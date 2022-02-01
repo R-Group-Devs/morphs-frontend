@@ -1,6 +1,6 @@
 {
-  "name": "forms-nft-minting-frontend",
-  "description": "Minting site for the Forms NFT drop.",
+  "name": "morphs-nft-minting-frontend",
+  "description": "Minting site for the Morphs NFT drop.",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,9 +11,11 @@
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
+    "styled-components": "^5.3.3",
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4"
   },

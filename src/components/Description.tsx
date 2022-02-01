@@ -1,0 +1,70 @@
+import styled from 'styled-components';
+import headShapesImage from '../assets/images/head-shapes.png';
+
+const Container = styled.div`
+  margin-top: 2.5em;
+  width: 45.035%;
+`;
+
+const Heading = styled.div`
+  margin-top: 5em;
+  font-family: 'Morphs Glyphs', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 2em;
+`;
+
+const HeadShapesImage = styled.img`
+  width: 60%;
+  height: auto;
+`;
+
+const FlavorText = styled.div`
+  margin-top: 4.5em;
+  font-family: 'IBM Plex Mono', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 2em;
+`;
+
+const Credits = styled.ul`
+  margin-top: 5em;
+  padding: 0;
+  list-style: none;
+  font-family: 'Inter', Sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1em;
+`;
+
+const Credit = styled.li`
+  margin-bottom: 1.25em;
+`;
+
+export default () => (
+  <Container>
+    <HeadShapesImage src={headShapesImage} alt="" />
+    <Heading>Mint a scroll, see what happens…</Heading>
+    <FlavorText>
+      <p>
+        Drifting through the immateria you find a scroll. You sense something mysterious, cosmic.
+      </p>
+
+      <p>You feel compelled to take it. After all, what have you got to lose…</p>
+    </FlavorText>
+
+    <Heading>Perhaps it will become something later on.</Heading>
+
+    <Credits>
+      <Credit>
+        built by <a href="https://playgrounds.wtf">playgrounds.wtf</a>
+      </Credit>
+      <Credit>
+        designed by <a href="https://twitter.com/polyforms_">@polyforms_</a>
+      </Credit>
+      <Credit>
+        made with <a href="https://heyshell.xyz">heyshell.xyz</a>
+      </Credit>
+    </Credits>
+  </Container>
+);

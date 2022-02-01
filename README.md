@@ -1,3 +1,3 @@
-# forms-nft-minting-frontend
+# morphs-nft-minting-frontend
 
-Minting site for the Forms NFT drop.
+Minting site for the Morphs NFT drop.
