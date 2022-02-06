@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import useMint from '../hooks/useMint';
-import { TRANSACTION_STATES } from '../hooks/useExecuteTransaction';
+import { transactionStates } from '../hooks/useExecuteTransaction';
 import scrollExampleImage from '../assets/images/scroll-example.png';
 
 const Container = styled.div`
@@ -81,10 +81,10 @@ const HelperText = styled.p`
 `;
 
 const BUTTON_TEXT = {
-  [TRANSACTION_STATES.IDLE]: 'Mint a Scroll',
-  [TRANSACTION_STATES.AWAITING_SIGNATURE]: 'Mint a Scroll...',
-  [TRANSACTION_STATES.AWAITING_CONFIRMATION]: 'Minting a Scroll...',
-  [TRANSACTION_STATES.CONFIRMED]: 'Minted!',
+  [transactionStates.IDLE]: 'Mint a Scroll',
+  [transactionStates.AWAITING_SIGNATURE]: 'Mint a Scroll...',
+  [transactionStates.AWAITING_CONFIRMATION]: 'Minting a Scroll...',
+  [transactionStates.CONFIRMED]: 'Minted!',
 };
 
 export default () => {
@@ -106,8 +106,8 @@ export default () => {
         <CodeInput placeholder="If you have a special code, input it here" />
         <SubmitButton
           disabled={
-            state === TRANSACTION_STATES.AWAITING_SIGNATURE ||
-            state === TRANSACTION_STATES.AWAITING_CONFIRMATION
+            state === transactionStates.AWAITING_SIGNATURE ||
+            state === transactionStates.AWAITING_CONFIRMATION
           }
         >
           {BUTTON_TEXT[state]}

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { TransactionResponse } from '@ethersproject/providers';
 
-export const TRANSACTION_STATES = {
+export const transactionStates = {
   IDLE: 'idle',
   AWAITING_SIGNATURE: 'awaitingSignature',
   AWAITING_CONFIRMATION: 'awaitingConfirmation',
@@ -11,30 +11,30 @@ export const TRANSACTION_STATES = {
 export interface Transaction {
   data: TransactionResponse;
   error: Error;
-  state: keyof typeof TRANSACTION_STATES;
+  state: keyof typeof transactionStates;
 }
 
 export default () => {
   const [data, setData] = useState<TransactionResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
-  const [state, setState] = useState(TRANSACTION_STATES.IDLE);
+  const [state, setState] = useState(transactionStates.IDLE);
 
   const executeTransaction = useCallback(async (method: () => Promise<TransactionResponse>) => {
     try {
-      setState(TRANSACTION_STATES.AWAITING_SIGNATURE);
+      setState(transactionStates.AWAITING_SIGNATURE);
 
       const tx = await method();
 
-      setState(TRANSACTION_STATES.AWAITING_CONFIRMATION);
+      setState(transactionStates.AWAITING_CONFIRMATION);
       setData(tx);
 
       await tx.wait(1);
-      setState(TRANSACTION_STATES.CONFIRMED);
+      setState(transactionStates.CONFIRMED);
 
       return tx;
     } catch (e) {
       setError(e as Error);
-      setState(TRANSACTION_STATES.IDLE);
+      setState(transactionStates.IDLE);
     }
   }, []);
 
