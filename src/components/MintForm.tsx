@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useMint from '../hooks/useMint';
+import { TRANSACTION_STATES } from '../hooks/useExecuteTransaction';
 import scrollExampleImage from '../assets/images/scroll-example.png';
 
 const Container = styled.div`
@@ -56,8 +57,16 @@ const SubmitButton = styled.button`
 
   &:hover {
     background: #7265d7;
-    color: #ffffff;
+    color: #fff;
     cursor: pointer;
+  }
+
+  &:disabled,
+  &[disabled] {
+    background: #5b4dc8;
+    color: #f8f4ec;
+    opacity: 0.6;
+    cursor: default;
   }
 `;
 
@@ -72,7 +81,7 @@ const HelperText = styled.p`
 `;
 
 export default () => {
-  const [, mint] = useMint();
+  const [{ state }, mint] = useMint();
 
   // TODO: check input code
   const isCodeValid = false;
@@ -88,7 +97,22 @@ export default () => {
         }}
       >
         <CodeInput placeholder="If you have a special code, input it here" />
-        <SubmitButton>Mint a Scroll</SubmitButton>
+        <SubmitButton
+          disabled={
+            state === TRANSACTION_STATES.AWAITING_SIGNATURE ||
+            state === TRANSACTION_STATES.AWAITING_CONFIRMATION
+          }
+        >
+          <span>
+            {state === TRANSACTION_STATES.AWAITING_CONFIRMATION
+              ? 'Minting a Scroll...'
+              : 'Mint a Scroll'}
+          </span>
+
+          {state === TRANSACTION_STATES.AWAITING_SIGNATURE && '...'}
+        </SubmitButton>
+
+        {state === TRANSACTION_STATES.CONFIRMED && 'Minted!'}
       </form>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>
