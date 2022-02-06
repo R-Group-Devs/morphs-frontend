@@ -1,42 +1,46 @@
 import { useState, useCallback } from 'react';
 import { TransactionResponse } from '@ethersproject/providers';
+import { ValueOf } from 'ts-essentials';
 
 export const transactionStates = {
   IDLE: 'idle',
   AWAITING_SIGNATURE: 'awaitingSignature',
   AWAITING_CONFIRMATION: 'awaitingConfirmation',
   CONFIRMED: 'confirmed',
-};
+} as const;
 
 export interface Transaction {
-  data: TransactionResponse;
-  error: Error;
-  state: keyof typeof transactionStates;
+  data: TransactionResponse | null;
+  error: Error | null;
+  state: ValueOf<typeof transactionStates>;
 }
 
 export default () => {
-  const [data, setData] = useState<TransactionResponse | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [state, setState] = useState(transactionStates.IDLE);
+  const [state, setState] = useState<Transaction>({
+    data: null,
+    state: transactionStates.IDLE,
+    error: null,
+  });
 
   const executeTransaction = useCallback(async (method: () => Promise<TransactionResponse>) => {
     try {
-      setState(transactionStates.AWAITING_SIGNATURE);
+      setState({ ...state, state: transactionStates.AWAITING_SIGNATURE });
 
       const tx = await method();
-
-      setState(transactionStates.AWAITING_CONFIRMATION);
-      setData(tx);
+      setState({ ...state, data: tx, state: transactionStates.AWAITING_CONFIRMATION });
 
       await tx.wait(1);
-      setState(transactionStates.CONFIRMED);
+      setState({ ...state, state: transactionStates.CONFIRMED });
 
       return tx;
     } catch (e) {
-      setError(e as Error);
-      setState(transactionStates.IDLE);
+      setState({
+        ...state,
+        state: transactionStates.IDLE,
+        error: e as Error,
+      });
     }
   }, []);
 
-  return [{ data, state, error }, executeTransaction] as [Transaction, typeof executeTransaction];
+  return [state, executeTransaction] as [Transaction, typeof executeTransaction];
 };
