@@ -29,7 +29,6 @@ const ConnectWalletButton = styled(Dialog.Trigger)`
 `;
 
 const ModalOverlay = styled(Dialog.Overlay)`
-  background: rgba(0 0 0 / 0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -38,6 +37,7 @@ const ModalOverlay = styled(Dialog.Overlay)`
   display: grid;
   place-items: center;
   overflow-y: auto;
+  background: rgba(0, 0, 0, 0.6);
 `;
 
 const ModalContainer = styled(Dialog.Content)`
@@ -45,6 +45,7 @@ const ModalContainer = styled(Dialog.Content)`
   background: #1a1a1a;
   padding: 1em 2em;
   border-radius: 4px;
+  box-shadow: #000 0 0 80px;
 `;
 
 const ModalTitle = styled(Dialog.Title)`
@@ -92,8 +93,8 @@ const ModalCloseButton = styled(Dialog.Close)`
 `;
 
 export default () => {
-  const [{ data: wallet, error: connectError, loading: isConnecting }, connect] = useConnect();
-  const [{ data: account, error: accountError, loading: isLoadingAccount }] = useAccount();
+  const [{ data: wallet }, connect] = useConnect();
+  const [{ data: account }] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
 
   return (

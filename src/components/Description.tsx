@@ -70,19 +70,19 @@ export default () => (
     <Credits>
       <Credit>
         built by{' '}
-        <a href="https://playgrounds.wtf" target="_blank" rel="noopener">
+        <a href="https://playgrounds.wtf" target="_blank" rel="noreferrer">
           playgrounds.wtf
         </a>
       </Credit>
       <Credit>
         designed by{' '}
-        <a href="https://twitter.com/polyforms_" target="_blank" rel="noopener">
+        <a href="https://twitter.com/polyforms_" target="_blank" rel="noreferrer">
           @polyforms_
         </a>
       </Credit>
       <Credit>
         made with{' '}
-        <a href="https://heyshell.xyz" target="_blank" rel="noopener">
+        <a href="https://heyshell.xyz" target="_blank" rel="noreferrer">
           heyshell.xyz
         </a>
       </Credit>

@@ -50,7 +50,7 @@ export default () => {
       <FooterText>
         Morphs is an NFT PFP project that evolves over time. Mint yourself a mystery scroll for free
         (gas only) and wait to see what happens… Follow{' '}
-        <a href="https://twitter.com/playgroundswtf" target="_blank" rel="noopener">
+        <a href="https://twitter.com/playgroundswtf" target="_blank" rel="noreferrer">
           @playgroundswtf
         </a>{' '}
         for updates.
