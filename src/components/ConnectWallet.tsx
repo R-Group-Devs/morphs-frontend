@@ -26,6 +26,11 @@ const ConnectWalletButton = styled(Dialog.Trigger)`
     color: #ffffff;
     cursor: pointer;
   }
+
+  @media (max-width: 580px) {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
 `;
 
 const ModalOverlay = styled(Dialog.Overlay)`
@@ -46,6 +51,10 @@ const ModalContainer = styled(Dialog.Content)`
   padding: 1em 2em;
   border-radius: 4px;
   box-shadow: #000 0 0 80px;
+
+  @media (max-width: 767px) {
+    width: 80%;
+  }
 `;
 
 const ModalTitle = styled(Dialog.Title)`

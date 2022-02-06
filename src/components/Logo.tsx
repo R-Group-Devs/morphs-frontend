@@ -7,6 +7,10 @@ const Container = styled.div`
   text-transform: uppercase;
   line-height: 1.2em;
   color: #f8f4ec;
+
+  @media (max-width: 580px) {
+    font-size: 42px;
+  }
 `;
 
 export default () => <Container>Morphs</Container>;
