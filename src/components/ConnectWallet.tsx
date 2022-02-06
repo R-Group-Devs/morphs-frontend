@@ -189,15 +189,8 @@ export default () => {
   const [{ data: account }, disconnect] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
-  const [isChangingWallets, setIsChangingWallets] = useState(false);
 
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsChangingWallets(false);
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     if (isAddressCopied) {
@@ -218,18 +211,16 @@ export default () => {
             onEscapeKeyDown={() => setIsOpen(false)}
           >
             <ModalTitle>
-              <span>{wallet.connected && !isChangingWallets ? 'Account' : 'Select a Wallet'}</span>
+              <span>{wallet.connected ? 'Account' : 'Select a Wallet'}</span>
               <ModalCloseButton onClick={() => setIsOpen(false)}>X</ModalCloseButton>
             </ModalTitle>
 
             <ModalContent>
-              {wallet.connected && !isChangingWallets ? (
+              {wallet.connected ? (
                 <ConnectedWalletDetails>
                   <ConnectedWalletHeading>
                     <span>Connected with {wallet.connector?.name}</span>
-                    <ChangeWalletButton onClick={() => setIsChangingWallets(true)}>
-                      Change
-                    </ChangeWalletButton>
+                    <ChangeWalletButton onClick={() => disconnect()}>Change</ChangeWalletButton>
                   </ConnectedWalletHeading>
                   <ConnectedWalletAddress>{connectedWalletText}</ConnectedWalletAddress>
 
