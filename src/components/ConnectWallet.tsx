@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useConnect, useAccount } from 'wagmi';
+import { useNetwork, useConnect, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -7,6 +7,7 @@ import { shortenAddress } from '../utils/address';
 import metamaskIcon from '../assets/images/icons/metamask.png';
 import walletConnectIcon from '../assets/images/icons/walletconnect.png';
 import walletLinkIcon from '../assets/images/icons/walletlink.png';
+import { BLOCK_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS, FONTS } from '../constants/theme';
 
 const WALLET_ICONS: Record<string, string> = {
@@ -178,6 +179,7 @@ const ModalCloseButton = styled(Dialog.Close)`
 `;
 
 export default () => {
+  const [{ data: network }] = useNetwork();
   const [{ data: wallet }, connect] = useConnect();
   const [{ data: account }, disconnect] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
@@ -236,8 +238,11 @@ export default () => {
                       <ModalAction>{isAddressCopied ? 'Copied' : 'Copy address'}</ModalAction>
                     </CopyToClipboard>
 
+                    {/* use mainnet fallback */}
                     <ModalAction
-                      href={`https://etherscan.io/address/${account?.address}`}
+                      href={`${BLOCK_EXPLORER_URLS[network?.chain?.id || 4]}/address/${
+                        account?.address
+                      }`}
                       target="_blank"
                       rel="noreferrer"
                     >
