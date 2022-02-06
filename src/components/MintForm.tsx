@@ -78,7 +78,13 @@ export default () => {
     <Container>
       <ScrollExampleImage src={scrollExampleImage} alt="" />
       <CodeInput placeholder="If you have a special code, input it here" />
-      <SubmitButton>Mint a Scroll</SubmitButton>
+      <SubmitButton
+        onClick={() =>
+          playgroundsGenesisEngineContract.mint('0x9c724d794940d94139fd32eff6606827c6c75fa0', false)
+        }
+      >
+        Mint a Scroll
+      </SubmitButton>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>
     </Container>
