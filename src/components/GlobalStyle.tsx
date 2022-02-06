@@ -3,8 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
   body {
     margin: 0;
-    font-family: 'IBM Plex Mono', sans-serif;
-    color: #f4f4ec;
     background: #1a1a1a;
   }
 
@@ -12,7 +10,27 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
-  a {
+  @font-face {
+    font-family: 'Morphs Glyphs';
+    src: url('./fonts/Morphs-Glyphs.woff2') format('woff2'),
+      url('./fonts/Morphs-Glyphs.woff') format('woff'),
+      url('./fonts/Morphs-Glyphs.otf') format('otf'),
+      url('./fonts/Morphs-Glyphs.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+  }
+
+  ::selection {
+    background: #f55a76;
+  }
+
+  body > :not(#walletconnect-wrapper) {
+    font-family: 'IBM Plex Mono', sans-serif;
+    color: #f4f4ec;
+  }
+
+  body > :not(#walletconnect-wrapper) a {
     color: #f55a76;
     border-bottom: 1px solid #f55a76;
     text-decoration: none;
@@ -31,20 +49,4 @@ export default createGlobalStyle`
       outline: none;
     }
   }
-
-  @font-face {
-    font-family: 'Morphs Glyphs';
-    src: url('./fonts/Morphs-Glyphs.woff2') format('woff2'),
-      url('./fonts/Morphs-Glyphs.woff') format('woff'),
-      url('./fonts/Morphs-Glyphs.otf') format('otf'),
-      url('./fonts/Morphs-Glyphs.ttf') format('ttf');
-    font-weight: 300;
-    font-style: normal;
-    font-display: block;
-  }
-
-  ::selection {
-    background: #f55a76;
-  }
-
 `;

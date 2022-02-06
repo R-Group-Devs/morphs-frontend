@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { shortenAddress } from '../utils/address';
 import metamaskIcon from '../assets/images/icons/metamask.png';
+import walletConnectIcon from '../assets/images/icons/walletconnect.png';
 
 const WALLET_ICONS: Record<string, string> = {
   injected: metamaskIcon,
+  walletConnect: walletConnectIcon,
 };
 
 const ConnectWalletButton = styled(Dialog.Trigger)`
@@ -87,7 +89,6 @@ const WalletProvider = styled.div`
 
 const WalletIcon = styled.img`
   width: 24px;
-  height: 24px;
 `;
 
 const ModalCloseButton = styled(Dialog.Close)`
@@ -107,12 +108,12 @@ export default () => {
   const [{ data: account }] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
 
+  const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
+
   return (
     <Dialog.Root open={isOpen}>
       <ConnectWalletButton onClick={() => setIsOpen(true)}>
-        {wallet.connected
-          ? account?.ens?.name ?? shortenAddress(account?.address ?? '')
-          : 'Connect Wallet'}
+        {wallet.connected ? connectedWalletText : 'Connect Wallet'}
       </ConnectWalletButton>
 
       <Dialog.Portal>

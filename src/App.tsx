@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Provider } from 'wagmi';
+import WalletProvider from './providers/WalletProvider';
 import GlobalStyle from './components/GlobalStyle';
 import Header from './components/Header';
 import Description from './components/Description';
@@ -36,7 +36,7 @@ const Panel = styled.div`
 
 const App = () => {
   return (
-    <Provider>
+    <WalletProvider>
       <Container>
         <GlobalStyle />
         <Header />
@@ -53,7 +53,7 @@ const App = () => {
 
         <Footer />
       </Container>
-    </Provider>
+    </WalletProvider>
   );
 };
 
