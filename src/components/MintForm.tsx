@@ -80,6 +80,13 @@ const HelperText = styled.p`
   text-align: center;
 `;
 
+const BUTTON_TEXT = {
+  [TRANSACTION_STATES.IDLE]: 'Mint a Scroll',
+  [TRANSACTION_STATES.AWAITING_SIGNATURE]: 'Mint a Scroll...',
+  [TRANSACTION_STATES.AWAITING_CONFIRMATION]: 'Minting a Scroll...',
+  [TRANSACTION_STATES.CONFIRMED]: 'Minted!',
+};
+
 export default () => {
   const [{ state }, mint] = useMint();
 
@@ -103,16 +110,8 @@ export default () => {
             state === TRANSACTION_STATES.AWAITING_CONFIRMATION
           }
         >
-          <span>
-            {state === TRANSACTION_STATES.AWAITING_CONFIRMATION
-              ? 'Minting a Scroll...'
-              : 'Mint a Scroll'}
-          </span>
-
-          {state === TRANSACTION_STATES.AWAITING_SIGNATURE && '...'}
+          {BUTTON_TEXT[state]}
         </SubmitButton>
-
-        {state === TRANSACTION_STATES.CONFIRMED && 'Minted!'}
       </form>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>
