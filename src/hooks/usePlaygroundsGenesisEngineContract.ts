@@ -7,7 +7,8 @@ export default () => {
   const [{ data: signer }] = useSigner();
 
   const contract = useContract({
-    addressOrName: PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES[network?.chain?.id || 4],
+    // TODO: use mainnet fallback
+    addressOrName: PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES[network?.chain?.id ?? 4],
     contractInterface: playgroundsGenesisEngineAbi,
     signerOrProvider: signer,
   });
