@@ -29,7 +29,6 @@ const ShapesPanelImageMobile = styled(ShapesPanelImage)`
 
 const FooterText = styled.p`
   margin-top: 2.25em;
-  font-family: 'IBM Plex Mono', sans-serif;
   font-size: 12px;
   font-weight: normal;
   line-height: 2em;

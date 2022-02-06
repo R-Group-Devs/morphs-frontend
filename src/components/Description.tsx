@@ -26,7 +26,6 @@ const HeadShapesImage = styled.img`
 
 const FlavorText = styled.div`
   margin-top: 4.5em;
-  font-family: 'IBM Plex Mono', sans-serif;
   font-size: 16px;
   font-weight: normal;
   line-height: 2em;

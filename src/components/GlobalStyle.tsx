@@ -3,8 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
   body {
     margin: 0;
-    background-color: #1a1a1a;
+    font-family: 'IBM Plex Mono', sans-serif;
     color: #f4f4ec;
+    background: #1a1a1a;
   }
 
   * {
