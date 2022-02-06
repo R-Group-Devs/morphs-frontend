@@ -131,6 +131,11 @@ const ChangeWalletButton = styled.button`
     outline: none;
     cursor: pointer;
   }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
 `;
 
 const ConnectedWalletAddress = styled.div`
