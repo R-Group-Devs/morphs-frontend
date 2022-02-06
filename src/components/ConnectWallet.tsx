@@ -29,7 +29,13 @@ const ConnectWalletButton = styled(Dialog.Trigger)`
   &:hover {
     background: ${COLORS.primary.light};
     color: #fff;
+    outline: none;
     cursor: pointer;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
   }
 
   @media (max-width: 580px) {
@@ -105,6 +111,10 @@ const ModalCloseButton = styled(Dialog.Close)`
   &:hover {
     cursor: pointer;
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default () => {
@@ -122,7 +132,10 @@ export default () => {
 
       <Dialog.Portal>
         <ModalOverlay>
-          <ModalContainer onPointerDownOutside={() => setIsOpen(false)}>
+          <ModalContainer
+            onPointerDownOutside={() => setIsOpen(false)}
+            onEscapeKeyDown={() => setIsOpen(false)}
+          >
             <ModalTitle>
               <span>Select a Wallet</span>
               <ModalCloseButton onClick={() => setIsOpen(false)}>X</ModalCloseButton>

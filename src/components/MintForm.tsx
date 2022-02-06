@@ -59,7 +59,13 @@ const SubmitButton = styled.button`
   &:hover:not(:disabled) {
     background: ${COLORS.primary.light};
     color: #fff;
+    outline: none;
     cursor: pointer;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
   }
 
   &:disabled {
