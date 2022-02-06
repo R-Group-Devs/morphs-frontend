@@ -18,7 +18,7 @@ export default () => {
           isCodeValid
         )
       ),
-    [network, playgroundsGenesisEngineContract]
+    [network, playgroundsGenesisEngineContract, executeTransaction]
   );
 
   return [{ data, state, error }, mint] as [Transaction, typeof mint];

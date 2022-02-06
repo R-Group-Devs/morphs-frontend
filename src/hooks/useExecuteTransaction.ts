@@ -31,10 +31,9 @@ export default () => {
       await tx.wait(1);
       setState(TRANSACTION_STATES.CONFIRMED);
 
-      return data;
+      return tx;
     } catch (e) {
-      const error = <Error>e;
-      setError(error);
+      setError(e as Error);
       setState(TRANSACTION_STATES.IDLE);
     }
   }, []);
