@@ -9,7 +9,7 @@ const Container = styled.div`
   color: #f8f4ec;
 
   @media (max-width: 580px) {
-    font-size: 42px;
+    font-size: 46px;
   }
 `;
 
