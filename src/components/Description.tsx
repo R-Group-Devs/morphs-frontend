@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import headShapesImage from '../assets/images/head-shapes.png';
 
-const Container = styled.div`
-  margin-top: 2.5em;
-  width: 45.035%;
-`;
+const Container = styled.div``;
 
 const Heading = styled.div`
   margin-top: 5em;

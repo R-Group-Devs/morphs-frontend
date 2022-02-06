@@ -27,7 +27,7 @@ export default createGlobalStyle`
     }
 
     &:focus:active {
-      outline: none
+      outline: none;
     }
   }
 
