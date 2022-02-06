@@ -211,7 +211,7 @@ export default () => {
             onEscapeKeyDown={() => setIsOpen(false)}
           >
             <ModalTitle>
-              <span>{wallet.connected ? 'Account' : 'Select a Wallet'}</span>
+              <span>{wallet.connected && !isChangingWallets ? 'Account' : 'Select a Wallet'}</span>
               <ModalCloseButton onClick={() => setIsOpen(false)}>X</ModalCloseButton>
             </ModalTitle>
 
