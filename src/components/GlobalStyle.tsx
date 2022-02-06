@@ -41,4 +41,9 @@ export default createGlobalStyle`
     font-style: normal;
     font-display: block;
   }
+
+  ::selection {
+    background: #f55a76;
+  }
+
 `;

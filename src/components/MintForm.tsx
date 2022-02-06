@@ -4,10 +4,15 @@ import scrollExampleImage from '../assets/images/scroll-example.png';
 const Container = styled.div`
   margin-left: 6em;
   width: 100%;
+
+  @media (max-width: 767px) {
+    margin-top: 2em;
+    margin-left: 0;
+  }
 `;
 
 const ScrollExampleImage = styled.img`
-  margin-bottom: 2em;
+  margin-bottom: 1.75em;
   width: 100%;
   height: auto;
   border: 1px solid #f8f4ec;
@@ -27,10 +32,14 @@ const CodeInput = styled.input`
   background: #d8d8d8;
   border: none;
   border-radius: 2px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const SubmitButton = styled.button`
-  padding: 25px 50px;
+  padding: 20px 50px;
   width: 100%;
   min-height: 72px;
   background-color: #5b4dc8;
@@ -44,6 +53,7 @@ const SubmitButton = styled.button`
 `;
 
 const HelperText = styled.p`
+  margin-top: 0.5em;
   color: #f8f4ec;
   font-family: 'Space Grotesk', Sans-serif;
   font-size: 14px;

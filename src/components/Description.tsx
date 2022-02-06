@@ -9,11 +9,19 @@ const Heading = styled.div`
   font-size: 14px;
   font-weight: normal;
   line-height: 2em;
+
+  @media (max-width: 767px) {
+    margin-top: 2em;
+  }
 `;
 
 const HeadShapesImage = styled.img`
   width: 60%;
   height: auto;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const FlavorText = styled.div`
@@ -22,6 +30,10 @@ const FlavorText = styled.div`
   font-size: 16px;
   font-weight: normal;
   line-height: 2em;
+
+  @media (max-width: 767px) {
+    margin-top: 2em;
+  }
 `;
 
 const Credits = styled.ul`
@@ -32,6 +44,10 @@ const Credits = styled.ul`
   font-size: 14px;
   font-weight: normal;
   line-height: 1em;
+
+  @media (max-width: 767px) {
+    margin-top: 2em;
+  }
 `;
 
 const Credit = styled.li`
@@ -54,13 +70,22 @@ export default () => (
 
     <Credits>
       <Credit>
-        built by <a href="https://playgrounds.wtf">playgrounds.wtf</a>
+        built by{' '}
+        <a href="https://playgrounds.wtf" target="_blank" rel="noopener">
+          playgrounds.wtf
+        </a>
       </Credit>
       <Credit>
-        designed by <a href="https://twitter.com/polyforms_">@polyforms_</a>
+        designed by{' '}
+        <a href="https://twitter.com/polyforms_" target="_blank" rel="noopener">
+          @polyforms_
+        </a>
       </Credit>
       <Credit>
-        made with <a href="https://heyshell.xyz">heyshell.xyz</a>
+        made with{' '}
+        <a href="https://heyshell.xyz" target="_blank" rel="noopener">
+          heyshell.xyz
+        </a>
       </Credit>
     </Credits>
   </Container>
