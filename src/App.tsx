@@ -26,7 +26,7 @@ const Content = styled.div`
 `;
 
 const Panel = styled.div`
-  width: 45.035%;
+  width: 45%;
 
   @media (max-width: 767px) {
     width: 100%;

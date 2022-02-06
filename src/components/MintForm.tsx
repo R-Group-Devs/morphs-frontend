@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import scrollExampleImage from '../assets/images/scroll-example.png';
 
 const Container = styled.div`
-  margin-left: 6em;
+  margin-left: 21%;
   width: 100%;
 
   @media (max-width: 767px) {
@@ -12,6 +12,7 @@ const Container = styled.div`
 `;
 
 const ScrollExampleImage = styled.img`
+  margin-top: -0.5em;
   margin-bottom: 1.75em;
   width: 100%;
   height: auto;
@@ -42,7 +43,7 @@ const SubmitButton = styled.button`
   padding: 20px 50px;
   width: 100%;
   min-height: 72px;
-  background-color: #5b4dc8;
+  background: #5b4dc8;
   font-family: 'Space Grotesk', Sans-serif;
   font-size: 24px;
   font-weight: bold;
@@ -50,6 +51,13 @@ const SubmitButton = styled.button`
   text-transform: uppercase;
   color: #f8f4ec;
   border: none;
+  transition: all 0.3s;
+
+  &:hover {
+    background: #7265d7;
+    color: #ffffff;
+    cursor: pointer;
+  }
 `;
 
 const HelperText = styled.p`

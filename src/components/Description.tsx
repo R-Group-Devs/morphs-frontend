@@ -11,7 +11,7 @@ const Heading = styled.div`
   line-height: 2em;
 
   @media (max-width: 767px) {
-    margin-top: 2em;
+    margin-top: 3em;
   }
 `;
 
