@@ -15,22 +15,23 @@ export default () => {
   const [{ data: network }] = useNetwork();
   const [data, setData] = useState();
 
-  const mint = useCallback(async () => {
-    const data = await playgroundsGenesisEngineContract.mint(
-      // TODO: use mainnet fallback
-      MORPHS_NFT_CONTRACT_ADDRESSES[network?.chain?.id ?? 4],
+  const mint = useCallback(
+    async (isCodeValid: boolean) => {
+      const data = await playgroundsGenesisEngineContract.mint(
+        // TODO: use mainnet fallback
+        MORPHS_NFT_CONTRACT_ADDRESSES[network?.chain?.id ?? 4],
+        isCodeValid
+      );
 
-      // TODO: check input code
-      false
-    );
+      setData(data);
 
-    setData(data);
+      // TODO: add loading state
+      // TODO: add error state
 
-    // TODO: add loading state
-    // TODO: add error state
+      return data;
+    },
+    [network, playgroundsGenesisEngineContract]
+  );
 
-    return data;
-  }, [playgroundsGenesisEngineContract]);
-
-  return [{ data }, mint] as [State, () => Promise<State>];
+  return [{ data }, mint] as [State, typeof mint];
 };

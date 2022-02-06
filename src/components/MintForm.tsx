@@ -74,11 +74,22 @@ const HelperText = styled.p`
 export default () => {
   const [, mint] = useMint();
 
+  // TODO: check input code
+  const isCodeValid = false;
+
   return (
     <Container>
       <ScrollExampleImage src={scrollExampleImage} alt="" />
-      <CodeInput placeholder="If you have a special code, input it here" />
-      <SubmitButton onClick={() => mint()}>Mint a Scroll</SubmitButton>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          mint(isCodeValid);
+        }}
+      >
+        <CodeInput placeholder="If you have a special code, input it here" />
+        <SubmitButton>Mint a Scroll</SubmitButton>
+      </form>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>
     </Container>
