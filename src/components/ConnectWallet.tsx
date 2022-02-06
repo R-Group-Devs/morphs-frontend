@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useConnect, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { shortenAddress } from '../utils/address';
 import metamaskIcon from '../assets/images/icons/metamask.png';
 import walletConnectIcon from '../assets/images/icons/walletconnect.png';
@@ -97,6 +98,65 @@ const WalletProvider = styled.div`
   }
 `;
 
+const ConnectedWalletDetails = styled(WalletProvider)`
+  flex-direction: column;
+  align-items: start;
+  height: auto;
+
+  &:hover {
+    cursor: default;
+  }
+`;
+
+const ConnectedWalletHeading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const ChangeWalletButton = styled.button`
+  padding: 5px 10px;
+  font-family: ${FONTS.sansSerif};
+  font-weight: 600;
+  color: ${COLORS.white};
+  border: 2px solid ${COLORS.primary.normal};
+  background: none;
+  transition: all 0.3s;
+
+  &:hover {
+    background: ${COLORS.primary.light};
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+  }
+`;
+
+const ConnectedWalletAddress = styled.div`
+  margin-top: 0.5em;
+  font-size: 22px;
+  font-weight: 600;
+`;
+
+const ModalActions = styled.div`
+  display: flex;
+  margin-top: 1.25em;
+  font-family: ${FONTS.sansSerifAlt};
+`;
+
+const ModalAction = styled.a`
+  margin-right: 2em;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 300;
+  border-bottom-color: transparent !important;
+
+  &:hover {
+    border-bottom-color: inherit !important;
+    cursor: pointer;
+  }
+`;
+
 const WalletIcon = styled.img`
   width: 24px;
 `;
@@ -119,10 +179,24 @@ const ModalCloseButton = styled(Dialog.Close)`
 
 export default () => {
   const [{ data: wallet }, connect] = useConnect();
-  const [{ data: account }] = useAccount();
+  const [{ data: account }, disconnect] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
+  const [isAddressCopied, setIsAddressCopied] = useState(false);
+  const [isChangingWallets, setIsChangingWallets] = useState(false);
 
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsChangingWallets(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isAddressCopied) {
+      setTimeout(() => setIsAddressCopied(false), 500);
+    }
+  }, [isAddressCopied]);
 
   return (
     <Dialog.Root open={isOpen}>
@@ -137,23 +211,65 @@ export default () => {
             onEscapeKeyDown={() => setIsOpen(false)}
           >
             <ModalTitle>
-              <span>Select a Wallet</span>
+              <span>{wallet.connected ? 'Account' : 'Select a Wallet'}</span>
               <ModalCloseButton onClick={() => setIsOpen(false)}>X</ModalCloseButton>
             </ModalTitle>
 
             <ModalContent>
-              {wallet.connectors.map((connector) => (
-                <WalletProvider
-                  key={connector.id}
-                  onClick={async () => {
-                    await connect(connector);
-                    setIsOpen(false);
-                  }}
-                >
-                  <span>{connector.name}</span>
-                  <WalletIcon src={WALLET_ICONS[connector.id]}></WalletIcon>
-                </WalletProvider>
-              ))}
+              {wallet.connected && !isChangingWallets ? (
+                <ConnectedWalletDetails>
+                  <ConnectedWalletHeading>
+                    <span>Connected with {wallet.connector?.name}</span>
+                    <ChangeWalletButton onClick={() => setIsChangingWallets(true)}>
+                      Change
+                    </ChangeWalletButton>
+                  </ConnectedWalletHeading>
+                  <ConnectedWalletAddress>{connectedWalletText}</ConnectedWalletAddress>
+
+                  <ModalActions>
+                    <CopyToClipboard
+                      text={account?.address ?? ''}
+                      onCopy={() => {
+                        setIsAddressCopied(true);
+                      }}
+                    >
+                      <ModalAction>{isAddressCopied ? 'Copied' : 'Copy address'}</ModalAction>
+                    </CopyToClipboard>
+
+                    <ModalAction
+                      href={`https://etherscan.io/address/${account?.address}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View on explorer
+                    </ModalAction>
+
+                    <ModalAction
+                      onClick={(e) => {
+                        e.preventDefault();
+                        disconnect();
+                      }}
+                    >
+                      Disconnect
+                    </ModalAction>
+                  </ModalActions>
+                </ConnectedWalletDetails>
+              ) : (
+                <>
+                  {wallet.connectors.map((connector) => (
+                    <WalletProvider
+                      key={connector.id}
+                      onClick={async () => {
+                        await connect(connector);
+                        setIsOpen(false);
+                      }}
+                    >
+                      <span>{connector.name}</span>
+                      <WalletIcon src={WALLET_ICONS[connector.id]}></WalletIcon>
+                    </WalletProvider>
+                  ))}
+                </>
+              )}
             </ModalContent>
           </ModalContainer>
         </ModalOverlay>
