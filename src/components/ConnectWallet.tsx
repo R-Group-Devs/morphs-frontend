@@ -15,13 +15,13 @@ const WALLET_ICONS: Record<string, string> = {
   walletLink: walletLinkIcon,
 };
 
-const ConnectWalletButton = styled(Dialog.Trigger)`
+const ConnectWalletButton = styled(Dialog.Trigger)<{ isConnected: boolean }>`
   padding: 15px 25px;
   font-family: ${FONTS.sansSerif};
   font-size: 18px;
   font-weight: bold;
   line-height: normal;
-  text-transform: uppercase;
+  text-transform: ${({ isConnected }) => (isConnected ? 'none' : 'uppercase')};
   color: ${COLORS.white};
   background: none;
   border: 3px solid ${COLORS.primary.normal};
@@ -200,7 +200,7 @@ export default () => {
 
   return (
     <Dialog.Root open={isOpen}>
-      <ConnectWalletButton onClick={() => setIsOpen(true)}>
+      <ConnectWalletButton onClick={() => setIsOpen(true)} isConnected={wallet.connected}>
         {wallet.connected ? connectedWalletText : 'Connect Wallet'}
       </ConnectWalletButton>
 
