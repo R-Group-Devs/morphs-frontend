@@ -8,7 +8,12 @@ interface Props {
 }
 
 const connectors = [
-  new InjectedConnector({ chains: defaultChains }),
+  new InjectedConnector({
+    chains: defaultChains,
+    options: {
+      shimDisconnect: true,
+    },
+  }),
   new WalletConnectConnector({
     chains: defaultChains,
     options: {
@@ -24,4 +29,8 @@ const connectors = [
   }),
 ];
 
-export default ({ children }: Props) => <Provider connectors={connectors}>{children}</Provider>;
+export default ({ children }: Props) => (
+  <Provider connectors={connectors} autoConnect>
+    {children}
+  </Provider>
+);
