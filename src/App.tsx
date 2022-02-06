@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Provider } from 'wagmi';
 import GlobalStyle from './components/GlobalStyle';
-import Logo from './components/Logo';
+import Header from './components/Header';
 import Description from './components/Description';
 import MintForm from './components/MintForm';
 import Footer from './components/Footer';
@@ -35,22 +36,24 @@ const Panel = styled.div`
 
 const App = () => {
   return (
-    <Container>
-      <GlobalStyle />
-      <Logo />
+    <Provider>
+      <Container>
+        <GlobalStyle />
+        <Header />
 
-      <Content>
-        <Panel>
-          <Description />
-        </Panel>
+        <Content>
+          <Panel>
+            <Description />
+          </Panel>
 
-        <Panel>
-          <MintForm />
-        </Panel>
-      </Content>
+          <Panel>
+            <MintForm />
+          </Panel>
+        </Content>
 
-      <Footer />
-    </Container>
+        <Footer />
+      </Container>
+    </Provider>
   );
 };
 

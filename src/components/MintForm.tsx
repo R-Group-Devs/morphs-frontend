@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import usePlaygroundsGenesisEngineContract from '../hooks/usePlaygroundsGenesisEngineContract';
 import scrollExampleImage from '../assets/images/scroll-example.png';
 
 const Container = styled.div`
-  margin-left: 21%;
+  margin-left: 22%;
   width: 100%;
 
   @media (max-width: 767px) {
@@ -70,12 +71,16 @@ const HelperText = styled.p`
   text-align: center;
 `;
 
-export default () => (
-  <Container>
-    <ScrollExampleImage src={scrollExampleImage} alt="" />
-    <CodeInput placeholder="If you have a special code, input it here" />
-    <SubmitButton>Mint a Scroll</SubmitButton>
+export default () => {
+  const playgroundsGenesisEngineContract = usePlaygroundsGenesisEngineContract();
 
-    <HelperText>Minting is free. You just pay gas.</HelperText>
-  </Container>
-);
+  return (
+    <Container>
+      <ScrollExampleImage src={scrollExampleImage} alt="" />
+      <CodeInput placeholder="If you have a special code, input it here" />
+      <SubmitButton>Mint a Scroll</SubmitButton>
+
+      <HelperText>Minting is free. You just pay gas.</HelperText>
+    </Container>
+  );
+};
