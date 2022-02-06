@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import shapesPanelImage from '../assets/images/shapes-panel.png';
 import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
+import { COLORS } from '../constants/theme';
 
 const Container = styled.footer`
   margin-top: 2em;
@@ -32,7 +33,7 @@ const FooterText = styled.p`
   font-size: 12px;
   font-weight: normal;
   line-height: 2em;
-  color: #f8f4ec;
+  color: ${COLORS.white};
 `;
 
 export default () => {

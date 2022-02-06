@@ -6,6 +6,7 @@ import { shortenAddress } from '../utils/address';
 import metamaskIcon from '../assets/images/icons/metamask.png';
 import walletConnectIcon from '../assets/images/icons/walletconnect.png';
 import walletLinkIcon from '../assets/images/icons/walletlink.png';
+import { COLORS, FONTS } from '../constants/theme';
 
 const WALLET_ICONS: Record<string, string> = {
   injected: metamaskIcon,
@@ -15,19 +16,19 @@ const WALLET_ICONS: Record<string, string> = {
 
 const ConnectWalletButton = styled(Dialog.Trigger)`
   padding: 15px 25px;
-  font-family: 'Space Grotesk', Sans-serif;
+  font-family: ${FONTS.sansSerif};
   font-size: 18px;
   font-weight: bold;
   line-height: normal;
   text-transform: uppercase;
-  color: #f8f4ec;
+  color: ${COLORS.white};
   background: none;
-  border: 3px solid #5b4dc8;
+  border: 3px solid ${COLORS.primary.normal};
   transition: all 0.3s;
 
   &:hover {
-    background: #7265d7;
-    color: #ffffff;
+    background: ${COLORS.primary.light};
+    color: #fff;
     cursor: pointer;
   }
 
@@ -52,7 +53,7 @@ const ModalOverlay = styled(Dialog.Overlay)`
 
 const ModalContainer = styled(Dialog.Content)`
   width: 580px;
-  background: #1a1a1a;
+  background: ${COLORS.black};
   padding: 1em 2em;
   border-radius: 4px;
   box-shadow: #000 0 0 80px;
@@ -67,7 +68,7 @@ const ModalTitle = styled(Dialog.Title)`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.25em;
-  font-family: 'Space Grotesk', Sans-serif;
+  font-family: ${FONTS.sansSerif};
   font-size: 28px;
   font-weight: 600;
   text-transform: uppercase;
@@ -83,7 +84,7 @@ const WalletProvider = styled.div`
   padding: 1.25em 2em;
   height: 64px;
   font-weight: 600;
-  border: 1px solid #5b4dc8;
+  border: 1px solid ${COLORS.primary.normal};
 
   &:hover {
     cursor: pointer;
@@ -97,7 +98,7 @@ const WalletIcon = styled.img`
 const ModalCloseButton = styled(Dialog.Close)`
   font-size: 24px;
   font-weight: 600;
-  color: #f8f4ec;
+  color: ${COLORS.white};
   background: none;
   border: none;
 

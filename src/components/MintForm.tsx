@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useMint from '../hooks/useMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
 import scrollExampleImage from '../assets/images/scroll-example.png';
+import { COLORS, FONTS } from '../constants/theme';
 
 const Container = styled.div`
   margin-left: 22%;
@@ -18,7 +19,7 @@ const ScrollExampleImage = styled.img`
   margin-bottom: 1.75em;
   width: 100%;
   height: auto;
-  border: 1px solid #f8f4ec;
+  border: 1px solid ${COLORS.white};
 `;
 
 const CodeInput = styled.input`
@@ -26,12 +27,12 @@ const CodeInput = styled.input`
   padding: 4px 12px;
   width: 100%;
   min-height: 33px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: ${FONTS.sansSerif};
   font-size: 14px;
   font-weight: normal;
   line-height: 2em;
   text-align: center;
-  color: #1a1a1a;
+  color: ${COLORS.black};
   background: #d8d8d8;
   border: none;
   border-radius: 2px;
@@ -45,26 +46,23 @@ const SubmitButton = styled.button`
   padding: 20px 50px;
   width: 100%;
   min-height: 72px;
-  background: #5b4dc8;
-  font-family: 'Space Grotesk', Sans-serif;
+  background: ${COLORS.primary.normal};
+  font-family: ${FONTS.sansSerif};
   font-size: 24px;
   font-weight: bold;
   line-height: normal;
   text-transform: uppercase;
-  color: #f8f4ec;
+  color: ${COLORS.white};
   border: none;
   transition: all 0.3s;
 
-  &:hover {
-    background: #7265d7;
+  &:hover:not(:disabled) {
+    background: ${COLORS.primary.light};
     color: #fff;
     cursor: pointer;
   }
 
-  &:disabled,
-  &[disabled] {
-    background: #5b4dc8;
-    color: #f8f4ec;
+  &:disabled {
     opacity: 0.6;
     cursor: default;
   }
@@ -72,12 +70,12 @@ const SubmitButton = styled.button`
 
 const HelperText = styled.p`
   margin-top: 0.5em;
-  color: #f8f4ec;
-  font-family: 'Space Grotesk', Sans-serif;
+  font-family: ${FONTS.sansSerif};
   font-size: 14px;
   font-weight: normal;
   line-height: 2em;
   text-align: center;
+  color: ${COLORS.white};
 `;
 
 const BUTTON_TEXT = {

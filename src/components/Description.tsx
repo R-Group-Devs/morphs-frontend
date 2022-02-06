@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import headShapesImage from '../assets/images/head-shapes.png';
+import { FONTS } from '../constants/theme';
 
 const Container = styled.div``;
 
 const Heading = styled.div`
   margin-top: 5em;
-  font-family: 'Morphs Glyphs', sans-serif;
+  font-family: ${FONTS.glyphs};
   font-size: 14px;
   font-weight: normal;
   line-height: 2em;
@@ -39,7 +40,7 @@ const Credits = styled.ul`
   margin-top: 5em;
   padding: 0;
   list-style: none;
-  font-family: 'Inter', Sans-serif;
+  font-family: ${FONTS.sansSerifAlt};
   font-size: 14px;
   font-weight: normal;
   line-height: 1em;

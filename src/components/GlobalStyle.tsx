@@ -1,13 +1,18 @@
 import { createGlobalStyle } from 'styled-components';
+import { COLORS, FONTS } from '../constants/theme';
 
 export default createGlobalStyle`
   body {
     margin: 0;
-    background: #1a1a1a;
+    background: ${COLORS.black};
   }
 
   * {
     box-sizing: border-box;
+  }
+
+  ::selection {
+    background: ${COLORS.accent.normal};
   }
 
   @font-face {
@@ -21,28 +26,24 @@ export default createGlobalStyle`
     font-display: block;
   }
 
-  ::selection {
-    background: #f55a76;
-  }
-
   body:not(.-walletlink-extension-dialog-box-bottom-description) > :not(#walletconnect-wrapper) {
-    font-family: 'IBM Plex Mono', sans-serif;
-    color: #f4f4ec;
+    font-family: ${FONTS.mono};
+    color: ${COLORS.white};
   }
 
   body > :not(#walletconnect-wrapper) a {
-    color: #f55a76;
-    border-bottom: 1px solid #f55a76;
+    color: ${COLORS.accent.normal};
+    border-bottom: 1px solid ${COLORS.accent.normal};
     text-decoration: none;
     transition: all 0.2s linear;
 
     &:hover {
-      color: #ecbacd;
-      border-bottom-color: #ecbacd;
+      color: ${COLORS.accent.light};
+      border-bottom-color: ${COLORS.accent.light};
     }
 
     &:focus {
-      outline: 1px dotted #f55a76;
+      outline: 1px dotted ${COLORS.accent.normal};
     }
 
     &:focus:active {
