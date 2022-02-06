@@ -25,7 +25,7 @@ export default createGlobalStyle`
     background: #f55a76;
   }
 
-  body > :not(#walletconnect-wrapper) {
+  body:not(.-walletlink-extension-dialog-box-bottom-description) > :not(#walletconnect-wrapper) {
     font-family: 'IBM Plex Mono', sans-serif;
     color: #f4f4ec;
   }

@@ -5,10 +5,12 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { shortenAddress } from '../utils/address';
 import metamaskIcon from '../assets/images/icons/metamask.png';
 import walletConnectIcon from '../assets/images/icons/walletconnect.png';
+import walletLinkIcon from '../assets/images/icons/walletlink.png';
 
 const WALLET_ICONS: Record<string, string> = {
   injected: metamaskIcon,
   walletConnect: walletConnectIcon,
+  walletLink: walletLinkIcon,
 };
 
 const ConnectWalletButton = styled(Dialog.Trigger)`
@@ -79,6 +81,7 @@ const WalletProvider = styled.div`
   justify-content: space-between;
   margin: 1em 0;
   padding: 1.25em 2em;
+  height: 64px;
   font-weight: 600;
   border: 1px solid #5b4dc8;
 
