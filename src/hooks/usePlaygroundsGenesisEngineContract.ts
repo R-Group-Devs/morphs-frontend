@@ -5,10 +5,14 @@ import playgroundsGenesisEngineAbi from '../constants/abis/PlaygroundsGenesisEng
 export default () => {
   const [{ data: network }] = useNetwork();
   const [{ data: signer }] = useSigner();
+  const chainId =
+    network?.chain?.id && network?.chain?.id in PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES
+      ? network?.chain?.id
+      : // TODO: use mainnet fallback
+        4;
 
   const contract = useContract({
-    // TODO: use mainnet fallback
-    addressOrName: PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES[network?.chain?.id ?? 4],
+    addressOrName: PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES[chainId],
     contractInterface: playgroundsGenesisEngineAbi,
     signerOrProvider: signer,
   });

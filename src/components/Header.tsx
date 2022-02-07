@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Logo from './Logo';
-import ConnectWallet from './ConnectWallet';
+import ConnectWalletButton from './ConnectWalletButton';
 
 const Container = styled.div`
   display: flex;
@@ -11,6 +11,6 @@ const Container = styled.div`
 export default () => (
   <Container>
     <Logo />
-    <ConnectWallet />
+    <ConnectWalletButton />
   </Container>
 );

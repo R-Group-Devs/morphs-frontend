@@ -1,11 +1,17 @@
 import { useState } from 'react';
-import { useConnect, useAccount } from 'wagmi';
+import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import ConnectWalletModal from './ConnectWalletModal';
 import useShouldAutoConnect from '../hooks/useShouldAutoConnect';
 import { shortenAddress } from '../utils/address';
+import { NETWORKS } from '../constants/networks';
 import { COLORS, FONTS } from '../constants/theme';
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   padding: 15px 25px;
@@ -37,26 +43,54 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   }
 `;
 
+const Network = styled.div<{ $isSupported: boolean }>`
+  margin-right: 2em;
+  font-size: 14px;
+
+  &:before {
+    content: '';
+    position: relative;
+    top: -1px;
+    margin-right: 0.75em;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 100%;
+    background: ${({ $isSupported }) => ($isSupported ? 'lime' : COLORS.accent.normal)};
+  }
+`;
+
 export default () => {
   const [{ data: wallet }] = useConnect();
+  const [{ data: network }] = useNetwork();
   const [{ data: account }] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const shouldAutoConnect = useShouldAutoConnect();
 
+  const isSupportedNetwork =
+    !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
 
   const isConnectWalletButtonVisible =
     !shouldAutoConnect || (shouldAutoConnect && wallet.connected);
 
   return (
-    <Dialog.Root open={isOpen}>
-      {isConnectWalletButtonVisible && (
-        <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
-          {wallet.connected ? connectedWalletText : 'Connect Wallet'}
-        </ConnectWalletButton>
+    <Container>
+      {wallet.connected && (
+        <Network $isSupported={isSupportedNetwork}>
+          {isSupportedNetwork ? network.chain?.name : 'Unsupported network'}
+        </Network>
       )}
 
-      <ConnectWalletModal close={() => setIsOpen(false)} />
-    </Dialog.Root>
+      <Dialog.Root open={isOpen}>
+        {isConnectWalletButtonVisible && (
+          <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
+            {wallet.connected ? connectedWalletText : 'Connect Wallet'}
+          </ConnectWalletButton>
+        )}
+
+        <ConnectWalletModal close={() => setIsOpen(false)} />
+      </Dialog.Root>
+    </Container>
   );
 };

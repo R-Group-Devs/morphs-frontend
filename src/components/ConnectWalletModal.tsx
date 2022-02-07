@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNetwork, useConnect, useAccount } from 'wagmi';
+import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { shortenAddress } from '../utils/address';
+import { NETWORKS } from '../constants/networks';
 import { WALLETS } from '../constants/wallets';
 import { BLOCK_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS, FONTS } from '../constants/theme';
@@ -168,6 +169,9 @@ export default ({ close }: Props) => {
   const [{ data: account }, disconnect] = useAccount();
   const [isAddressCopied, setIsAddressCopied] = useState(false);
 
+  const isSupportedNetwork =
+    !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
+
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
 
   useEffect(() => {
@@ -207,15 +211,17 @@ export default ({ close }: Props) => {
                   </CopyToClipboard>
 
                   {/* TODO: use mainnet fallback */}
-                  <ModalAction
-                    href={`${BLOCK_EXPLORER_URLS[network?.chain?.id || 4]}/address/${
-                      account?.address
-                    }`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View on explorer
-                  </ModalAction>
+                  {isSupportedNetwork && (
+                    <ModalAction
+                      href={`${BLOCK_EXPLORER_URLS[network?.chain?.id || 4]}/address/${
+                        account?.address
+                      }`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View on explorer
+                    </ModalAction>
+                  )}
 
                   <ModalAction
                     onClick={(e) => {
