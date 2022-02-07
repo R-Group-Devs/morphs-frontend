@@ -28,6 +28,7 @@ export default createGlobalStyle`
 
   body:not(.-walletlink-extension-dialog-box-bottom-description) > :not(#walletconnect-wrapper) {
     font-family: ${FONTS.mono};
+    font-weight: 300;
     color: ${COLORS.white};
   }
 

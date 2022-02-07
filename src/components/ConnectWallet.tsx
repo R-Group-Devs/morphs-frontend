@@ -4,17 +4,9 @@ import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { shortenAddress } from '../utils/address';
-import metamaskIcon from '../assets/images/icons/metamask.png';
-import walletConnectIcon from '../assets/images/icons/walletconnect.png';
-import walletLinkIcon from '../assets/images/icons/walletlink.png';
+import { WALLETS } from '../constants/wallets';
 import { BLOCK_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS, FONTS } from '../constants/theme';
-
-const WALLET_ICONS: Record<string, string> = {
-  injected: metamaskIcon,
-  walletConnect: walletConnectIcon,
-  walletLink: walletLinkIcon,
-};
 
 const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   padding: 15px 25px;
@@ -84,7 +76,7 @@ const ModalTitle = styled(Dialog.Title)`
 
 const ModalContent = styled.div``;
 
-const WalletProvider = styled.div`
+const ModalItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -99,7 +91,7 @@ const WalletProvider = styled.div`
   }
 `;
 
-const ConnectedWalletDetails = styled(WalletProvider)`
+const ConnectedWalletDetails = styled(ModalItem)`
   flex-direction: column;
   align-items: start;
   height: auto;
@@ -144,6 +136,23 @@ const ConnectedWalletAddress = styled.div`
   font-weight: 600;
 `;
 
+const WalletProviderDetails = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const WalletProviderDescription = styled.div`
+  margin-top: 1em;
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+const WalletIcon = styled.img`
+  width: 24px;
+`;
+
 const ModalActions = styled.div`
   display: flex;
   margin-top: 1.25em;
@@ -161,10 +170,6 @@ const ModalAction = styled.a`
     border-bottom-color: inherit !important;
     cursor: pointer;
   }
-`;
-
-const WalletIcon = styled.img`
-  width: 24px;
 `;
 
 const ModalCloseButton = styled(Dialog.Close)`
@@ -185,7 +190,7 @@ const ModalCloseButton = styled(Dialog.Close)`
 
 export default () => {
   const [{ data: network }] = useNetwork();
-  const [{ data: wallet }, connect] = useConnect();
+  const [{ data: wallet, loading: isConnectingWallet }, connect] = useConnect();
   const [{ data: account }, disconnect] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
@@ -216,7 +221,7 @@ export default () => {
             </ModalTitle>
 
             <ModalContent>
-              {wallet.connected ? (
+              {wallet.connected && (
                 <ConnectedWalletDetails>
                   <ConnectedWalletHeading>
                     <span>Connected with {wallet.connector?.name}</span>
@@ -255,10 +260,12 @@ export default () => {
                     </ModalAction>
                   </ModalActions>
                 </ConnectedWalletDetails>
-              ) : (
+              )}
+
+              {!wallet.connected && !isConnectingWallet && (
                 <>
                   {wallet.connectors.map((connector) => (
-                    <WalletProvider
+                    <ModalItem
                       key={connector.id}
                       onClick={async () => {
                         await connect(connector);
@@ -266,9 +273,33 @@ export default () => {
                       }}
                     >
                       <span>{connector.name}</span>
-                      <WalletIcon src={WALLET_ICONS[connector.id]}></WalletIcon>
-                    </WalletProvider>
+                      <WalletIcon src={WALLETS[connector.id].icon} />
+                    </ModalItem>
                   ))}
+                </>
+              )}
+
+              {isConnectingWallet && (
+                <>
+                  <ConnectedWalletDetails>Initializing...</ConnectedWalletDetails>
+
+                  <ConnectedWalletDetails>
+                    <WalletProviderDetails>
+                      <div>
+                        <div>{wallet.connector?.name}</div>
+
+                        {wallet.connector?.id && (
+                          <WalletProviderDescription>
+                            {WALLETS[wallet.connector.id].description}
+                          </WalletProviderDescription>
+                        )}
+                      </div>
+
+                      {wallet.connector?.id && (
+                        <WalletIcon src={WALLETS[wallet.connector.id].icon} />
+                      )}
+                    </WalletProviderDetails>
+                  </ConnectedWalletDetails>
                 </>
               )}
             </ModalContent>

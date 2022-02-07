@@ -28,7 +28,6 @@ const HeadShapesImage = styled.img`
 const FlavorText = styled.div`
   margin-top: 4.5em;
   font-size: 16px;
-  font-weight: normal;
   line-height: 2em;
 
   @media (max-width: 767px) {
