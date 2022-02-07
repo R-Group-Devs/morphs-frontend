@@ -50,6 +50,10 @@ const Network = styled.div<{ $isSupported: boolean }>`
   font-size: 14px;
   color: ${COLORS.white};
 
+  &:hover {
+    cursor: default;
+  }
+
   &:before {
     content: '';
     position: relative;

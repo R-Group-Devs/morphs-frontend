@@ -48,7 +48,7 @@ export default ({ isVisible = true, children }: Props) => {
   return (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={200}>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
 
         <TooltipContent sideOffset={5} $isVisible={isVisible && !isSupportedNetwork}>
           <TooltipArrow />

@@ -141,7 +141,7 @@ export default () => {
               state === transactionStates.AWAITING_SIGNATURE ||
               state === transactionStates.AWAITING_CONFIRMATION
             }
-            $isRestricted={!isSupportedNetwork}
+            $isRestricted={wallet.connected && !isSupportedNetwork}
           >
             {BUTTON_TEXT[state]}
           </SubmitButton>
