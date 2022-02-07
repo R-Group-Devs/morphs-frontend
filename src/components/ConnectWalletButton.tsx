@@ -58,6 +58,10 @@ const Network = styled.div<{ $isSupported: boolean }>`
     border-radius: 100%;
     background: ${({ $isSupported }) => ($isSupported ? 'lime' : COLORS.accent.normal)};
   }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export default () => {
