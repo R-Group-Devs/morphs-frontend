@@ -248,7 +248,7 @@ export default () => {
                       <ModalAction>{isAddressCopied ? 'Copied' : 'Copy address'}</ModalAction>
                     </CopyToClipboard>
 
-                    {/* use mainnet fallback */}
+                    {/* TODO: use mainnet fallback */}
                     <ModalAction
                       href={`${BLOCK_EXPLORER_URLS[network?.chain?.id || 4]}/address/${
                         account?.address
