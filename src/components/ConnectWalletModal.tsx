@@ -55,24 +55,22 @@ const ModalItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1em 0;
-  padding: 1.25em 2em;
-  height: 64px;
-  font-weight: 600;
-  border: 1px solid ${COLORS.primary.normal};
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const ConnectedWalletDetails = styled(ModalItem)`
   flex-direction: column;
   align-items: start;
-  height: auto;
+  margin: 1em 0;
+  padding: 1.25em 2em;
+  font-weight: 600;
+  border: 1px solid ${COLORS.primary.normal};
+  transition: all 0.3s;
+`;
+
+const WalletProviderOption = styled(ModalItem)`
+  flex-direction: row;
+  height: 64px;
 
   &:hover {
-    cursor: initial;
+    background: ${COLORS.primary.light};
+    cursor: pointer;
   }
 `;
 
@@ -198,7 +196,7 @@ export default ({ close }: Props) => {
 
           <ModalContent>
             {wallet.connected && (
-              <ConnectedWalletDetails>
+              <ModalItem>
                 <ConnectedWalletHeading>
                   <span>Connected with {wallet.connector?.name}</span>
                   <ChangeWalletButton onClick={() => disconnect()}>Change</ChangeWalletButton>
@@ -237,13 +235,13 @@ export default ({ close }: Props) => {
                     Disconnect
                   </ModalAction>
                 </ModalActions>
-              </ConnectedWalletDetails>
+              </ModalItem>
             )}
 
             {!wallet.connected && !isConnectingWallet && (
               <>
                 {wallet.connectors.map((connector) => (
-                  <ModalItem
+                  <WalletProviderOption
                     key={connector.id}
                     onClick={async () => {
                       await connect(connector);
@@ -252,16 +250,16 @@ export default ({ close }: Props) => {
                   >
                     <span>{connector.name}</span>
                     <WalletIcon src={WALLETS[connector.id].icon} />
-                  </ModalItem>
+                  </WalletProviderOption>
                 ))}
               </>
             )}
 
             {isConnectingWallet && (
               <>
-                <ConnectedWalletDetails>Initializing...</ConnectedWalletDetails>
+                <ModalItem>Initializing...</ModalItem>
 
-                <ConnectedWalletDetails>
+                <ModalItem>
                   <WalletProviderDetails>
                     <div>
                       <div>{wallet.connector?.name}</div>
@@ -275,7 +273,7 @@ export default ({ close }: Props) => {
 
                     {wallet.connector?.id && <WalletIcon src={WALLETS[wallet.connector.id].icon} />}
                   </WalletProviderDetails>
-                </ConnectedWalletDetails>
+                </ModalItem>
               </>
             )}
           </ModalContent>
