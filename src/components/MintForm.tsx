@@ -135,7 +135,7 @@ export default () => {
       >
         <CodeInput placeholder="If you have a special code, input it here" />
 
-        <UnsupportedNetworkTooltip>
+        <UnsupportedNetworkTooltip isVisible={wallet.connected}>
           <SubmitButton
             disabled={
               state === transactionStates.AWAITING_SIGNATURE ||

@@ -5,6 +5,7 @@ import { NETWORKS } from '../constants/networks';
 import { FONTS } from '../constants/theme';
 
 interface Props {
+  isVisible?: boolean;
   children: React.ReactNode;
 }
 
@@ -35,7 +36,7 @@ const TooltipArrow = styled(Tooltip.Arrow)`
   fill: #444;
 `;
 
-export default ({ children }: Props) => {
+export default ({ isVisible = true, children }: Props) => {
   const [{ data: network }] = useNetwork();
 
   const supportedNetworks = Object.values(NETWORKS).map(
@@ -49,7 +50,7 @@ export default ({ children }: Props) => {
       <Tooltip.Root delayDuration={200}>
         <TooltipTrigger>{children}</TooltipTrigger>
 
-        <TooltipContent sideOffset={5} $isVisible={!isSupportedNetwork}>
+        <TooltipContent sideOffset={5} $isVisible={isVisible && !isSupportedNetwork}>
           <TooltipArrow />
           <p>This app only supports the following networks: {supportedNetworks.join(', ')}</p>
         </TooltipContent>
