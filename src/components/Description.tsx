@@ -78,7 +78,14 @@ export default () => (
       <p>You feel compelled to take it. After all, what have you got to lose…</p>
 
       <GalleryLink>
-        <a href="#">See the scrolls of those who came before →</a>
+        {/* TODO: replace w/ NFT contract address */}
+        <a
+          href="https://rarible.com/collection/0x9c724d794940d94139fd32eff6606827c6c75fa0"
+          target="_blank"
+          rel="noreferrer"
+        >
+          See the scrolls of those who came before →
+        </a>
       </GalleryLink>
     </FlavorText>
 
