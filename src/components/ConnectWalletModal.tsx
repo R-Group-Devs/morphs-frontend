@@ -169,7 +169,9 @@ const ModalCloseButton = styled(Dialog.Close)`
 export default ({ close }: Props) => {
   const [{ data: network }] = useNetwork();
   const [{ data: wallet, loading: isConnectingWallet }, connect] = useConnect();
-  const [{ data: account }, disconnect] = useAccount();
+  const [{ data: account }, disconnect] = useAccount({
+    fetchEns: true,
+  });
   const [isAddressCopied, setIsAddressCopied] = useState(false);
 
   const isSupportedNetwork =

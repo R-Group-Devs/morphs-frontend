@@ -70,7 +70,9 @@ const Network = styled.div<{ $isSupported: boolean }>`
 export default () => {
   const [{ data: wallet }] = useConnect();
   const [{ data: network }] = useNetwork();
-  const [{ data: account }] = useAccount();
+  const [{ data: account }] = useAccount({
+    fetchEns: true,
+  });
   const [isOpen, setIsOpen] = useState(false);
   const shouldAutoConnect = useShouldAutoConnect();
 
