@@ -20,7 +20,7 @@ const Container = styled.div`
   }
 `;
 
-const ScrollExampleImage = styled.img`
+const ScrollExampleVideo = styled.video`
   margin-top: -0.5em;
   margin-bottom: 1.75em;
   width: 100%;
@@ -119,7 +119,15 @@ export default () => {
 
   return (
     <Container>
-      <ScrollExampleImage src={scrollExampleImage} alt="" />
+      <ScrollExampleVideo
+        src="./videos/scrolls-display.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        controlsList="nodownload"
+        poster={scrollExampleImage}
+      />
 
       <form
         onSubmit={(e) => {
