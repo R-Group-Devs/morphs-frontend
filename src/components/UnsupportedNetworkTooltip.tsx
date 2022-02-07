@@ -23,7 +23,7 @@ const scaleInAnimation = keyframes({
 
 const TooltipContent = styled(Tooltip.Content)<{ $isVisible: boolean }>`
   padding: 0.25em 1.5em;
-  font-family: ${FONTS.sansSerifAlt};
+  font-family: ${FONTS.sansSerif};
   font-size: 12px;
   background: #444;
   border-radius: 2px;

@@ -46,7 +46,7 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
 
 const Network = styled.div<{ $isSupported: boolean }>`
   margin-right: 2em;
-  font-family: ${FONTS.sansSerifAlt};
+  font-family: ${FONTS.sansSerif};
   font-size: 14px;
   color: ${COLORS.white};
 

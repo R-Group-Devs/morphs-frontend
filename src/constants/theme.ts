@@ -14,6 +14,5 @@ export const COLORS = {
 export const FONTS = {
   mono: `'IBM Plex Mono', monospace`,
   sansSerif: `'Space Grotesk', sans-serif`,
-  sansSerifAlt: `Inter, sans-serif`,
   glyphs: `'Morphs Glyphs', sans-serif`,
 };

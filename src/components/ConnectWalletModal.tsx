@@ -129,7 +129,6 @@ const WalletIcon = styled.img`
 const ModalActions = styled.div`
   display: flex;
   margin-top: 1.25em;
-  font-family: ${FONTS.sansSerifAlt};
 `;
 
 const ModalAction = styled.a`

@@ -5,7 +5,7 @@ import { FONTS } from '../constants/theme';
 const Container = styled.div``;
 
 const Heading = styled.div`
-  margin-top: 5em;
+  margin-top: 4em;
   font-family: ${FONTS.glyphs};
   font-size: 14px;
   font-weight: normal;
@@ -26,7 +26,7 @@ const MorphsShapesVideo = styled.video`
 `;
 
 const FlavorText = styled.div`
-  margin-top: 4.5em;
+  margin-top: 2.5em;
   font-size: 16px;
   line-height: 2em;
 
@@ -35,11 +35,15 @@ const FlavorText = styled.div`
   }
 `;
 
+const GalleryLink = styled.p`
+  margin-top: 3em;
+  font-size: 14px;
+`;
+
 const Credits = styled.ul`
-  margin-top: 5em;
+  margin-top: 4em;
   padding: 0;
   list-style: none;
-  font-family: ${FONTS.sansSerifAlt};
   font-size: 14px;
   font-weight: normal;
   line-height: 1em;
@@ -72,6 +76,10 @@ export default () => (
       </p>
 
       <p>You feel compelled to take it. After all, what have you got to lose…</p>
+
+      <GalleryLink>
+        <a href="#">See the scrolls of those who came before →</a>
+      </GalleryLink>
     </FlavorText>
 
     <Heading>Perhaps it will become something later on.</Heading>
