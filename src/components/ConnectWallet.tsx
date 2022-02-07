@@ -204,7 +204,9 @@ export default () => {
 
   useEffect(() => {
     if (isAddressCopied) {
-      setTimeout(() => setIsAddressCopied(false), 500);
+      const timeout = setTimeout(() => setIsAddressCopied(false), 500);
+
+      return () => clearTimeout(timeout);
     }
   }, [isAddressCopied]);
 
