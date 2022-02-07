@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react';
+import { useConnect } from 'wagmi';
 import styled from 'styled-components';
+import * as Dialog from '@radix-ui/react-dialog';
+import ConnectWalletModal from './ConnectWalletModal';
 import useMint from '../hooks/useMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
 import scrollExampleImage from '../assets/images/scroll-example.png';
@@ -92,10 +96,20 @@ const BUTTON_TEXT = {
 };
 
 export default () => {
-  const [{ state }, mint] = useMint();
+  const [{ data: wallet }] = useConnect();
+  const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(false);
+  const [hasPendingMint, setHasPendingMint] = useState(false);
+  const [{ state, signer }, mint] = useMint();
 
   // TODO: check input code
   const isCodeValid = false;
+
+  useEffect(() => {
+    if (wallet.connected && signer && hasPendingMint) {
+      setHasPendingMint(false);
+      mint(isCodeValid);
+    }
+  }, [mint, isCodeValid, wallet, signer, hasPendingMint]);
 
   return (
     <Container>
@@ -104,7 +118,13 @@ export default () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          mint(isCodeValid);
+
+          if (!wallet.connected) {
+            setHasPendingMint(true);
+            setIsConnectWalletModalOpen(true);
+          } else {
+            mint(isCodeValid);
+          }
         }}
       >
         <CodeInput placeholder="If you have a special code, input it here" />
@@ -119,6 +139,10 @@ export default () => {
       </form>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>
+
+      <Dialog.Root open={isConnectWalletModalOpen}>
+        <ConnectWalletModal close={() => setIsConnectWalletModalOpen(false)} />
+      </Dialog.Root>
     </Container>
   );
 };
