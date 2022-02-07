@@ -39,8 +39,20 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   }
 
   @media (max-width: 580px) {
-    padding: 10px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    padding: 20px 20px;
+    width: 100%;
     font-size: 16px;
+
+    &:active {
+      position: absolute;
+      top: 0;
+    }
   }
 `;
 

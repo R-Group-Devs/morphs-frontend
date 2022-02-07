@@ -7,8 +7,8 @@ import MintForm from './components/MintForm';
 import Footer from './components/Footer';
 
 const Container = styled.div`
-  margin: 2em auto;
-  padding: 0 2em;
+  margin: 0 auto;
+  padding: 2em;
   max-width: 1080px;
 
   @media (max-width: 767px) {
