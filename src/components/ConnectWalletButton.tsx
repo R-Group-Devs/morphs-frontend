@@ -22,7 +22,7 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   text-transform: ${({ $isConnected }) => ($isConnected ? 'none' : 'uppercase')};
   color: ${COLORS.white};
   background: none;
-  border: 3px solid ${COLORS.primary.normal};
+  border: 2px solid ${COLORS.primary.normal};
   transition: all 0.3s;
 
   &:hover {
