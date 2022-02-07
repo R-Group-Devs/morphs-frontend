@@ -3,6 +3,7 @@ import { useNetwork, useConnect, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import useShouldAutoConnect from '../hooks/useShouldAutoConnect';
 import { shortenAddress } from '../utils/address';
 import { WALLETS } from '../constants/wallets';
 import { BLOCK_EXPLORER_URLS } from '../constants/explorers';
@@ -194,6 +195,10 @@ export default () => {
   const [{ data: account }, disconnect] = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressCopied, setIsAddressCopied] = useState(false);
+  const shouldAutoConnect = useShouldAutoConnect();
+
+  const isConnectWalletButtonVisible =
+    !shouldAutoConnect || (shouldAutoConnect && wallet.connected);
 
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
 
@@ -205,9 +210,11 @@ export default () => {
 
   return (
     <Dialog.Root open={isOpen}>
-      <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
-        {wallet.connected ? connectedWalletText : 'Connect Wallet'}
-      </ConnectWalletButton>
+      {isConnectWalletButtonVisible && (
+        <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
+          {wallet.connected ? connectedWalletText : 'Connect Wallet'}
+        </ConnectWalletButton>
+      )}
 
       <Dialog.Portal>
         <ModalOverlay>
