@@ -29,7 +29,7 @@ const ModalOverlay = styled(Dialog.Overlay)`
 const ModalContainer = styled(Dialog.Content)`
   width: 580px;
   background: ${COLORS.black};
-  padding: 1em 2em;
+  padding: 0.5em 2em 1em;
   border-radius: 4px;
   box-shadow: #000 0 0 80px;
 
@@ -42,7 +42,7 @@ const ModalTitle = styled(Dialog.Title)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25em;
+  margin-bottom: 1em;
   font-family: ${FONTS.sansSerif};
   font-size: 28px;
   font-weight: 600;
@@ -72,7 +72,7 @@ const ConnectedWalletDetails = styled(ModalItem)`
   height: auto;
 
   &:hover {
-    cursor: default;
+    cursor: initial;
   }
 `;
 
@@ -88,8 +88,8 @@ const ChangeWalletButton = styled.button`
   font-family: ${FONTS.sansSerif};
   font-weight: 600;
   color: ${COLORS.white};
-  border: 2px solid ${COLORS.primary.normal};
-  background: none;
+  background: ${COLORS.primary.normal};
+  border: none;
   transition: all 0.3s;
 
   &:hover {
@@ -139,11 +139,16 @@ const ModalAction = styled.a`
   display: inline-block;
   font-size: 12px;
   font-weight: 300;
+  color: #999 !important;
   border-bottom-color: transparent !important;
 
   &:hover {
     border-bottom-color: inherit !important;
     cursor: pointer;
+  }
+
+  &:focus {
+    outline-color: #999 !important;
   }
 `;
 
