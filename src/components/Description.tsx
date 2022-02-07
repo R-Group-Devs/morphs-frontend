@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import headShapesImage from '../assets/images/head-shapes.png';
+import morphsShapesImage from '../assets/images/morphs-shapes.png';
 import { FONTS } from '../constants/theme';
 
 const Container = styled.div``;
@@ -16,7 +16,7 @@ const Heading = styled.div`
   }
 `;
 
-const HeadShapesImage = styled.img`
+const MorphsShapesVideo = styled.video`
   width: 60%;
   height: auto;
 
@@ -55,7 +55,16 @@ const Credit = styled.li`
 
 export default () => (
   <Container>
-    <HeadShapesImage src={headShapesImage} alt="" />
+    <MorphsShapesVideo
+      src="./videos/morphs-shapes.mp4"
+      autoPlay
+      loop
+      muted
+      playsInline
+      controlsList="nodownload"
+      poster={morphsShapesImage}
+    />
+
     <Heading>Mint a scroll, see what happens…</Heading>
     <FlavorText>
       <p>
