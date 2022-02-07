@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useConnect } from 'wagmi';
+import { useConnect, useNetwork } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import ConnectWalletModal from './ConnectWalletModal';
+import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import useMint from '../hooks/useMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
 import scrollExampleImage from '../assets/images/scroll-example.png';
+import { NETWORKS } from '../constants/networks';
 import { COLORS, FONTS } from '../constants/theme';
 
 const Container = styled.div`
@@ -46,7 +48,7 @@ const CodeInput = styled.input`
   }
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button<{ $isRestricted: boolean }>`
   padding: 20px 50px;
   width: 100%;
   min-height: 72px;
@@ -64,7 +66,7 @@ const SubmitButton = styled.button`
     background: ${COLORS.primary.light};
     color: #fff;
     outline: none;
-    cursor: pointer;
+    cursor: ${({ $isRestricted }) => ($isRestricted ? 'default' : 'pointer')};
   }
 
   &:active {
@@ -96,10 +98,14 @@ const BUTTON_TEXT = {
 };
 
 export default () => {
+  const [{ data: network }] = useNetwork();
   const [{ data: wallet }] = useConnect();
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(false);
   const [hasPendingMint, setHasPendingMint] = useState(false);
   const [{ state, signer }, mint] = useMint();
+
+  const isSupportedNetwork =
+    !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
   // TODO: check input code
   const isCodeValid = false;
@@ -128,14 +134,18 @@ export default () => {
         }}
       >
         <CodeInput placeholder="If you have a special code, input it here" />
-        <SubmitButton
-          disabled={
-            state === transactionStates.AWAITING_SIGNATURE ||
-            state === transactionStates.AWAITING_CONFIRMATION
-          }
-        >
-          {BUTTON_TEXT[state]}
-        </SubmitButton>
+
+        <UnsupportedNetworkTooltip>
+          <SubmitButton
+            disabled={
+              state === transactionStates.AWAITING_SIGNATURE ||
+              state === transactionStates.AWAITING_CONFIRMATION
+            }
+            $isRestricted={!isSupportedNetwork}
+          >
+            {BUTTON_TEXT[state]}
+          </SubmitButton>
+        </UnsupportedNetworkTooltip>
       </form>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>

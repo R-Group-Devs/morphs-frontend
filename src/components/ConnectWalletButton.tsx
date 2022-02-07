@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
-import * as Tooltip from '@radix-ui/react-tooltip';
 import ConnectWalletModal from './ConnectWalletModal';
+import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import useShouldAutoConnect from '../hooks/useShouldAutoConnect';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
@@ -44,18 +44,11 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   }
 `;
 
-const scaleInAnimation = keyframes({
-  '0%': { opacity: 0, transform: 'scale(0)' },
-  '100%': { opacity: 1, transform: 'scale(1)' },
-});
-
-const Network = styled(Tooltip.Trigger)<{ $isSupported: boolean }>`
+const Network = styled.div<{ $isSupported: boolean }>`
   margin-right: 2em;
   font-family: ${FONTS.sansSerifAlt};
   font-size: 14px;
   color: ${COLORS.white};
-  background: none;
-  border: none;
 
   &:before {
     content: '';
@@ -74,21 +67,6 @@ const Network = styled(Tooltip.Trigger)<{ $isSupported: boolean }>`
   }
 `;
 
-const TooltipContent = styled(Tooltip.Content)<{ $isVisible: boolean }>`
-  padding: 0.25em 1.5em;
-  font-family: ${FONTS.sansSerifAlt};
-  font-size: 12px;
-  background: #444;
-  border-radius: 2px;
-  display: ${({ $isVisible }) => ($isVisible ? 'inherit' : 'none')};
-  transform-origin: var(--radix-tooltip-content-transform-origin);
-  animation: ${scaleInAnimation} 0.1s ease-out;
-`;
-
-const TooltipArrow = styled(Tooltip.Arrow)`
-  fill: #444;
-`;
-
 export default () => {
   const [{ data: wallet }] = useConnect();
   const [{ data: network }] = useNetwork();
@@ -96,9 +74,6 @@ export default () => {
   const [isOpen, setIsOpen] = useState(false);
   const shouldAutoConnect = useShouldAutoConnect();
 
-  const supportedNetworks = Object.values(NETWORKS).map(
-    (chainId) => network?.chains?.find((chain) => chain.id === chainId)?.name
-  );
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
@@ -110,18 +85,11 @@ export default () => {
   return (
     <Container>
       {wallet.connected && (
-        <Tooltip.Provider>
-          <Tooltip.Root delayDuration={200}>
-            <Network $isSupported={isSupportedNetwork}>
-              {isSupportedNetwork ? network.chain?.name : 'Unsupported network'}
-            </Network>
-
-            <TooltipContent sideOffset={5} $isVisible={!isSupportedNetwork}>
-              <TooltipArrow />
-              <p>This app only supports the following networks: {supportedNetworks.join(', ')}</p>
-            </TooltipContent>
-          </Tooltip.Root>
-        </Tooltip.Provider>
+        <UnsupportedNetworkTooltip>
+          <Network $isSupported={isSupportedNetwork}>
+            {isSupportedNetwork ? network.chain?.name : 'Unsupported network'}
+          </Network>
+        </UnsupportedNetworkTooltip>
       )}
 
       <Dialog.Root open={isOpen}>
