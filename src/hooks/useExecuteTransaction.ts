@@ -22,25 +22,28 @@ export default () => {
     error: null,
   });
 
-  const executeTransaction = useCallback(async (method: () => Promise<TransactionResponse>) => {
-    try {
-      setState({ ...state, state: transactionStates.AWAITING_SIGNATURE });
+  const executeTransaction = useCallback(
+    async (method: () => Promise<TransactionResponse>) => {
+      try {
+        setState({ ...state, state: transactionStates.AWAITING_SIGNATURE });
 
-      const tx = await method();
-      setState({ ...state, data: tx, state: transactionStates.AWAITING_CONFIRMATION });
+        const tx = await method();
+        setState({ ...state, data: tx, state: transactionStates.AWAITING_CONFIRMATION });
 
-      await tx.wait(1);
-      setState({ ...state, state: transactionStates.CONFIRMED });
+        await tx.wait(1);
+        setState({ ...state, state: transactionStates.CONFIRMED });
 
-      return tx;
-    } catch (e) {
-      setState({
-        ...state,
-        state: transactionStates.IDLE,
-        error: e as Error,
-      });
-    }
-  }, []);
+        return tx;
+      } catch (e) {
+        setState({
+          ...state,
+          state: transactionStates.IDLE,
+          error: e as Error,
+        });
+      }
+    },
+    [state]
+  );
 
   return [state, executeTransaction] as [Transaction, typeof executeTransaction];
 };
