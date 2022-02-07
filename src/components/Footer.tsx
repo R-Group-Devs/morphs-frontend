@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import shapesPanelImage from '../assets/images/shapes-panel.png';
-import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
+// import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
 import { COLORS } from '../constants/theme';
 
 const Container = styled.footer`
@@ -12,20 +12,10 @@ const Container = styled.footer`
   }
 `;
 
-const ShapesPanelImage = styled.img`
+const MorphsShapesBannerVideo = styled.video`
   margin: 0 -32px;
   width: calc(100% + 64px);
-  filter: brightness(100%) contrast(100%) saturate(0%) blur(0px) hue-rotate(0deg);
   transition-duration: 0.7s;
-
-  &:hover {
-    filter: brightness(100%) contrast(100%) saturate(100%) blur(0px) hue-rotate(0deg);
-  }
- );
-`;
-
-const ShapesPanelImageMobile = styled(ShapesPanelImage)`
-  filter: brightness(100%) contrast(100%) saturate(100%) blur(0px) hue-rotate(0deg);
 `;
 
 const FooterText = styled.p`
@@ -44,9 +34,25 @@ export default () => {
   return (
     <Container>
       {isMobile ? (
-        <ShapesPanelImageMobile src={shapesPanelImageMobile} alt="" />
+        <MorphsShapesBannerVideo
+          src="./videos/morphs-shapes-banner.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          controlsList="nodownload"
+          poster={shapesPanelImage}
+        />
       ) : (
-        <ShapesPanelImage src={shapesPanelImage} alt="" />
+        <MorphsShapesBannerVideo
+          src="./videos/morphs-shapes-banner.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          controlsList="nodownload"
+          poster={shapesPanelImage}
+        />
       )}
       <FooterText>
         Morphs is an NFT PFP project that evolves over time. Mint yourself a mystery scroll for free
