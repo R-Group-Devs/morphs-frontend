@@ -12,7 +12,7 @@ export default createGlobalStyle`
   }
 
   ::selection {
-    background: ${COLORS.accent.normal};
+    background: ${COLORS.primary.light};
   }
 
   @font-face {
