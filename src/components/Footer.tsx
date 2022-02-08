@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import shapesPanelImage from '../assets/images/shapes-panel.png';
-// import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
+import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
 import { COLORS } from '../constants/theme';
 
 const Container = styled.footer`
@@ -35,13 +35,13 @@ export default () => {
     <Container>
       {isMobile ? (
         <MorphsShapesBannerVideo
-          src="./videos/morphs-shapes-banner.mp4"
+          src="./videos/morphs-shapes-banner-mobile.mp4"
           autoPlay
           loop
           muted
           playsInline
           controlsList="nodownload"
-          poster={shapesPanelImage}
+          poster={shapesPanelImageMobile}
         />
       ) : (
         <MorphsShapesBannerVideo
