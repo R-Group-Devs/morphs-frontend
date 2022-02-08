@@ -5,11 +5,7 @@ import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
 import { COLORS } from '../constants/theme';
 
 const Container = styled.footer`
-  margin-top: 2em;
-
-  @media (max-width: 767px) {
-    margin-top: 3em;
-  }
+  margin-top: 3em;
 `;
 
 const MorphsShapesBannerVideo = styled.video`
