@@ -1,13 +1,8 @@
 import { useCallback } from 'react';
 import { useNetwork } from 'wagmi';
-import { Signer } from 'ethers';
 import usePlaygroundsGenesisEngineContract from './usePlaygroundsGenesisEngineContract';
-import useExecuteTransaction, { Transaction } from './useExecuteTransaction';
+import useExecuteTransaction from './useExecuteTransaction';
 import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
-
-interface MintTransaction extends Transaction {
-  signer: Signer;
-}
 
 export default () => {
   const playgroundsGenesisEngineContract = usePlaygroundsGenesisEngineContract();
