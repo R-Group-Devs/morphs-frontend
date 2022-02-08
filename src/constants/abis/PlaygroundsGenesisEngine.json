@@ -58,12 +58,12 @@
         "type": "uint256"
       }
     ],
-    "name": "getIsFlagged",
+    "name": "getFlag",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "uint256",
         "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -173,9 +173,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "bool",
-        "name": "isFlagged",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "flag",
+        "type": "uint256"
       }
     ],
     "name": "getVariation",
@@ -197,9 +197,9 @@
         "type": "address"
       },
       {
-        "internalType": "bool",
+        "internalType": "uint256",
         "name": "flag",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "name": "mint",

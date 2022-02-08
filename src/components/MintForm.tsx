@@ -108,14 +108,14 @@ export default () => {
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
   // TODO: check input code
-  const isCodeValid = false;
+  const flag = 0;
 
   useEffect(() => {
     if (wallet.connected && signer && hasPendingMint) {
       setHasPendingMint(false);
-      mint(isCodeValid);
+      mint(flag);
     }
-  }, [mint, isCodeValid, wallet, signer, hasPendingMint]);
+  }, [mint, flag, wallet, signer, hasPendingMint]);
 
   return (
     <Container>
@@ -137,7 +137,7 @@ export default () => {
             setHasPendingMint(true);
             setIsConnectWalletModalOpen(true);
           } else {
-            mint(isCodeValid);
+            mint(flag);
           }
         }}
       >

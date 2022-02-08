@@ -15,12 +15,12 @@ export default () => {
   const [{ data: network }] = useNetwork();
 
   const mint = useCallback(
-    async (isCodeValid: boolean) => {
+    async (flag: number) => {
       executeTransaction(() =>
         playgroundsGenesisEngineContract.mint(
           // TODO: use mainnet fallback
           MORPHS_NFT_CONTRACT_ADDRESSES[network?.chain?.id ?? 4],
-          isCodeValid
+          flag
         )
       );
     },
