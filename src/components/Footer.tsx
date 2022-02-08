@@ -27,13 +27,13 @@ const FooterText = styled.p`
 `;
 
 export default () => {
-  const isMobile = useMediaQuery({
+  const isSmallViewport = useMediaQuery({
     query: '(max-width: 767px)',
   });
 
   return (
     <Container>
-      {isMobile ? (
+      {isSmallViewport ? (
         <MorphsShapesBannerVideo
           src="./videos/morphs-shapes-banner-mobile.mp4"
           autoPlay

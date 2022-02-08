@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useMediaQuery } from 'react-responsive';
 import ConnectWalletModal from './ConnectWalletModal';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import useShouldAutoConnect from '../hooks/useShouldAutoConnect';
@@ -100,6 +101,10 @@ export default () => {
   const isConnectWalletButtonVisible =
     !shouldAutoConnect || (shouldAutoConnect && wallet.connected);
 
+  const isXSmallViewport = useMediaQuery({
+    query: '(max-width: 580px)',
+  });
+
   return (
     <Container>
       {wallet.connected && (
@@ -113,7 +118,11 @@ export default () => {
       <Dialog.Root open={isOpen}>
         {isConnectWalletButtonVisible && (
           <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
-            {wallet.connected ? connectedWalletText : 'Connect Wallet'}
+            {wallet.connected
+              ? isXSmallViewport
+                ? `Connected as ${connectedWalletText}`
+                : connectedWalletText
+              : 'Connect Wallet'}
           </ConnectWalletButton>
         )}
 
