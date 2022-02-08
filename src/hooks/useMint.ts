@@ -13,6 +13,7 @@ export default () => {
   const playgroundsGenesisEngineContract = usePlaygroundsGenesisEngineContract();
   const [{ data, state, error }, executeTransaction] = useExecuteTransaction();
   const [{ data: network }] = useNetwork();
+  const { signer } = playgroundsGenesisEngineContract;
 
   const mint = useCallback(
     async (flag: number) => {
@@ -27,8 +28,5 @@ export default () => {
     [network, playgroundsGenesisEngineContract, executeTransaction]
   );
 
-  return [{ data, state, error, signer: playgroundsGenesisEngineContract.signer }, mint] as [
-    MintTransaction,
-    typeof mint
-  ];
+  return [{ data, state, error, signer }, mint] as const;
 };
