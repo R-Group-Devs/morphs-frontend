@@ -48,7 +48,18 @@ export default ({ isVisible = true, children }: Props) => {
   return (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={100}>
-        <TooltipTrigger onMouseDown={(e) => e.preventDefault()} onClick={(e) => e.preventDefault()}>
+        <TooltipTrigger
+          onMouseDown={(e) => {
+            if (isVisible && !isSupportedNetwork) {
+              e.preventDefault();
+            }
+          }}
+          onClick={(e) => {
+            if (isVisible && !isSupportedNetwork) {
+              e.preventDefault();
+            }
+          }}
+        >
           {children}
         </TooltipTrigger>
 
