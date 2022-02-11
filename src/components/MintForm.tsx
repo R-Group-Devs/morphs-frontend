@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useConnect, useNetwork } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import ConnectWalletModal from './ConnectWalletModal';
+import MintScrollModal from './MintScrollModal';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import useMint from '../hooks/useMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
@@ -93,7 +94,7 @@ const HelperText = styled.p`
 const BUTTON_TEXT = {
   [transactionStates.IDLE]: 'Mint a Scroll',
   [transactionStates.AWAITING_SIGNATURE]: 'Mint a Scroll...',
-  [transactionStates.AWAITING_CONFIRMATION]: 'Minting a Scroll...',
+  [transactionStates.AWAITING_CONFIRMATION]: 'Minting Scroll...',
   [transactionStates.CONFIRMED]: 'Minted!',
 };
 
@@ -104,6 +105,7 @@ export default () => {
   const [{ data: network }] = useNetwork();
   const [{ data: wallet }] = useConnect();
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(false);
+  const [isMintScrollModalOpen, setIsMintScrollModalOpen] = useState(false);
   const [hasPendingMint, setHasPendingMint] = useState(false);
   const [code, setCode] = useState('');
   const [{ state, signer }, mint] = useMint();
@@ -125,10 +127,15 @@ export default () => {
     return 0;
   }, [code]);
 
+  const mintScroll = useCallback(() => {
+    setIsMintScrollModalOpen(true);
+    mint(flag);
+  }, [mint, flag, setIsMintScrollModalOpen]);
+
   useEffect(() => {
     if (wallet.connected && signer && hasPendingMint) {
       setHasPendingMint(false);
-      mint(flag);
+      mintScroll();
     }
   }, [mint, flag, wallet, signer, hasPendingMint]);
 
@@ -152,7 +159,7 @@ export default () => {
             setHasPendingMint(true);
             setIsConnectWalletModalOpen(true);
           } else {
-            mint(flag);
+            mintScroll();
           }
         }}
       >
@@ -178,6 +185,10 @@ export default () => {
 
       <Dialog.Root open={isConnectWalletModalOpen}>
         <ConnectWalletModal close={() => setIsConnectWalletModalOpen(false)} />
+      </Dialog.Root>
+
+      <Dialog.Root open={isMintScrollModalOpen}>
+        <MintScrollModal state={state} close={() => setIsMintScrollModalOpen(false)} />
       </Dialog.Root>
     </Container>
   );

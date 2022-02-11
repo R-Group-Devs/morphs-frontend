@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
-import * as Dialog from '@radix-ui/react-dialog';
+import {
+  ModalPortal,
+  ModalOverlay,
+  ModalContainer,
+  ModalTitle,
+  ModalContent,
+  ModalItem,
+} from './Modal';
+import { WalletProviderDetails, WalletProviderDescription, WalletIcon } from './WalletProvider';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
@@ -12,57 +20,6 @@ import { COLORS, FONTS } from '../constants/theme';
 interface Props {
   close: () => void;
 }
-
-const ModalOverlay = styled(Dialog.Overlay)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-  background: rgba(0, 0, 0, 0.6);
-`;
-
-const ModalContainer = styled(Dialog.Content)`
-  width: 580px;
-  background: ${COLORS.black};
-  padding: 0.5em 2em 1em;
-  border-radius: 4px;
-  box-shadow: #000 0 0 80px;
-
-  @media (max-width: 767px) {
-    width: 80%;
-  }
-`;
-
-const ModalTitle = styled(Dialog.Title)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1em;
-  font-family: ${FONTS.sansSerif};
-  font-size: 28px;
-  font-weight: 600;
-  text-transform: uppercase;
-`;
-
-const ModalContent = styled.div``;
-
-const ModalItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: start;
-  margin: 1em 0;
-  padding: 1.25em 2em;
-  font-weight: 600;
-  border: 1px solid ${COLORS.primary.normal};
-  transition: all 0.3s;
-`;
 
 const WalletProviderOption = styled(ModalItem)`
   flex-direction: row;
@@ -109,23 +66,6 @@ const ConnectedWalletAddress = styled.div`
   font-weight: 600;
 `;
 
-const WalletProviderDetails = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const WalletProviderDescription = styled.div`
-  margin-top: 1em;
-  font-size: 14px;
-  font-weight: 400;
-`;
-
-const WalletIcon = styled.img`
-  width: 24px;
-`;
-
 const ModalActions = styled.div`
   display: flex;
   margin-top: 1.25em;
@@ -146,22 +86,6 @@ const ModalAction = styled.a`
 
   &:focus {
     outline-color: #999 !important;
-  }
-`;
-
-const ModalCloseButton = styled(Dialog.Close)`
-  font-size: 24px;
-  font-weight: 600;
-  color: ${COLORS.white};
-  background: none;
-  border: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: none;
   }
 `;
 
@@ -187,12 +111,11 @@ export default ({ close }: Props) => {
   }, [isAddressCopied]);
 
   return (
-    <Dialog.Portal>
+    <ModalPortal>
       <ModalOverlay>
-        <ModalContainer onPointerDownOutside={() => close()} onEscapeKeyDown={() => close()}>
-          <ModalTitle>
+        <ModalContainer close={close}>
+          <ModalTitle close={close}>
             <span>{wallet.connected ? 'Account' : 'Select a Wallet'}</span>
-            <ModalCloseButton onClick={() => close()}>X</ModalCloseButton>
           </ModalTitle>
 
           <ModalContent>
@@ -280,6 +203,6 @@ export default ({ close }: Props) => {
           </ModalContent>
         </ModalContainer>
       </ModalOverlay>
-    </Dialog.Portal>
+    </ModalPortal>
   );
 };
