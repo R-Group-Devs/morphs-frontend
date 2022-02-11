@@ -147,7 +147,7 @@ export default () => {
     if (wallet.connected && signer && hasPendingMint && isCodeValid) {
       mintScroll();
     }
-  }, [mint, flag, wallet, signer, hasPendingMint]);
+  }, [flag, wallet, signer, isCodeValid, hasPendingMint, mintScroll]);
 
   return (
     <Container>

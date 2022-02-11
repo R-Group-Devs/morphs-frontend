@@ -11,7 +11,6 @@ import {
 import { WalletProviderDetails, WalletProviderDescription, WalletIcon } from './WalletProvider';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import { WALLETS } from '../constants/wallets';
-import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
   state: Transaction['state'];
@@ -25,7 +24,7 @@ export default ({ state, close }: Props) => {
     if (state === transactionStates.IDLE) {
       close();
     }
-  }, [state]);
+  }, [state, close]);
 
   return (
     <ModalPortal>

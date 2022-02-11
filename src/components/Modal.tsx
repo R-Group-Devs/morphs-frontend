@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { COLORS, FONTS } from '../constants/theme';
