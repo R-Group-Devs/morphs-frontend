@@ -115,7 +115,7 @@ export default () => {
   const [hasPendingMint, setHasPendingMint] = useState(false);
   const [code, setCode] = useState('');
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
-  const [{ state, signer }, mint] = useMint();
+  const [{ data, state, signer }, mint] = useMint();
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
@@ -210,7 +210,7 @@ export default () => {
       </Dialog.Root>
 
       <Dialog.Root open={isMintScrollModalOpen}>
-        <MintScrollModal state={state} close={() => setIsMintScrollModalOpen(false)} />
+        <MintScrollModal data={data} state={state} close={() => setIsMintScrollModalOpen(false)} />
       </Dialog.Root>
     </Container>
   );

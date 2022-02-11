@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { TransactionResponse } from '@ethersproject/providers';
+import { TransactionResponse, TransactionReceipt } from '@ethersproject/providers';
 import { ValueOf } from 'ts-essentials';
 
 export const transactionStates = {
@@ -10,7 +10,7 @@ export const transactionStates = {
 } as const;
 
 export interface Transaction {
-  data: TransactionResponse | null;
+  data: TransactionReceipt | null;
   error: Error | null;
   state: ValueOf<typeof transactionStates>;
 }
@@ -27,12 +27,12 @@ export default () => {
       setState((state) => ({ ...state, state: transactionStates.AWAITING_SIGNATURE }));
 
       const tx = await method();
-      setState((state) => ({ ...state, data: tx, state: transactionStates.AWAITING_CONFIRMATION }));
+      setState((state) => ({ ...state, state: transactionStates.AWAITING_CONFIRMATION }));
 
-      await tx.wait(1);
-      setState((state) => ({ ...state, state: transactionStates.CONFIRMED }));
+      const confirmedTx = await tx.wait(1);
+      setState((state) => ({ ...state, data: confirmedTx, state: transactionStates.CONFIRMED }));
 
-      return tx;
+      return confirmedTx;
     } catch (e) {
       setState((state) => ({
         ...state,

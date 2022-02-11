@@ -1,5 +1,11 @@
+import { useNetwork } from 'wagmi';
 import styled from 'styled-components';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
+import {
+  PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
+  MORPHS_NFT_CONTRACT_ADDRESSES,
+} from '../constants/contracts';
+import { NFT_EXPLORER_URLS } from '../constants/explorers';
 import { FONTS } from '../constants/theme';
 
 const Container = styled.div``;
@@ -57,59 +63,68 @@ const Credit = styled.li`
   margin-bottom: 1.25em;
 `;
 
-export default () => (
-  <Container>
-    <MorphsShapesVideo
-      src="./videos/morphs-shapes.mp4"
-      autoPlay
-      loop
-      muted
-      playsInline
-      controlsList="nodownload"
-      poster={morphsShapesImage}
-    />
+export default () => {
+  const [{ data: network }] = useNetwork();
 
-    <Heading>Mint a scroll, see what happens…</Heading>
-    <FlavorText>
-      <p>
-        Drifting through the immateria you find a scroll. You sense something mysterious, cosmic.
-      </p>
+  const chainId =
+    network?.chain?.id && network?.chain?.id in PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES
+      ? network?.chain?.id
+      : // TODO: use mainnet fallback
+        4;
 
-      <p>You feel compelled to take it. After all, what have you got to lose…</p>
+  return (
+    <Container>
+      <MorphsShapesVideo
+        src="./videos/morphs-shapes.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        controlsList="nodownload"
+        poster={morphsShapesImage}
+      />
 
-      <GalleryLink>
-        {/* TODO: replace w/ NFT contract address */}
-        <a
-          href="https://rarible.com/collection/0x9c724d794940d94139fd32eff6606827c6c75fa0"
-          target="_blank"
-          rel="noreferrer"
-        >
-          See the scrolls of those who came before →
-        </a>
-      </GalleryLink>
-    </FlavorText>
+      <Heading>Mint a scroll, see what happens…</Heading>
+      <FlavorText>
+        <p>
+          Drifting through the immateria you find a scroll. You sense something mysterious, cosmic.
+        </p>
 
-    <Heading>Perhaps it will become something later on.</Heading>
+        <p>You feel compelled to take it. After all, what have you got to lose…</p>
 
-    <Credits>
-      <Credit>
-        built by{' '}
-        <a href="https://playgrounds.wtf" target="_blank" rel="noreferrer">
-          playgrounds.wtf
-        </a>
-      </Credit>
-      <Credit>
-        designed by{' '}
-        <a href="https://twitter.com/polyforms_" target="_blank" rel="noreferrer">
-          @polyforms_
-        </a>
-      </Credit>
-      <Credit>
-        made with{' '}
-        <a href="https://heyshell.xyz" target="_blank" rel="noreferrer">
-          heyshell.xyz
-        </a>
-      </Credit>
-    </Credits>
-  </Container>
-);
+        <GalleryLink>
+          <a
+            href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            See the scrolls of those who came before →
+          </a>
+        </GalleryLink>
+      </FlavorText>
+
+      <Heading>Perhaps it will become something later on.</Heading>
+
+      <Credits>
+        <Credit>
+          built by{' '}
+          <a href="https://playgrounds.wtf" target="_blank" rel="noreferrer">
+            playgrounds.wtf
+          </a>
+        </Credit>
+        <Credit>
+          designed by{' '}
+          <a href="https://twitter.com/polyforms_" target="_blank" rel="noreferrer">
+            @polyforms_
+          </a>
+        </Credit>
+        <Credit>
+          made with{' '}
+          <a href="https://heyshell.xyz" target="_blank" rel="noreferrer">
+            heyshell.xyz
+          </a>
+        </Credit>
+      </Credits>
+    </Container>
+  );
+};

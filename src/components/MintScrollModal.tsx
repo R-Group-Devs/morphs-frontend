@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
-import { useConnect } from 'wagmi';
+import { useEffect, useMemo } from 'react';
+import { useConnect, useNetwork } from 'wagmi';
+import { TransactionReceipt } from '@ethersproject/providers';
 import {
   ModalPortal,
   ModalOverlay,
@@ -10,15 +11,41 @@ import {
 } from './Modal';
 import { WalletProviderDetails, WalletProviderDescription, WalletIcon } from './WalletProvider';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
+import {
+  PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
+  MORPHS_NFT_CONTRACT_ADDRESSES,
+} from '../constants/contracts';
 import { WALLETS } from '../constants/wallets';
+import { NFT_EXPLORER_URLS } from '../constants/explorers';
 
 interface Props {
+  data: TransactionReceipt | null;
   state: Transaction['state'];
   close: () => void;
 }
 
-export default ({ state, close }: Props) => {
+export default ({ data, state, close }: Props) => {
   const [{ data: wallet }] = useConnect();
+  const [{ data: network }] = useNetwork();
+
+  const chainId =
+    network?.chain?.id && network?.chain?.id in PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES
+      ? network?.chain?.id
+      : // TODO: use mainnet fallback
+        4;
+
+  const nftId = useMemo(() => {
+    if (
+      state === transactionStates.CONFIRMED &&
+      data?.logs &&
+      data.logs[0]?.topics &&
+      data.logs[0]?.topics[3]
+    ) {
+      return parseInt(data.logs[0].topics[3]);
+    }
+
+    return null;
+  }, [data, state]);
 
   useEffect(() => {
     if (state === transactionStates.IDLE) {
@@ -71,16 +98,25 @@ export default ({ state, close }: Props) => {
                 <ModalItem>Scroll minted!</ModalItem>
 
                 <ModalItem>
-                  {/* TODO: replace w/ NFT contract address + NFT token ID */}
                   <span>
                     Your scroll has been minted. See it{' '}
-                    <a
-                      href="https://rarible.com/collection/0x9c724d794940d94139fd32eff6606827c6c75fa0"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      here
-                    </a>
+                    {nftId ? (
+                      <a
+                        href={`${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${nftId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        here
+                      </a>
+                    ) : (
+                      <a
+                        href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        here
+                      </a>
+                    )}
                     .
                   </span>
                 </ModalItem>
