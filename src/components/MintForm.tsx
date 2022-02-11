@@ -92,7 +92,7 @@ const HelperText = styled.p`
 `;
 
 const ValidationError = styled.div`
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   font-size: 12px;
   color: ${COLORS.accent.normal};
 `;
@@ -115,7 +115,7 @@ export default () => {
   const [hasPendingMint, setHasPendingMint] = useState(false);
   const [code, setCode] = useState('');
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
-  const [{ data, state, signer }, mint] = useMint();
+  const [{ data, state, signer }, mint, reset] = useMint();
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
@@ -148,6 +148,12 @@ export default () => {
       mintScroll();
     }
   }, [flag, wallet, signer, isCodeValid, hasPendingMint, mintScroll]);
+
+  useEffect(() => {
+    if (!isMintScrollModalOpen && state !== transactionStates.IDLE) {
+      reset();
+    }
+  }, [isMintScrollModalOpen, state, reset]);
 
   return (
     <Container>

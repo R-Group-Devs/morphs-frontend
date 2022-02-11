@@ -95,8 +95,6 @@ export default ({ data, state, close }: Props) => {
 
             {state === transactionStates.CONFIRMED && (
               <>
-                <ModalItem>Scroll minted!</ModalItem>
-
                 <ModalItem>
                   <span>
                     Your scroll has been minted. See it{' '}

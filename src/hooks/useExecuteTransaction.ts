@@ -15,12 +15,18 @@ export interface Transaction {
   state: ValueOf<typeof transactionStates>;
 }
 
+const initialState = {
+  data: null,
+  state: transactionStates.IDLE,
+  error: null,
+} as const;
+
 export default () => {
-  const [state, setState] = useState<Transaction>({
-    data: null,
-    state: transactionStates.IDLE,
-    error: null,
-  });
+  const [state, setState] = useState<Transaction>(initialState);
+
+  const reset = useCallback(() => {
+    setState(initialState);
+  }, []);
 
   const executeTransaction = useCallback(async (method: () => Promise<TransactionResponse>) => {
     try {
@@ -42,5 +48,5 @@ export default () => {
     }
   }, []);
 
-  return [state, executeTransaction] as const;
+  return [state, executeTransaction, reset] as const;
 };
