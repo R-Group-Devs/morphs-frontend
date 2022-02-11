@@ -26,7 +26,7 @@ const Overlay = styled(Dialog.Overlay)`
 `;
 
 const Container = styled(Dialog.Content)`
-  width: 580px;
+  width: 600px;
   background: ${COLORS.black};
   padding: 0.5em 2em 1em;
   border-radius: 4px;

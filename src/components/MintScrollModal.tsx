@@ -120,6 +120,22 @@ export default ({ data, state, close }: Props) => {
                 </ModalItem>
               </>
             )}
+
+            {state === transactionStates.FAILED && (
+              <>
+                <ModalItem>There was an error processing your transaction.</ModalItem>
+
+                <ModalItem>
+                  <span>
+                    Please try again or reach out on the{' '}
+                    <a href="https://discord.gg/cXxFndSu" target="_blank" rel="noreferrer">
+                      Playgrounds Discord
+                    </a>{' '}
+                    for help.
+                  </span>
+                </ModalItem>
+              </>
+            )}
           </ModalContent>
         </ModalContainer>
       </ModalOverlay>

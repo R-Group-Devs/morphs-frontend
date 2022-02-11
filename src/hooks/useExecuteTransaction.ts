@@ -7,6 +7,7 @@ export const transactionStates = {
   AWAITING_SIGNATURE: 'awaitingSignature',
   AWAITING_CONFIRMATION: 'awaitingConfirmation',
   CONFIRMED: 'confirmed',
+  FAILED: 'failed',
 } as const;
 
 export interface Transaction {
@@ -42,7 +43,7 @@ export default () => {
     } catch (e) {
       setState((state) => ({
         ...state,
-        state: transactionStates.IDLE,
+        state: transactionStates.FAILED,
         error: e as Error,
       }));
     }

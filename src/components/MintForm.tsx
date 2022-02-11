@@ -102,6 +102,7 @@ const BUTTON_TEXT = {
   [transactionStates.AWAITING_SIGNATURE]: 'Mint a Scroll...',
   [transactionStates.AWAITING_CONFIRMATION]: 'Minting Scroll...',
   [transactionStates.CONFIRMED]: 'Mint a Scroll',
+  [transactionStates.FAILED]: 'Mint a Scroll',
 };
 
 const MYTHICAL_CODE = 'MYTHICAL69';
