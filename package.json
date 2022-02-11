@@ -1,6 +1,6 @@
 {
   "name": "morphs-nft-frontend",
-  "description": "Minting site for the Morphs NFT drop.",
+  "description": "Minting app for the Morphs NFT drop.",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
