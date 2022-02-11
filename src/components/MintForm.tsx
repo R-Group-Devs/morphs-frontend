@@ -101,6 +101,7 @@ const ValidationError = styled.div`
 
 const ToastDismissButton = styled.button`
   font-family: ${FONTS.sansSerif};
+  font-weight: 600;
   color: ${COLORS.white};
   background: none;
   border: none;
@@ -255,6 +256,7 @@ export default () => {
           duration: 60000,
           style: {
             maxWidth: 400,
+            fontFamily: FONTS.sansSerif,
             fontSize: 12,
             color: COLORS.white,
             background: '#444',
