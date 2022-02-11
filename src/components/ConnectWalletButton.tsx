@@ -5,7 +5,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useMediaQuery } from 'react-responsive';
 import ConnectWalletModal from './ConnectWalletModal';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
-import useShouldAutoConnect from '../hooks/useShouldAutoConnect';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
 import { COLORS, FONTS } from '../constants/theme';
@@ -91,15 +90,11 @@ export default () => {
     fetchEns: true,
   });
   const [isOpen, setIsOpen] = useState(false);
-  const shouldAutoConnect = useShouldAutoConnect();
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
-
-  const isConnectWalletButtonVisible =
-    !shouldAutoConnect || (shouldAutoConnect && wallet.connected);
 
   const isXSmallViewport = useMediaQuery({
     query: '(max-width: 580px)',
@@ -116,15 +111,13 @@ export default () => {
       )}
 
       <Dialog.Root open={isOpen}>
-        {isConnectWalletButtonVisible && (
-          <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
-            {wallet.connected
-              ? isXSmallViewport
-                ? `Connected as ${connectedWalletText}`
-                : connectedWalletText
-              : 'Connect Wallet'}
-          </ConnectWalletButton>
-        )}
+        <ConnectWalletButton onClick={() => setIsOpen(true)} $isConnected={wallet.connected}>
+          {wallet.connected
+            ? isXSmallViewport
+              ? `Connected as ${connectedWalletText}`
+              : connectedWalletText
+            : 'Connect Wallet'}
+        </ConnectWalletButton>
 
         <ConnectWalletModal close={() => setIsOpen(false)} />
       </Dialog.Root>

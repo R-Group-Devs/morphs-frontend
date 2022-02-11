@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useConnect, useNetwork } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -97,18 +97,33 @@ const BUTTON_TEXT = {
   [transactionStates.CONFIRMED]: 'Minted!',
 };
 
+const MYTHICAL_CODE = 'MYTHICAL69';
+const COSMIC_CODE = 'COSMIC420';
+
 export default () => {
   const [{ data: network }] = useNetwork();
   const [{ data: wallet }] = useConnect();
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(false);
   const [hasPendingMint, setHasPendingMint] = useState(false);
+  const [code, setCode] = useState('');
   const [{ state, signer }, mint] = useMint();
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
-  // TODO: check input code
-  const flag = 0;
+  const flag = useMemo(() => {
+    const sanitizedCode = code.toUpperCase().trim();
+
+    if (sanitizedCode === MYTHICAL_CODE) {
+      return 1;
+    }
+
+    if (sanitizedCode === COSMIC_CODE) {
+      return 2;
+    }
+
+    return 0;
+  }, [code]);
 
   useEffect(() => {
     if (wallet.connected && signer && hasPendingMint) {
@@ -141,7 +156,10 @@ export default () => {
           }
         }}
       >
-        <CodeInput placeholder="If you have a special code, input it here" />
+        <CodeInput
+          placeholder="If you have a special code, input it here"
+          onChange={(e) => setCode(e.target.value)}
+        />
 
         <UnsupportedNetworkTooltip isVisible={wallet.connected}>
           <SubmitButton
