@@ -41,8 +41,8 @@ const CodeInput = styled.input`
   font-weight: normal;
   line-height: 2em;
   text-align: center;
-  color: ${COLORS.black};
-  background: #d8d8d8;
+  color: ${COLORS.white};
+  background: #2e2e2e;
   border: none;
   border-radius: 2px;
 
