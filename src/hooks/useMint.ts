@@ -6,7 +6,7 @@ import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
 
 export default () => {
   const playgroundsGenesisEngineContract = usePlaygroundsGenesisEngineContract();
-  const [{ data, state, error }, executeTransaction, reset] = useExecuteTransaction();
+  const [{ data, state, error }, executeTransaction] = useExecuteTransaction();
   const [{ data: network }] = useNetwork();
   const { signer } = playgroundsGenesisEngineContract;
 
@@ -23,5 +23,5 @@ export default () => {
     [network, playgroundsGenesisEngineContract, executeTransaction]
   );
 
-  return [{ data, state, error, signer }, mint, reset] as const;
+  return [{ data, state, error, signer }, mint] as const;
 };

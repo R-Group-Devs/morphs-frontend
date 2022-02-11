@@ -25,10 +25,6 @@ const initialState = {
 export default () => {
   const [state, setState] = useState<Transaction>(initialState);
 
-  const reset = useCallback(() => {
-    setState(initialState);
-  }, []);
-
   const executeTransaction = useCallback(async (method: () => Promise<TransactionResponse>) => {
     try {
       setState((state) => ({ ...state, state: transactionStates.AWAITING_SIGNATURE }));
@@ -49,5 +45,5 @@ export default () => {
     }
   }, []);
 
-  return [state, executeTransaction, reset] as const;
+  return [state, executeTransaction] as const;
 };

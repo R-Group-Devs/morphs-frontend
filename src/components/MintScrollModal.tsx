@@ -97,7 +97,7 @@ export default ({ data, state, close }: Props) => {
               <>
                 <ModalItem>
                   <span>
-                    Your scroll has been minted. See it{' '}
+                    Your scroll has been minted! See it{' '}
                     {nftId ? (
                       <a
                         href={`${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${nftId}`}
