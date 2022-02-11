@@ -91,11 +91,17 @@ const HelperText = styled.p`
   color: ${COLORS.white};
 `;
 
+const ValidationError = styled.div`
+  margin-bottom: 1em;
+  font-size: 12px;
+  color: ${COLORS.accent.normal};
+`;
+
 const BUTTON_TEXT = {
   [transactionStates.IDLE]: 'Mint a Scroll',
   [transactionStates.AWAITING_SIGNATURE]: 'Mint a Scroll...',
   [transactionStates.AWAITING_CONFIRMATION]: 'Minting Scroll...',
-  [transactionStates.CONFIRMED]: 'Minted!',
+  [transactionStates.CONFIRMED]: 'Mint a Scroll',
 };
 
 const MYTHICAL_CODE = 'MYTHICAL69';
@@ -108,6 +114,7 @@ export default () => {
   const [isMintScrollModalOpen, setIsMintScrollModalOpen] = useState(false);
   const [hasPendingMint, setHasPendingMint] = useState(false);
   const [code, setCode] = useState('');
+  const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
   const [{ state, signer }, mint] = useMint();
 
   const isSupportedNetwork =
@@ -127,14 +134,17 @@ export default () => {
     return 0;
   }, [code]);
 
+  const isCodeValid = !code || (code && flag !== 0);
+
   const mintScroll = useCallback(() => {
+    setHasPendingMint(false);
     setIsMintScrollModalOpen(true);
+    setHasAttemptedSubmission(false);
     mint(flag);
   }, [mint, flag, setIsMintScrollModalOpen]);
 
   useEffect(() => {
-    if (wallet.connected && signer && hasPendingMint) {
-      setHasPendingMint(false);
+    if (wallet.connected && signer && hasPendingMint && isCodeValid) {
       mintScroll();
     }
   }, [mint, flag, wallet, signer, hasPendingMint]);
@@ -155,6 +165,12 @@ export default () => {
         onSubmit={(e) => {
           e.preventDefault();
 
+          setHasAttemptedSubmission(true);
+
+          if (!isCodeValid) {
+            return false;
+          }
+
           if (!wallet.connected) {
             setHasPendingMint(true);
             setIsConnectWalletModalOpen(true);
@@ -167,6 +183,12 @@ export default () => {
           placeholder="If you have a special code, input it here"
           onChange={(e) => setCode(e.target.value)}
         />
+
+        {!isCodeValid && hasAttemptedSubmission && (
+          <ValidationError>
+            This code is invalid. Please double-check the code you entered or mint without a code.
+          </ValidationError>
+        )}
 
         <UnsupportedNetworkTooltip isVisible={wallet.connected}>
           <SubmitButton
