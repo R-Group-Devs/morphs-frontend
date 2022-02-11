@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useConnect, useNetwork } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -123,6 +123,7 @@ export default () => {
   const [code, setCode] = useState('');
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
   const [shouldShowTransactionToast, setShouldShowTransactionToast] = useState(false);
+  const codeInputRef = useRef<HTMLInputElement>(null);
   const [{ data, state, signer }, mint] = useMint();
 
   const isSupportedNetwork =
@@ -212,6 +213,8 @@ export default () => {
           setHasAttemptedSubmission(true);
 
           if (!isCodeValid) {
+            codeInputRef.current?.focus();
+
             return false;
           }
 
@@ -225,7 +228,10 @@ export default () => {
       >
         <CodeInput
           placeholder="If you have a special code, input it here"
+          ref={codeInputRef}
           onChange={(e) => setCode(e.target.value)}
+          spellCheck={false}
+          autoComplete="off"
         />
 
         {!isCodeValid && hasAttemptedSubmission && (
