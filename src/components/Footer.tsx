@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import Credits from './Credits';
 import shapesPanelImage from '../assets/images/shapes-panel.png';
 import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
 import { COLORS } from '../constants/theme';
@@ -50,6 +51,7 @@ export default () => {
           poster={shapesPanelImage}
         />
       )}
+
       <FooterText>
         Morphs is an NFT PFP project that evolves over time. Mint yourself a mystery scroll for free
         (gas only) and wait to see what happens… Follow{' '}
@@ -58,6 +60,8 @@ export default () => {
         </a>{' '}
         for updates.
       </FooterText>
+
+      {isSmallViewport && <Credits />}
     </Container>
   );
 };

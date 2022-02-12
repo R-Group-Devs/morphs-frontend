@@ -1,5 +1,7 @@
 import { useNetwork } from 'wagmi';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
+import Credits from './Credits';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
 import {
   PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
@@ -46,23 +48,6 @@ const GalleryLink = styled.p`
   font-size: 14px;
 `;
 
-const Credits = styled.ul`
-  margin-top: 4em;
-  padding: 0;
-  list-style: none;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1em;
-
-  @media (max-width: 767px) {
-    margin-top: 2em;
-  }
-`;
-
-const Credit = styled.li`
-  margin-bottom: 1.25em;
-`;
-
 export default () => {
   const [{ data: network }] = useNetwork();
 
@@ -71,6 +56,10 @@ export default () => {
       ? network?.chain?.id
       : // TODO: use mainnet fallback
         4;
+
+  const isSmallViewport = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
 
   return (
     <Container>
@@ -85,6 +74,7 @@ export default () => {
       />
 
       <Heading>Mint a scroll, see what happens…</Heading>
+
       <FlavorText>
         <p>
           Drifting through the immateria you find a scroll. You sense something mysterious, cosmic.
@@ -105,26 +95,7 @@ export default () => {
 
       <Heading>Perhaps it will become something later on.</Heading>
 
-      <Credits>
-        <Credit>
-          built by{' '}
-          <a href="https://playgrounds.wtf" target="_blank" rel="noreferrer">
-            playgrounds.wtf
-          </a>
-        </Credit>
-        <Credit>
-          designed by{' '}
-          <a href="https://twitter.com/polyforms_" target="_blank" rel="noreferrer">
-            @polyforms_
-          </a>
-        </Credit>
-        <Credit>
-          made with{' '}
-          <a href="https://heyshell.xyz" target="_blank" rel="noreferrer">
-            heyshell.xyz
-          </a>
-        </Credit>
-      </Credits>
+      {!isSmallViewport && <Credits />}
     </Container>
   );
 };
