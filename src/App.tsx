@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring';
 import WalletProvider from './providers/WalletProvider';
 import GlobalStyle from './components/GlobalStyle';
 import Header from './components/Header';
@@ -35,24 +36,35 @@ const Panel = styled.div`
 `;
 
 const App = () => {
+  const animationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+  });
+
   return (
     <WalletProvider>
-      <Container>
-        <GlobalStyle />
-        <Header />
+      <animated.div style={animationProps}>
+        <Container>
+          <GlobalStyle />
+          <Header />
 
-        <Content>
-          <Panel>
-            <Description />
-          </Panel>
+          <Content>
+            <Panel>
+              <Description />
+            </Panel>
 
-          <Panel>
-            <MintForm />
-          </Panel>
-        </Content>
+            <Panel>
+              <MintForm />
+            </Panel>
+          </Content>
 
-        <Footer />
-      </Container>
+          <Footer />
+        </Container>
+      </animated.div>
     </WalletProvider>
   );
 };

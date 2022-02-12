@@ -23,6 +23,7 @@
     "react-hot-toast": "^2.2.0",
     "react-responsive": "^9.0.0-beta.6",
     "react-scripts": "5.0.0",
+    "react-spring": "^9.4.2",
     "styled-components": "^5.3.3",
     "ts-essentials": "^9.1.2",
     "ts-node": "^10.5.0",
