@@ -96,6 +96,9 @@ const ModalOverlay = ({ children }: OverlayProps) => {
     to: {
       opacity: 1,
     },
+    config: {
+      duration: 200,
+    },
   });
 
   return (
