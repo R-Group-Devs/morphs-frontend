@@ -23,6 +23,10 @@ const Overlay = styled(Dialog.Overlay)`
   justify-content: center;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.6);
+
+  @media (max-width: 767px) {
+    align-items: start;
+  }
 `;
 
 const Container = styled(Dialog.Content)`
@@ -33,7 +37,7 @@ const Container = styled(Dialog.Content)`
   box-shadow: #000 0 0 80px;
 
   @media (max-width: 767px) {
-    width: 80%;
+    width: 100%;
   }
 `;
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import {
   ModalPortal,
   ModalOverlay,
@@ -36,6 +37,12 @@ const ConnectedWalletHeading = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  @media (max-width: 767px) {
+    margin-top: 0.5em;
+    justify-content: center;
+    text-align: center;
+  }
 `;
 
 const ChangeWalletButton = styled.button`
@@ -58,17 +65,33 @@ const ChangeWalletButton = styled.button`
     position: relative;
     top: 1px;
   }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const ConnectedWalletAddress = styled.div`
   margin-top: 0.5em;
   font-size: 22px;
   font-weight: 600;
+
+  @media (max-width: 767px) {
+    margin-top: 1em;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 const ModalActions = styled.div`
   display: flex;
   margin-top: 1.25em;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const ModalAction = styled.a`
@@ -80,12 +103,44 @@ const ModalAction = styled.a`
   border-bottom-color: transparent !important;
 
   &:hover {
-    border-bottom-color: inherit !important;
+    color: ${COLORS.white} !important;
+    text-decoration: underline !important;
     cursor: pointer;
   }
 
   &:focus {
     outline-color: #999 !important;
+  }
+
+  @media (max-width: 767px) {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 15px 25px;
+    display: block;
+    width: 100%;
+    font-family: ${FONTS.sansSerif};
+    font-size: 18px;
+    font-weight: bold;
+    line-height: normal;
+    text-transform: uppercase;
+    text-align: center;
+    color: ${COLORS.white} !important;
+    background: ${COLORS.primary.normal};
+    transition: all 0.3s;
+
+    &:hover {
+      background: ${COLORS.primary.light};
+      border-bottom-color: none !important;
+      text-decoration: none !important;
+      color: #fff;
+      outline: none;
+      cursor: pointer;
+    }
+
+    &:active {
+      position: relative;
+      top: 1px;
+    }
   }
 `;
 
@@ -101,6 +156,10 @@ export default ({ close }: Props) => {
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
+
+  const isSmallViewport = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
 
   useEffect(() => {
     if (isAddressCopied) {
@@ -128,17 +187,19 @@ export default ({ close }: Props) => {
                 <ConnectedWalletAddress>{connectedWalletText}</ConnectedWalletAddress>
 
                 <ModalActions>
-                  <CopyToClipboard
-                    text={account?.address ?? ''}
-                    onCopy={() => {
-                      setIsAddressCopied(true);
-                    }}
-                  >
-                    <ModalAction>{isAddressCopied ? 'Copied' : 'Copy address'}</ModalAction>
-                  </CopyToClipboard>
+                  {!isSmallViewport && (
+                    <CopyToClipboard
+                      text={account?.address ?? ''}
+                      onCopy={() => {
+                        setIsAddressCopied(true);
+                      }}
+                    >
+                      <ModalAction>{isAddressCopied ? 'Copied' : 'Copy address'}</ModalAction>
+                    </CopyToClipboard>
+                  )}
 
                   {/* TODO: use mainnet fallback */}
-                  {isSupportedNetwork && (
+                  {isSupportedNetwork && !isSmallViewport && (
                     <ModalAction
                       href={`${BLOCK_EXPLORER_URLS[network?.chain?.id || 4]}/address/${
                         account?.address
