@@ -10,7 +10,7 @@ const Container = styled.div`
   color: ${COLORS.white};
 
   @media (max-width: 580px) {
-    margin-top: 1.5em;
+    margin-top: 0.75em;
     font-size: 46px;
   }
 `;

@@ -6,6 +6,7 @@ import { FONTS } from '../constants/theme';
 
 interface Props {
   isVisible?: boolean;
+  isContentVisible?: boolean;
   children: React.ReactNode;
 }
 
@@ -36,7 +37,7 @@ const TooltipArrow = styled(Tooltip.Arrow)`
   fill: #444;
 `;
 
-export default ({ isVisible = true, children }: Props) => {
+export default ({ isVisible = true, isContentVisible = true, children }: Props) => {
   const [{ data: network }] = useNetwork();
 
   const supportedNetworks = Object.values(NETWORKS).map(
@@ -48,20 +49,22 @@ export default ({ isVisible = true, children }: Props) => {
   return (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={100}>
-        <TooltipTrigger
-          onMouseDown={(e) => {
-            if (isVisible && !isSupportedNetwork) {
-              e.preventDefault();
-            }
-          }}
-          onClick={(e) => {
-            if (isVisible && !isSupportedNetwork) {
-              e.preventDefault();
-            }
-          }}
-        >
-          {children}
-        </TooltipTrigger>
+        {isContentVisible && (
+          <TooltipTrigger
+            onMouseDown={(e) => {
+              if (isVisible && !isSupportedNetwork) {
+                e.preventDefault();
+              }
+            }}
+            onClick={(e) => {
+              if (isVisible && !isSupportedNetwork) {
+                e.preventDefault();
+              }
+            }}
+          >
+            {children}
+          </TooltipTrigger>
+        )}
 
         <TooltipContent sideOffset={5} $isVisible={isVisible && !isSupportedNetwork}>
           <TooltipArrow />

@@ -39,20 +39,9 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   }
 
   @media (max-width: 580px) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top-width: 0;
-    border-left-width: 0;
-    border-right-width: 0;
-    padding: 20px 20px;
-    width: 100%;
+    padding: 20px;
+    width: 80vw;
     font-size: 16px;
-
-    &:active {
-      position: absolute;
-      top: 0;
-    }
   }
 `;
 
@@ -77,10 +66,6 @@ const Network = styled.div<{ $isSupported: boolean }>`
     border-radius: 100%;
     background: ${({ $isSupported }) => ($isSupported ? 'lime' : COLORS.accent.normal)};
   }
-
-  @media (max-width: 767px) {
-    display: none;
-  }
 `;
 
 export default () => {
@@ -100,10 +85,14 @@ export default () => {
     query: '(max-width: 580px)',
   });
 
+  const isSmallViewport = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
   return (
     <Container>
       {wallet.connected && (
-        <UnsupportedNetworkTooltip>
+        <UnsupportedNetworkTooltip isContentVisible={!isSmallViewport}>
           <Network $isSupported={isSupportedNetwork}>
             {isSupportedNetwork ? network.chain?.name : 'Unsupported network'}
           </Network>
