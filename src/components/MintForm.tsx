@@ -31,7 +31,7 @@ const ScrollExampleVideo = styled.video`
   border: 1px solid ${COLORS.white};
 `;
 
-const CodeInput = styled.input`
+const CodeInput = styled.input<{ $hasError: boolean }>`
   margin-bottom: 1em;
   padding: 4px 12px;
   width: 100%;
@@ -43,8 +43,10 @@ const CodeInput = styled.input`
   text-align: center;
   color: ${COLORS.white};
   background: #2e2e2e;
-  border: none;
+  border: ${({ $hasError }) =>
+    $hasError ? `1px solid ${COLORS.accent.normal}` : '1px solid transparent'};
   border-radius: 2px;
+  transition: all 0.3s;
 
   &:focus {
     outline: none;
@@ -230,6 +232,7 @@ export default () => {
           placeholder="If you have a special code, input it here"
           ref={codeInputRef}
           onChange={(e) => setCode(e.target.value)}
+          $hasError={!isCodeValid && hasAttemptedSubmission}
           spellCheck={false}
           autoComplete="off"
         />
