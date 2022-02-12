@@ -1,6 +1,11 @@
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring';
 import * as Dialog from '@radix-ui/react-dialog';
 import { COLORS, FONTS } from '../constants/theme';
+
+interface OverlayProps {
+  children: React.ReactNode;
+}
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -83,6 +88,23 @@ const CloseButton = styled(Dialog.Close)`
   }
 `;
 
+const ModalOverlay = ({ children }: OverlayProps) => {
+  const animationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+  });
+
+  return (
+    <animated.div style={animationProps}>
+      <Overlay>{children}</Overlay>
+    </animated.div>
+  );
+};
+
 const ModalContainer = ({ children, close }: ContainerProps) => (
   <Container onPointerDownOutside={() => close()} onEscapeKeyDown={() => close()}>
     {children}
@@ -100,7 +122,7 @@ const ModalPortal = Dialog.Portal;
 
 export {
   ModalPortal,
-  Overlay as ModalOverlay,
+  ModalOverlay,
   ModalContainer,
   ModalTitle,
   Content as ModalContent,
