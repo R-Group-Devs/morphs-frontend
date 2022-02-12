@@ -1,6 +1,7 @@
+import { forwardRef, ForwardedRef } from 'react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useSpring, animated } from 'react-spring';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface OverlayProps {
@@ -88,7 +89,7 @@ const CloseButton = styled(Dialog.Close)`
   }
 `;
 
-const ModalOverlay = ({ children }: OverlayProps) => {
+const ModalOverlay = forwardRef(({ children }: OverlayProps, ref: ForwardedRef<HTMLDivElement>) => {
   const animationProps = useSpring({
     from: {
       opacity: 0,
@@ -103,10 +104,10 @@ const ModalOverlay = ({ children }: OverlayProps) => {
 
   return (
     <animated.div style={animationProps}>
-      <Overlay>{children}</Overlay>
+      <Overlay ref={ref}>{children}</Overlay>
     </animated.div>
   );
-};
+});
 
 const ModalContainer = ({ children, close }: ContainerProps) => (
   <Container onPointerDownOutside={() => close()} onEscapeKeyDown={() => close()}>
