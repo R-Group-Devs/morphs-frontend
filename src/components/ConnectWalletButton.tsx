@@ -94,7 +94,7 @@ export default () => {
       {wallet.connected && (
         <UnsupportedNetworkTooltip isContentVisible={!isSmallViewport}>
           <Network $isSupported={isSupportedNetwork}>
-            {isSupportedNetwork ? network.chain?.name : 'Unsupported network'}
+            {network.chain?.id === 1 ? 'Ethereum' : network.chain?.name}
           </Network>
         </UnsupportedNetworkTooltip>
       )}
