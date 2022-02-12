@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useConnect, useNetwork } from 'wagmi';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import toast, { Toaster, ToastBar } from 'react-hot-toast';
 import ConnectWalletModal from './ConnectWalletModal';
@@ -31,8 +31,22 @@ const ScrollExampleVideo = styled.video`
   border: 1px solid ${COLORS.white};
 `;
 
-const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
+const shimmer = keyframes`
+  0% {
+    background-position: 40% 0;
+  }
+
+  100% {
+    background-position: top right;
+  }
+`;
+
+const CodeInputContainer = styled.div`
   margin-bottom: 1em;
+  background: #2e2e2e;
+`;
+
+const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   padding: 4px 12px;
   width: 100%;
   min-height: 33px;
@@ -46,11 +60,28 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   border: ${({ $hasError }) =>
     $hasError ? `1px solid ${COLORS.accent.normal}` : '1px solid transparent'};
   border-radius: 2px;
-  transition: all 0.3s;
+  transition: color 0.3s, border-color 0.3s;
 
   &:focus {
     outline: none;
   }
+
+  ${({ $isValid }) =>
+    $isValid &&
+    css`
+      background: linear-gradient(to right, #66ba62 30%, #fff 50%, #66ba62 70%);
+      color: rgba(255, 255, 255, 0.1);
+      background-size: 100px 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      animation-name: ${shimmer};
+      animation-duration: 2s;
+      animation-iteration-count: 1;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-color: #66ba62;
+    `}
 `;
 
 const SubmitButtonStyles = css`
@@ -235,15 +266,17 @@ export default () => {
           }
         }}
       >
-        <CodeInput
-          placeholder="If you have a special code, input it here"
-          ref={codeInputRef}
-          onChange={(e) => setCode(e.target.value)}
-          $hasError={!isCodeValid && hasAttemptedSubmission}
-          $isValid={!!code && isCodeValid}
-          spellCheck={false}
-          autoComplete="off"
-        />
+        <CodeInputContainer>
+          <CodeInput
+            placeholder="If you have a special code, input it here"
+            ref={codeInputRef}
+            onChange={(e) => setCode(e.target.value)}
+            $hasError={!isCodeValid && hasAttemptedSubmission}
+            $isValid={!!code && isCodeValid}
+            spellCheck={false}
+            autoComplete="off"
+          />
+        </CodeInputContainer>
 
         {!isCodeValid && hasAttemptedSubmission && (
           <ValidationError>
