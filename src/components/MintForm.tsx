@@ -60,6 +60,7 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   border: ${({ $hasError }) =>
     $hasError ? `1px solid ${COLORS.accent.normal}` : '1px solid transparent'};
   border-radius: 2px;
+  caret-color: ${COLORS.white};
   transition: color 0.3s, border-color 0.3s;
 
   &:focus {
