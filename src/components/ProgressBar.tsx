@@ -4,7 +4,7 @@ import * as Progress from '@radix-ui/react-progress';
 import { COLORS } from '../constants/theme';
 
 const ProgressBar = styled(Progress.Root)`
-  position: absolute;
+  position: fixed;
   top: calc(50% - 4px);
   left: calc(50% - 150px);
   width: 300px;
