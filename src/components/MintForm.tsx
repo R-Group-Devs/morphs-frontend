@@ -31,17 +31,17 @@ const ScrollExampleVideo = styled.video`
   border: 1px solid ${COLORS.white};
 `;
 
-const CodeInput = styled.input<{ $hasError: boolean }>`
+const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   margin-bottom: 1em;
   padding: 4px 12px;
   width: 100%;
   min-height: 33px;
   font-family: ${FONTS.sansSerif};
   font-size: 14px;
-  font-weight: normal;
+  font-weight: ${({ $isValid }) => ($isValid ? 600 : 'normal')};
   line-height: 2em;
   text-align: center;
-  color: ${COLORS.white};
+  color: ${({ $isValid }) => ($isValid ? '#66ba62' : COLORS.white)};
   background: #2e2e2e;
   border: ${({ $hasError }) =>
     $hasError ? `1px solid ${COLORS.accent.normal}` : '1px solid transparent'};
@@ -145,7 +145,7 @@ export default () => {
     return 0;
   }, [code]);
 
-  const isCodeValid = !code || (code && flag !== 0);
+  const isCodeValid = !code || !!(code && flag !== 0);
 
   const tokenId = useMemo(() => {
     if (
@@ -233,6 +233,7 @@ export default () => {
           ref={codeInputRef}
           onChange={(e) => setCode(e.target.value)}
           $hasError={!isCodeValid && hasAttemptedSubmission}
+          $isValid={!!code && isCodeValid}
           spellCheck={false}
           autoComplete="off"
         />
