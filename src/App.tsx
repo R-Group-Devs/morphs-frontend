@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import WalletProvider from './providers/WalletProvider';
 import GlobalStyle from './components/GlobalStyle';
+import ProgressBar from './components/ProgressBar';
 import Header from './components/Header';
 import Description from './components/Description';
 import MintForm from './components/MintForm';
@@ -36,7 +37,21 @@ const Panel = styled.div`
 `;
 
 const App = () => {
-  const animationProps = useSpring({
+  const progressBarAnimationProps = useSpring({
+    from: {
+      opacity: 1,
+    },
+    to: {
+      opacity: 0,
+    },
+    delay: 1000,
+    config: {
+      duration: 300,
+    },
+  });
+
+  const contentAnimationProps = useSpring({
+    delay: 1300,
     from: {
       opacity: 0,
     },
@@ -47,7 +62,11 @@ const App = () => {
 
   return (
     <WalletProvider>
-      <animated.div style={animationProps}>
+      <animated.div style={progressBarAnimationProps}>
+        <ProgressBar />
+      </animated.div>
+
+      <animated.div style={contentAnimationProps}>
         <Container>
           <GlobalStyle />
           <Header />
