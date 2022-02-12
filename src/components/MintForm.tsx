@@ -69,18 +69,18 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   ${({ $isValid }) =>
     $isValid &&
     css`
-      background: linear-gradient(to right, #66ba62 30%, #fff 50%, #66ba62 70%);
       color: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(to right, #66ba62 30%, #fff 50%, #66ba62 70%);
+      background-color: #66ba62;
       background-size: 100px 100%;
+      background-repeat: no-repeat;
+      background-position: 0 0;
       background-clip: text;
       -webkit-background-clip: text;
       -moz-background-clip: text;
       animation-name: ${shimmer};
       animation-duration: 2s;
       animation-iteration-count: 1;
-      background-repeat: no-repeat;
-      background-position: 0 0;
-      background-color: #66ba62;
     `}
 `;
 
@@ -121,6 +121,12 @@ const DisabledSubmitButton = styled.div`
   &:hover {
     cursor: default;
   }
+`;
+
+const SubmitButtonText = styled.span<{ $isVisible: boolean }>`
+  transform: ${({ $isVisible }) => ($isVisible ? 'scaleX(1)' : 'scaleX(0)')};
+  display: inline-block;
+  transition: all 0.1s;
 `;
 
 const HelperText = styled.p`
@@ -285,7 +291,19 @@ export default () => {
         )}
 
         {!wallet.connected || isSupportedNetwork ? (
-          <SubmitButton>Mint a Scroll</SubmitButton>
+          <SubmitButton>
+            <SubmitButtonText $isVisible={flag === 0}>
+              {flag === 0 && 'Mint a Scroll'}
+            </SubmitButtonText>
+
+            <SubmitButtonText $isVisible={flag === 1}>
+              {flag === 1 && 'Mint a Mythical Scroll'}
+            </SubmitButtonText>
+
+            <SubmitButtonText $isVisible={flag === 2}>
+              {flag === 2 && 'Mint a Cosmic Scroll'}
+            </SubmitButtonText>
+          </SubmitButton>
         ) : (
           <UnsupportedNetworkTooltip isVisible={wallet.connected}>
             <DisabledSubmitButton>Mint a Scroll</DisabledSubmitButton>
