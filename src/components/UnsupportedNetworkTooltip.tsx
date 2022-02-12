@@ -2,7 +2,6 @@ import { useNetwork } from 'wagmi';
 import styled, { keyframes } from 'styled-components';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { NETWORKS } from '../constants/networks';
-import { FONTS } from '../constants/theme';
 
 interface Props {
   isVisible?: boolean;
@@ -24,7 +23,6 @@ const scaleInAnimation = keyframes({
 
 const TooltipContent = styled(Tooltip.Content)<{ $isVisible: boolean }>`
   padding: 0.25em 1.5em;
-  font-family: ${FONTS.sansSerif};
   font-size: 12px;
   background: #444;
   border-radius: 2px;

@@ -265,11 +265,22 @@ export default () => {
         toastOptions={{
           duration: 60000,
           style: {
-            maxWidth: 400,
-            fontFamily: FONTS.sansSerif,
+            maxWidth: 450,
             fontSize: 12,
             color: COLORS.white,
             background: '#444',
+          },
+          success: {
+            iconTheme: {
+              primary: '#66ba62',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: COLORS.accent.normal,
+              secondary: '#fff',
+            },
           },
         }}
       >
