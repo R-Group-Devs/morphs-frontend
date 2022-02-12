@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useConnect, useNetwork } from 'wagmi';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import toast, { Toaster, ToastBar } from 'react-hot-toast';
 import ConnectWalletModal from './ConnectWalletModal';
@@ -53,7 +53,7 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   }
 `;
 
-const SubmitButton = styled.button<{ $isDisabled: boolean }>`
+const SubmitButtonStyles = css`
   padding: 20px 50px;
   width: 100%;
   min-height: 72px;
@@ -67,20 +67,27 @@ const SubmitButton = styled.button<{ $isDisabled: boolean }>`
   border: none;
   transition: all 0.3s;
 
-  &:hover:not(:disabled) {
+  &:hover {
     background: ${COLORS.primary.light};
     color: #fff;
     outline: none;
-    cursor: ${({ $isDisabled }) => ($isDisabled ? 'default' : 'pointer')};
+    cursor: pointer;
   }
 
   &:active {
     position: relative;
     top: 1px;
   }
+`;
 
-  &:disabled {
-    opacity: 0.6;
+const SubmitButton = styled.button`
+  ${SubmitButtonStyles}
+`;
+
+const DisabledSubmitButton = styled.div`
+  ${SubmitButtonStyles}
+
+  &:hover {
     cursor: default;
   }
 `;
@@ -244,11 +251,13 @@ export default () => {
           </ValidationError>
         )}
 
-        <UnsupportedNetworkTooltip isVisible={wallet.connected}>
-          <SubmitButton $isDisabled={wallet.connected && !isSupportedNetwork}>
-            Mint a Scroll
-          </SubmitButton>
-        </UnsupportedNetworkTooltip>
+        {!wallet.connected || isSupportedNetwork ? (
+          <SubmitButton>Mint a Scroll</SubmitButton>
+        ) : (
+          <UnsupportedNetworkTooltip isVisible={wallet.connected}>
+            <DisabledSubmitButton>Mint a Scroll</DisabledSubmitButton>
+          </UnsupportedNetworkTooltip>
+        )}
       </form>
 
       <HelperText>Minting is free. You just pay gas.</HelperText>
