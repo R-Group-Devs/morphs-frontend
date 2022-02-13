@@ -31,7 +31,9 @@ const ellipsis = keyframes`
   }
 `;
 
-const LoadingText = styled.div`
+const LoadingText = styled.span`
+  display: block;
+
   &:after {
     content: '...';
     margin-left: 0.1em;
