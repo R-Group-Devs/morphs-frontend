@@ -25,11 +25,13 @@ interface Props {
 
 const Paragraph = styled.p`
   margin: 0.25em 0 0.5em 0;
+  font-size: 16px;
+  line-height: 1.5em;
 `;
 
-const HelperText = styled.span`
-  margin-top: 0.25em;
-  font-size: 11px;
+const HelperText = styled.div`
+  margin-top: 0.5em;
+  font-size: 14px;
   font-weight: 300;
 `;
 
