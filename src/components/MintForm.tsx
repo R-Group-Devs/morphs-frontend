@@ -127,7 +127,6 @@ const DisabledSubmitButton = styled.div`
 const SubmitButtonText = styled.span<{ $isVisible: boolean }>`
   transform: ${({ $isVisible }) => ($isVisible ? 'scaleX(1)' : 'scaleX(0)')};
   display: inline-block;
-  transition: all 0.1s;
 `;
 
 const HelperText = styled.p`
