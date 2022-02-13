@@ -325,7 +325,7 @@ export default () => {
         toastOptions={{
           duration: 60000,
           style: {
-            maxWidth: 450,
+            maxWidth: 550,
             fontSize: 12,
             color: COLORS.white,
             background: '#444',

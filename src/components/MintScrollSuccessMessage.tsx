@@ -32,7 +32,7 @@ export default ({ tokenId }: Props) => {
 
   return (
     <span>
-      <span>Your scroll has been minted! See it </span>
+      <span>Success! You feel a pulse of strange energy... </span>
       <Link
         href={
           tokenId
@@ -42,7 +42,7 @@ export default ({ tokenId }: Props) => {
         target="_blank"
         rel="noreferrer"
       >
-        here
+        See your scroll
       </Link>
       .
     </span>

@@ -1,21 +1,14 @@
 import { useEffect, useMemo } from 'react';
-import { useConnect, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
-import {
-  ModalPortal,
-  ModalOverlay,
-  ModalContainer,
-  ModalTitle,
-  ModalContent,
-  ModalItem,
-} from './Modal';
+import styled, { keyframes } from 'styled-components';
+import { ModalPortal, ModalOverlay, ModalContainer, ModalTitle, ModalContent } from './Modal';
 import { WalletProviderDetails, WalletProviderDescription, WalletIcon } from './WalletProvider';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import {
   PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
   MORPHS_NFT_CONTRACT_ADDRESSES,
 } from '../constants/contracts';
-import { WALLETS } from '../constants/wallets';
 import { NFT_EXPLORER_URLS } from '../constants/explorers';
 
 interface Props {
@@ -24,8 +17,39 @@ interface Props {
   close: () => void;
 }
 
+const Paragraph = styled.p`
+  margin-bottom: 1.5em;
+  font-size: 16px;
+
+  &:last-child {
+    margin-bottom: 1em;
+  }
+`;
+
+const HelperText = styled.span`
+  font-size: 11px;
+  font-weight: 300;
+`;
+
+const ellipsis = keyframes`
+  to {
+    width: 2.1em;
+  }
+`;
+
+const LoadingText = styled.div`
+  &:after {
+    content: '...';
+    margin-left: 0.1em;
+    width: 0;
+    display: inline-block;
+    vertical-align: bottom;
+    animation: ${ellipsis} steps(4, end) 900ms infinite;
+    overflow: hidden;
+  }
+`;
+
 export default ({ data, state, close }: Props) => {
-  const [{ data: wallet }] = useConnect();
   const [{ data: network }] = useNetwork();
 
   const chainId =
@@ -62,49 +86,45 @@ export default ({ data, state, close }: Props) => {
           <ModalContent>
             {state === transactionStates.AWAITING_SIGNATURE && (
               <>
-                <ModalItem>Awaiting wallet signature...</ModalItem>
+                <Paragraph>
+                  <LoadingText>Awaiting wallet signature</LoadingText>
+                </Paragraph>
 
-                <ModalItem>
-                  <WalletProviderDetails>
-                    <div>
-                      <div>{wallet.connector?.name}</div>
-
-                      {wallet.connector?.id && (
-                        <WalletProviderDescription>
-                          {WALLETS[wallet.connector.id].description}
-                        </WalletProviderDescription>
-                      )}
-                    </div>
-
-                    {wallet.connector?.id && <WalletIcon src={WALLETS[wallet.connector.id].icon} />}
-                  </WalletProviderDetails>
-                </ModalItem>
+                <Paragraph>
+                  <HelperText>Sign the mint transaction in your wallet provider.</HelperText>
+                </Paragraph>
               </>
             )}
 
             {state === transactionStates.AWAITING_CONFIRMATION && (
               <>
-                <ModalItem>Minting scroll...</ModalItem>
+                <Paragraph>
+                  <LoadingText>Minting</LoadingText>
+                </Paragraph>
 
-                <ModalItem>
-                  This may take up to a few minutes. Feel free to close this window and check back
-                  later.
-                </ModalItem>
+                <Paragraph>
+                  <HelperText>
+                    This may take up to a few minutes. Feel free to close this window and check back
+                    later.
+                  </HelperText>
+                </Paragraph>
               </>
             )}
 
             {state === transactionStates.CONFIRMED && (
               <>
-                <ModalItem>
-                  <span>
-                    Your scroll has been minted! See it{' '}
+                <Paragraph>Success!</Paragraph>
+
+                <Paragraph>
+                  <HelperText>
+                    You feel a pulse of strange energy...{' '}
                     {nftId ? (
                       <a
                         href={`${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${nftId}`}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        here
+                        See your scroll
                       </a>
                     ) : (
                       <a
@@ -112,28 +132,28 @@ export default ({ data, state, close }: Props) => {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        here
+                        See your scroll
                       </a>
                     )}
                     .
-                  </span>
-                </ModalItem>
+                  </HelperText>
+                </Paragraph>
               </>
             )}
 
             {state === transactionStates.FAILED && (
               <>
-                <ModalItem>There was an error processing your transaction.</ModalItem>
+                <Paragraph>There was an error processing your transaction.</Paragraph>
 
-                <ModalItem>
-                  <span>
+                <Paragraph>
+                  <HelperText>
                     Please try again or reach out on the{' '}
                     <a href="https://discord.gg/cXxFndSu" target="_blank" rel="noreferrer">
                       Playgrounds Discord
                     </a>{' '}
                     for help.
-                  </span>
-                </ModalItem>
+                  </HelperText>
+                </Paragraph>
               </>
             )}
           </ModalContent>
