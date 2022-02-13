@@ -251,8 +251,13 @@ export default ({ close }: Props) => {
                   <WalletProviderOption
                     key={connector.id}
                     onClick={async () => {
-                      await connect(connector);
-                      close();
+                      if (connector.id === 'walletConnect' || connector.id === 'walletLink') {
+                        connect(connector);
+                        close();
+                      } else {
+                        await connect(connector);
+                        close();
+                      }
                     }}
                   >
                     <span>{connector.name}</span>
