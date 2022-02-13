@@ -80,8 +80,10 @@ const CloseButton = styled(Dialog.Close)`
   color: ${COLORS.white};
   background: none;
   border: none;
+  transition: all 0.3s;
 
   &:hover {
+    opacity: 0.6;
     cursor: pointer;
   }
 
