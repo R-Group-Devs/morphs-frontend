@@ -7,6 +7,7 @@ const Credits = styled.ul`
   font-size: 14px;
   font-weight: normal;
   line-height: 1em;
+  text-transform: lowercase;
 
   @media (max-width: 767px) {
     margin-top: 3em;
@@ -22,19 +23,19 @@ const Credit = styled.li`
 export default () => (
   <Credits>
     <Credit>
-      built by{' '}
+      Built by{' '}
       <a href="https://playgrounds.wtf" target="_blank" rel="noreferrer">
         playgrounds.wtf
       </a>
     </Credit>
     <Credit>
-      designed by{' '}
+      Designed by{' '}
       <a href="https://twitter.com/polyforms_" target="_blank" rel="noreferrer">
         @polyforms_
       </a>
     </Credit>
     <Credit>
-      made with{' '}
+      Made with{' '}
       <a href="https://heyshell.xyz" target="_blank" rel="noreferrer">
         heyshell.xyz
       </a>
