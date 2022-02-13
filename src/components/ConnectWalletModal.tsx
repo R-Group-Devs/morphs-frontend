@@ -172,10 +172,7 @@ const ModalAction = styled.a`
 
 export default ({ isOpen, close }: Props) => {
   const [{ data: network }] = useNetwork();
-  const [
-    { data: wallet, loading: isConnecting, error: hasConnectionError },
-    connect,
-  ] = useConnect();
+  const [{ data: wallet, loading: isConnecting, error: connectionError }, connect] = useConnect();
   const [{ data: account }, disconnect] = useAccount({
     fetchEns: true,
   });
@@ -206,10 +203,10 @@ export default ({ isOpen, close }: Props) => {
   }, [isConnecting]);
 
   useEffect(() => {
-    if (!isOpen && hasConnectionError) {
+    if (!isOpen && connectionError) {
       setHasSeenConnectionError(true);
     }
-  }, [isOpen, hasConnectionError]);
+  }, [isOpen, connectionError]);
 
   return (
     <ModalPortal>
@@ -265,7 +262,7 @@ export default ({ isOpen, close }: Props) => {
               </ModalItem>
             )}
 
-            {!wallet.connected && !isConnecting && (!hasConnectionError || hasSeenConnectionError) && (
+            {!wallet.connected && !isConnecting && (!connectionError || hasSeenConnectionError) && (
               <>
                 {wallet.connectors.map((connector) => (
                   <WalletProviderOption
@@ -316,7 +313,7 @@ export default ({ isOpen, close }: Props) => {
               </>
             )}
 
-            {hasConnectionError && !hasSeenConnectionError && !wallet.connected && (
+            {connectionError && !hasSeenConnectionError && !wallet.connected && (
               <ModalItem>
                 <Paragraph>There was an error connecting to your wallet.</Paragraph>
 
