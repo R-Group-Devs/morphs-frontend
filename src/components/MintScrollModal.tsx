@@ -3,7 +3,6 @@ import { useNetwork } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
 import styled, { keyframes } from 'styled-components';
 import { ModalPortal, ModalOverlay, ModalContainer, ModalTitle, ModalContent } from './Modal';
-import { WalletProviderDetails, WalletProviderDescription, WalletIcon } from './WalletProvider';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import {
   PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
