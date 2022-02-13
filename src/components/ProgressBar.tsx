@@ -27,9 +27,7 @@ export default () => {
   useEffect(() => {
     const timeout = setTimeout(() => setProgress(100), 500);
 
-    return () => {
-      clearTimeout(timeout);
-    };
+    return () => clearTimeout(timeout);
   }, []);
 
   return (

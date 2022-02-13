@@ -271,21 +271,25 @@ export default ({ close }: Props) => {
               <>
                 <ModalItem>Initializing...</ModalItem>
 
-                <ModalItem>
-                  <WalletProviderDetails>
-                    <div>
-                      <div>{wallet.connector?.name}</div>
+                {wallet.connector && (
+                  <ModalItem>
+                    <WalletProviderDetails>
+                      <div>
+                        <div>{wallet.connector?.name}</div>
+
+                        {wallet.connector?.id && (
+                          <WalletProviderDescription>
+                            {WALLETS[wallet.connector.id].description}
+                          </WalletProviderDescription>
+                        )}
+                      </div>
 
                       {wallet.connector?.id && (
-                        <WalletProviderDescription>
-                          {WALLETS[wallet.connector.id].description}
-                        </WalletProviderDescription>
+                        <WalletIcon src={WALLETS[wallet.connector.id].icon} />
                       )}
-                    </div>
-
-                    {wallet.connector?.id && <WalletIcon src={WALLETS[wallet.connector.id].icon} />}
-                  </WalletProviderDetails>
-                </ModalItem>
+                    </WalletProviderDetails>
+                  </ModalItem>
+                )}
               </>
             )}
           </ModalContent>
