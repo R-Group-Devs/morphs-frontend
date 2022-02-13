@@ -13,14 +13,15 @@ interface Props {
 
 const Link = styled.a`
   font-weight: 600;
+  color: ${COLORS.white};
+  border-bottom-color: ${COLORS.white};
 
-  &&,
-  &&:hover {
+  &:hover {
     color: ${COLORS.white};
     border-bottom-color: ${COLORS.white};
   }
 
-  &&:focus {
+  &:focus {
     outline-color: ${COLORS.white};
   }
 `;

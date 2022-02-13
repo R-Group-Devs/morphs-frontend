@@ -3,6 +3,10 @@ import { ModalOverlayStyles } from '../components/Modal';
 import { COLORS, FONTS } from '../constants/theme';
 
 export default createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     background: ${COLORS.black};
@@ -11,22 +15,7 @@ export default createGlobalStyle`
     color: ${COLORS.white};
   }
 
-  * {
-    box-sizing: border-box;
-  }
-
-  @font-face {
-    font-family: 'Morphs Glyphs';
-    src: url('./fonts/Morphs-Glyphs.woff2') format('woff2'),
-      url('./fonts/Morphs-Glyphs.woff') format('woff'),
-      url('./fonts/Morphs-Glyphs.otf') format('otf'),
-      url('./fonts/Morphs-Glyphs.ttf') format('ttf');
-    font-weight: 300;
-    font-style: normal;
-    font-display: block;
-  }
-
-  body a {
+  a {
     color: ${COLORS.accent.normal};
     border-bottom: 1px solid ${COLORS.accent.normal};
     text-decoration: none;
@@ -44,6 +33,21 @@ export default createGlobalStyle`
     &:focus:active {
       outline: none;
     }
+  }
+
+  @font-face {
+    font-family: 'Morphs Glyphs';
+    src: url('./fonts/Morphs-Glyphs.woff2') format('woff2'),
+      url('./fonts/Morphs-Glyphs.woff') format('woff'),
+      url('./fonts/Morphs-Glyphs.otf') format('otf'),
+      url('./fonts/Morphs-Glyphs.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+  }
+
+  ::selection {
+    background: ${COLORS.primary.light};
   }
 
   #walletconnect-wrapper a {
@@ -74,10 +78,6 @@ export default createGlobalStyle`
       ${ModalOverlayStyles}
       transition: all 0.3s;
     }
-  }
-
-  ::selection {
-    background: ${COLORS.primary.light};
   }
 
   .-walletlink-extension-dialog-container ::selection {

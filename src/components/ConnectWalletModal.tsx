@@ -116,18 +116,18 @@ const ModalAction = styled.a`
   font-size: 12px;
   font-weight: 300;
 
-  && {
+  & {
     color: #999;
     border-bottom-color: transparent;
   }
 
-  &&:hover {
+  &:hover {
     color: ${COLORS.white};
     border-bottom-color: ${COLORS.white};
     cursor: pointer;
   }
 
-  &&:focus {
+  &:focus {
     outline-color: #999;
   }
 
@@ -146,11 +146,11 @@ const ModalAction = styled.a`
     background: ${COLORS.primary.normal};
     transition: all 0.3s;
 
-    && {
+    & {
       color: ${COLORS.white};
     }
 
-    &&:hover {
+    &:hover {
       background: ${COLORS.primary.light};
       border-bottom-color: transparent;
       text-decoration: none;
