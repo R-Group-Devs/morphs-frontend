@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   ModalPortal,
   ModalOverlay,
@@ -10,8 +11,6 @@ import {
   ModalContent,
   ModalItem,
 } from './Modal';
-import { WalletProviderDetails, WalletProviderDescription, WalletIcon } from './WalletProvider';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
 import { WALLETS } from '../constants/wallets';
@@ -22,6 +21,19 @@ interface Props {
   close: () => void;
 }
 
+const WalletProviderDetails = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const WalletProviderDescription = styled.div`
+  margin-top: 1em;
+  font-size: 14px;
+  font-weight: 400;
+`;
+
 const WalletProviderOption = styled(ModalItem)`
   flex-direction: row;
   height: 64px;
@@ -30,6 +42,10 @@ const WalletProviderOption = styled(ModalItem)`
     background: ${COLORS.primary.light};
     cursor: pointer;
   }
+`;
+
+const WalletIcon = styled.img`
+  width: 24px;
 `;
 
 const ConnectedWalletHeading = styled.div`
@@ -99,17 +115,20 @@ const ModalAction = styled.a`
   display: inline-block;
   font-size: 12px;
   font-weight: 300;
-  color: #999 !important;
-  border-bottom-color: transparent !important;
 
-  &:hover {
-    color: ${COLORS.white} !important;
-    text-decoration: underline !important;
+  && {
+    color: #999;
+    border-bottom-color: transparent;
+  }
+
+  &&:hover {
+    color: ${COLORS.white};
+    border-bottom-color: ${COLORS.white};
     cursor: pointer;
   }
 
-  &:focus {
-    outline-color: #999 !important;
+  &&:focus {
+    outline-color: #999;
   }
 
   @media (max-width: 767px) {
@@ -124,14 +143,17 @@ const ModalAction = styled.a`
     line-height: normal;
     text-transform: uppercase;
     text-align: center;
-    color: ${COLORS.white} !important;
     background: ${COLORS.primary.normal};
     transition: all 0.3s;
 
-    &:hover {
+    && {
+      color: ${COLORS.white};
+    }
+
+    &&:hover {
       background: ${COLORS.primary.light};
-      border-bottom-color: none !important;
-      text-decoration: none !important;
+      border-bottom-color: transparent;
+      text-decoration: none;
       color: #fff;
       outline: none;
       cursor: pointer;

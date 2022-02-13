@@ -30,27 +30,19 @@ export default () => {
 
   return (
     <Container>
-      {isSmallViewport ? (
-        <MorphsShapesBannerVideo
-          src="./videos/morphs-shapes-banner-mobile.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          controlsList="nodownload"
-          poster={shapesPanelImageMobile}
-        />
-      ) : (
-        <MorphsShapesBannerVideo
-          src="./videos/morphs-shapes-banner.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          controlsList="nodownload"
-          poster={shapesPanelImage}
-        />
-      )}
+      <MorphsShapesBannerVideo
+        src={
+          isSmallViewport
+            ? './videos/morphs-shapes-banner-mobile.mp4'
+            : './videos/morphs-shapes-banner.mp4'
+        }
+        autoPlay
+        loop
+        muted
+        playsInline
+        controlsList="nodownload"
+        poster={isSmallViewport ? shapesPanelImageMobile : shapesPanelImage}
+      />
 
       <FooterText>
         Morphs is an NFT PFP project that evolves over time. Mint yourself a mystery scroll for free

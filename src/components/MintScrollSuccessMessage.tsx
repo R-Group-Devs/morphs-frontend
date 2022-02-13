@@ -12,12 +12,16 @@ interface Props {
 }
 
 const Link = styled.a`
-  color: ${COLORS.white} !important;
   font-weight: 600;
-  border-bottom-color: ${COLORS.white} !important;
 
-  &:focus {
-    outline-color: ${COLORS.white} !important;
+  &&,
+  &&:hover {
+    color: ${COLORS.white};
+    border-bottom-color: ${COLORS.white};
+  }
+
+  &&:focus {
+    outline-color: ${COLORS.white};
   }
 `;
 

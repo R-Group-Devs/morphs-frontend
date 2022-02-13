@@ -26,13 +26,13 @@ export default createGlobalStyle`
     font-display: block;
   }
 
-  body:not(.-walletlink-extension-dialog-box-bottom-description) > :not(#walletconnect-wrapper) {
+  body:not(.-walletlink-extension-dialog-box-bottom-description) > :not(.walletconnect-modal__base) {
     font-family: ${FONTS.mono};
     font-weight: 300;
     color: ${COLORS.white};
   }
 
-  body > :not(#walletconnect-wrapper) a {
+  body > :not(.walletconnect-modal__base) a {
     color: ${COLORS.accent.normal};
     border-bottom: 1px solid ${COLORS.accent.normal};
     text-decoration: none;
