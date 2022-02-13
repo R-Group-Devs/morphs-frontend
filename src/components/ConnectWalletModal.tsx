@@ -36,6 +36,7 @@ const WalletProviderDescription = styled.div`
 
 const WalletProviderOption = styled(ModalItem)`
   flex-direction: row;
+  align-items: center;
   height: 64px;
 
   &:hover {
