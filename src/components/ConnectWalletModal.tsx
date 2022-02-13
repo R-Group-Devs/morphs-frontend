@@ -11,6 +11,8 @@ import {
   ModalContent,
   ModalItem,
 } from './Modal';
+import Paragraph from './Paragraph';
+import HelperText from './HelperText';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
 import { WALLETS } from '../constants/wallets';
@@ -18,6 +20,7 @@ import { BLOCK_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
+  isOpen: boolean;
   close: () => void;
 }
 
@@ -167,13 +170,17 @@ const ModalAction = styled.a`
   }
 `;
 
-export default ({ close }: Props) => {
+export default ({ isOpen, close }: Props) => {
   const [{ data: network }] = useNetwork();
-  const [{ data: wallet, loading: isConnectingWallet }, connect] = useConnect();
+  const [
+    { data: wallet, loading: isConnecting, error: hasConnectionError },
+    connect,
+  ] = useConnect();
   const [{ data: account }, disconnect] = useAccount({
     fetchEns: true,
   });
   const [isAddressCopied, setIsAddressCopied] = useState(false);
+  const [hasSeenConnectionError, setHasSeenConnectionError] = useState(false);
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
@@ -191,6 +198,18 @@ export default ({ close }: Props) => {
       return () => clearTimeout(timeout);
     }
   }, [isAddressCopied]);
+
+  useEffect(() => {
+    if (isConnecting) {
+      setHasSeenConnectionError(false);
+    }
+  }, [isConnecting]);
+
+  useEffect(() => {
+    if (!isOpen && hasConnectionError) {
+      setHasSeenConnectionError(true);
+    }
+  }, [isOpen, hasConnectionError]);
 
   return (
     <ModalPortal>
@@ -246,7 +265,7 @@ export default ({ close }: Props) => {
               </ModalItem>
             )}
 
-            {!wallet.connected && !isConnectingWallet && (
+            {!wallet.connected && !isConnecting && (!hasConnectionError || hasSeenConnectionError) && (
               <>
                 {wallet.connectors.map((connector) => (
                   <WalletProviderOption
@@ -256,8 +275,11 @@ export default ({ close }: Props) => {
                         connect(connector);
                         close();
                       } else {
-                        await connect(connector);
-                        close();
+                        const { error } = await connect(connector);
+
+                        if (!error) {
+                          close();
+                        }
                       }
                     }}
                   >
@@ -268,7 +290,7 @@ export default ({ close }: Props) => {
               </>
             )}
 
-            {isConnectingWallet && (
+            {isConnecting && (
               <>
                 <ModalItem>Initializing...</ModalItem>
 
@@ -292,6 +314,22 @@ export default ({ close }: Props) => {
                   </ModalItem>
                 )}
               </>
+            )}
+
+            {hasConnectionError && !hasSeenConnectionError && !wallet.connected && (
+              <ModalItem>
+                <Paragraph>There was an error connecting to your wallet.</Paragraph>
+
+                <Paragraph>
+                  <HelperText>
+                    Make sure you have the wallet provider software downloaded. Reach out on the{' '}
+                    <a href="https://discord.gg/cXxFndSu" target="_blank" rel="noreferrer">
+                      Playgrounds Discord
+                    </a>{' '}
+                    for help.
+                  </HelperText>
+                </Paragraph>
+              </ModalItem>
             )}
           </ModalContent>
         </ModalContainer>

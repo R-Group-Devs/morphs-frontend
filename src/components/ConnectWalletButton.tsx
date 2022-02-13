@@ -108,7 +108,7 @@ export default () => {
             : 'Connect Wallet'}
         </ConnectWalletButton>
 
-        <ConnectWalletModal close={() => setIsOpen(false)} />
+        <ConnectWalletModal isOpen={isOpen} close={() => setIsOpen(false)} />
       </Dialog.Root>
     </Container>
   );

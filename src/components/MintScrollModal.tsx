@@ -10,6 +10,8 @@ import {
   ModalContent,
   ModalItem,
 } from './Modal';
+import Paragraph from './Paragraph';
+import HelperText from './HelperText';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import {
   PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
@@ -22,22 +24,6 @@ interface Props {
   state: Transaction['state'];
   close: () => void;
 }
-
-const Paragraph = styled.p`
-  margin: 0.25em 0 0.5em 0;
-  font-size: 16px;
-  line-height: 1.5em;
-
-  &:last-child {
-    margin-bottom: 0.25em;
-  }
-`;
-
-const HelperText = styled.div`
-  margin-top: 0.5em;
-  font-size: 14px;
-  font-weight: 300;
-`;
 
 const ellipsis = keyframes`
   to {

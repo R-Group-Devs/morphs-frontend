@@ -314,7 +314,10 @@ export default () => {
       <HelperText>Minting is free. You just pay gas.</HelperText>
 
       <Dialog.Root open={isConnectWalletModalOpen}>
-        <ConnectWalletModal close={() => setIsConnectWalletModalOpen(false)} />
+        <ConnectWalletModal
+          isOpen={isConnectWalletModalOpen}
+          close={() => setIsConnectWalletModalOpen(false)}
+        />
       </Dialog.Root>
 
       <Dialog.Root open={isMintScrollModalOpen}>
