@@ -29,6 +29,7 @@ const Overlay = styled(Dialog.Overlay)`
   justify-content: center;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
 
   @media (max-width: 767px) {
     align-items: start;
