@@ -5,18 +5,13 @@ export default createGlobalStyle`
   body {
     margin: 0;
     background: ${COLORS.black};
+    font-family: ${FONTS.mono};
+    font-weight: 300;
+    color: ${COLORS.white};
   }
 
   * {
     box-sizing: border-box;
-  }
-
-  ::selection {
-    background: ${COLORS.primary.light};
-  }
-
-  .-walletlink-extension-dialog-container ::selection {
-    background: highlight;
   }
 
   @font-face {
@@ -28,12 +23,6 @@ export default createGlobalStyle`
     font-weight: 300;
     font-style: normal;
     font-display: block;
-  }
-
-  body {
-    font-family: ${FONTS.mono};
-    font-weight: 300;
-    color: ${COLORS.white};
   }
 
   body a {
@@ -86,5 +75,13 @@ export default createGlobalStyle`
       backdrop-filter: blur(3px);
       transition: all 0.3s;
     }
+  }
+
+  ::selection {
+    background: ${COLORS.primary.light};
+  }
+
+  .-walletlink-extension-dialog-container ::selection {
+    background: highlight;
   }
 `;

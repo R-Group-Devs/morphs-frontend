@@ -55,7 +55,7 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
   font-weight: ${({ $isValid }) => ($isValid ? 600 : 'normal')};
   line-height: 2em;
   text-align: center;
-  color: ${({ $isValid }) => ($isValid ? '#66ba62' : COLORS.white)};
+  color: ${({ $isValid }) => ($isValid ? COLORS.success : COLORS.white)};
   background: #2e2e2e;
   border: ${({ $hasError }) =>
     $hasError ? `1px solid ${COLORS.accent.normal}` : '1px solid transparent'};
@@ -71,8 +71,8 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
     $isValid &&
     css`
       color: rgba(255, 255, 255, 0.1);
-      background: linear-gradient(to right, #66ba62 30%, #fff 50%, #66ba62 70%);
-      background-color: #66ba62;
+      background: linear-gradient(to right, ${COLORS.success} 30%, #fff 50%, ${COLORS.success} 70%);
+      background-color: ${COLORS.success};
       background-size: 100px 100%;
       background-repeat: no-repeat;
       background-position: 0 0;
@@ -332,7 +332,7 @@ export default () => {
           },
           success: {
             iconTheme: {
-              primary: '#66ba62',
+              primary: COLORS.success,
               secondary: '#fff',
             },
           },

@@ -16,18 +16,24 @@ const TooltipTrigger = styled(Tooltip.Trigger)`
   border: none;
 `;
 
-const scaleInAnimation = keyframes({
-  '0%': { opacity: 0, transform: 'scale(0)' },
-  '100%': { opacity: 1, transform: 'scale(1)' },
-});
+const scaleInAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 const TooltipContent = styled(Tooltip.Content)<{ $isVisible: boolean }>`
   padding: 0.25em 1.5em;
+  display: ${({ $isVisible }) => ($isVisible ? 'inherit' : 'none')};
   font-size: 12px;
   background: #444;
   border-radius: 2px;
-  display: ${({ $isVisible }) => ($isVisible ? 'inherit' : 'none')};
-  transform-origin: var(--radix-tooltip-content-transform-origin);
   animation: ${scaleInAnimation} 0.1s ease-out;
 `;
 
@@ -46,7 +52,7 @@ export default ({ isVisible = true, isContentVisible = true, children }: Props) 
 
   return (
     <Tooltip.Provider>
-      <Tooltip.Root delayDuration={100}>
+      <Tooltip.Root delayDuration={20}>
         {isContentVisible && (
           <TooltipTrigger
             onMouseDown={(e) => {
