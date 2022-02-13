@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { ModalOverlayStyles } from '../components/Modal';
 import { COLORS, FONTS } from '../constants/theme';
 
 export default createGlobalStyle`
@@ -64,15 +65,13 @@ export default createGlobalStyle`
   }
 
   .-walletlink-css-reset .-walletlink-extension-dialog-container .-walletlink-extension-dialog-backdrop {
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px);
+    ${ModalOverlayStyles}
     transition: all 0.3s;
   }
 
   .walletconnect-qrcode__base {
     && {
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(3px);
+      ${ModalOverlayStyles}
       transition: all 0.3s;
     }
   }
