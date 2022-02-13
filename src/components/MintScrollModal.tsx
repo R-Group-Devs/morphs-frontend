@@ -155,7 +155,8 @@ export default ({ data, state, close }: Props) => {
 
                 <Paragraph>
                   <HelperText>
-                    Please try again or reach out on the{' '}
+                    {/* TODO: change to Ethereum */}
+                    Make sure you are on the Rinkeby network and try again. Reach out on the{' '}
                     <a href="https://discord.gg/cXxFndSu" target="_blank" rel="noreferrer">
                       Playgrounds Discord
                     </a>{' '}
