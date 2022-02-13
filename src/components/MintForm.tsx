@@ -337,6 +337,7 @@ export default () => {
             },
           },
           error: {
+            duration: 8000,
             iconTheme: {
               primary: COLORS.accent.normal,
               secondary: '#fff',
