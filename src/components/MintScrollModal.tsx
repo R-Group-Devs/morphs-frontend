@@ -2,7 +2,14 @@ import { useEffect, useMemo } from 'react';
 import { useNetwork } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
 import styled, { keyframes } from 'styled-components';
-import { ModalPortal, ModalOverlay, ModalContainer, ModalTitle, ModalContent } from './Modal';
+import {
+  ModalPortal,
+  ModalOverlay,
+  ModalContainer,
+  ModalTitle,
+  ModalContent,
+  ModalItem,
+} from './Modal';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import {
   PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
@@ -17,15 +24,11 @@ interface Props {
 }
 
 const Paragraph = styled.p`
-  margin-bottom: 1.5em;
-  font-size: 16px;
-
-  &:last-child {
-    margin-bottom: 1em;
-  }
+  margin: 0.25em 0 0.5em 0;
 `;
 
 const HelperText = styled.span`
+  margin-top: 0.25em;
   font-size: 11px;
   font-weight: 300;
 `;
@@ -84,7 +87,7 @@ export default ({ data, state, close }: Props) => {
 
           <ModalContent>
             {state === transactionStates.AWAITING_SIGNATURE && (
-              <>
+              <ModalItem>
                 <Paragraph>
                   <LoadingText>Awaiting wallet signature</LoadingText>
                 </Paragraph>
@@ -92,11 +95,11 @@ export default ({ data, state, close }: Props) => {
                 <Paragraph>
                   <HelperText>Sign the mint transaction in your wallet provider.</HelperText>
                 </Paragraph>
-              </>
+              </ModalItem>
             )}
 
             {state === transactionStates.AWAITING_CONFIRMATION && (
-              <>
+              <ModalItem>
                 <Paragraph>
                   <LoadingText>Minting</LoadingText>
                 </Paragraph>
@@ -107,11 +110,11 @@ export default ({ data, state, close }: Props) => {
                     later.
                   </HelperText>
                 </Paragraph>
-              </>
+              </ModalItem>
             )}
 
             {state === transactionStates.CONFIRMED && (
-              <>
+              <ModalItem>
                 <Paragraph>Success!</Paragraph>
 
                 <Paragraph>
@@ -137,11 +140,11 @@ export default ({ data, state, close }: Props) => {
                     .
                   </HelperText>
                 </Paragraph>
-              </>
+              </ModalItem>
             )}
 
             {state === transactionStates.FAILED && (
-              <>
+              <ModalItem>
                 <Paragraph>There was an error processing your transaction.</Paragraph>
 
                 <Paragraph>
@@ -153,7 +156,7 @@ export default ({ data, state, close }: Props) => {
                     for help.
                   </HelperText>
                 </Paragraph>
-              </>
+              </ModalItem>
             )}
           </ModalContent>
         </ModalContainer>
