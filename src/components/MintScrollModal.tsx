@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useNetwork } from 'wagmi';
+import { useConnect, useNetwork } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
 import styled, { keyframes } from 'styled-components';
 import {
@@ -58,6 +58,7 @@ const LoadingText = styled.div`
 `;
 
 export default ({ data, state, close }: Props) => {
+  const [{ data: wallet }] = useConnect();
   const [{ data: network }] = useNetwork();
 
   const chainId =
@@ -99,7 +100,9 @@ export default ({ data, state, close }: Props) => {
                 </Paragraph>
 
                 <Paragraph>
-                  <HelperText>Sign the mint transaction in your wallet provider.</HelperText>
+                  <HelperText>
+                    Sign the mint transaction in your {wallet.connector?.name} wallet.
+                  </HelperText>
                 </Paragraph>
               </ModalItem>
             )}
