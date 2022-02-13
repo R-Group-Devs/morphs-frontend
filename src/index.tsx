@@ -12,7 +12,6 @@ ReactDOM.render(
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </BrowserRouter>
-    ,
   </React.StrictMode>,
   document.getElementById('root')
 );
