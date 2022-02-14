@@ -72,6 +72,7 @@ export default ({ isVisible = true, isContentVisible = true, children }: Props) 
 
         <TooltipContent sideOffset={5} $isVisible={isVisible && !isSupportedNetwork}>
           <TooltipArrow />
+          {/* TODO: change tooltip text */}
           <p>This app only supports the following networks: {supportedNetworks.join(', ')}</p>
         </TooltipContent>
       </Tooltip.Root>
