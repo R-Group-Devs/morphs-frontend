@@ -306,7 +306,19 @@ export default () => {
           </SubmitButton>
         ) : (
           <UnsupportedNetworkTooltip isVisible={wallet.connected}>
-            <DisabledSubmitButton>Mint a Scroll</DisabledSubmitButton>
+            <DisabledSubmitButton>
+              <SubmitButtonText $isVisible={flag === 0}>
+                {flag === 0 && 'Mint a Scroll'}
+              </SubmitButtonText>
+
+              <SubmitButtonText $isVisible={flag === 1}>
+                {flag === 1 && 'Mint a Mythical Scroll'}
+              </SubmitButtonText>
+
+              <SubmitButtonText $isVisible={flag === 2}>
+                {flag === 2 && 'Mint a Cosmic Scroll'}
+              </SubmitButtonText>
+            </DisabledSubmitButton>
           </UnsupportedNetworkTooltip>
         )}
       </form>
