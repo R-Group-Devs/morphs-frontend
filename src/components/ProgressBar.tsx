@@ -23,12 +23,21 @@ const Indicator = styled(Progress.Indicator)`
 
 export default () => {
   const [progress, setProgress] = useState(10);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setProgress(100), 500);
+    const progressTimeout = setTimeout(() => setProgress(100), 500);
+    const hideTimeout = setTimeout(() => setIsVisible(false), 2500);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(progressTimeout);
+      clearTimeout(hideTimeout);
+    };
   }, []);
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <ProgressBar value={66}>
