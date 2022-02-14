@@ -13,6 +13,7 @@ import {
 } from './Modal';
 import Paragraph from './Paragraph';
 import HelperText from './HelperText';
+import LoadingText from './LoadingText';
 import useChainId from '../hooks/useChainId';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
@@ -288,7 +289,9 @@ export default ({ isOpen, close }: Props) => {
 
             {isConnecting && (
               <>
-                <ModalItem>Initializing...</ModalItem>
+                <ModalItem>
+                  <LoadingText>Initializing</LoadingText>
+                </ModalItem>
 
                 {wallet.connector && (
                   <ModalItem>

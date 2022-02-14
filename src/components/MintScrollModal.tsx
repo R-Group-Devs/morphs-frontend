@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useConnect } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
-import styled, { keyframes } from 'styled-components';
 import {
   ModalPortal,
   ModalOverlay,
@@ -12,6 +11,7 @@ import {
 } from './Modal';
 import Paragraph from './Paragraph';
 import HelperText from './HelperText';
+import LoadingText from './LoadingText';
 import useChainId from '../hooks/useChainId';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
@@ -22,26 +22,6 @@ interface Props {
   state: Transaction['state'];
   close: () => void;
 }
-
-const ellipsis = keyframes`
-  to {
-    width: 2.1em;
-  }
-`;
-
-const LoadingText = styled.span`
-  display: block;
-
-  &:after {
-    content: '...';
-    margin-left: 0.1em;
-    width: 0;
-    display: inline-block;
-    vertical-align: bottom;
-    animation: ${ellipsis} steps(4, end) 900ms infinite;
-    overflow: hidden;
-  }
-`;
 
 export default ({ data, state, close }: Props) => {
   const [{ data: wallet }] = useConnect();
