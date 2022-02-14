@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useConnect, useNetwork } from 'wagmi';
+import { useConnect } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
 import styled, { keyframes } from 'styled-components';
 import {
@@ -12,11 +12,9 @@ import {
 } from './Modal';
 import Paragraph from './Paragraph';
 import HelperText from './HelperText';
+import useChainId from '../hooks/useChainId';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
-import {
-  PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
-  MORPHS_NFT_CONTRACT_ADDRESSES,
-} from '../constants/contracts';
+import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
 import { NFT_EXPLORER_URLS } from '../constants/explorers';
 
 interface Props {
@@ -47,13 +45,7 @@ const LoadingText = styled.span`
 
 export default ({ data, state, close }: Props) => {
   const [{ data: wallet }] = useConnect();
-  const [{ data: network }] = useNetwork();
-
-  const chainId =
-    network?.chain?.id && network?.chain?.id in PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES
-      ? network?.chain?.id
-      : // TODO: use mainnet fallback
-        4;
+  const chainId = useChainId();
 
   const nftId = useMemo(() => {
     if (

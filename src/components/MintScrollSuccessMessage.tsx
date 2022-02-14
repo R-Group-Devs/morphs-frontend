@@ -1,9 +1,6 @@
-import { useNetwork } from 'wagmi';
 import styled from 'styled-components';
-import {
-  PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
-  MORPHS_NFT_CONTRACT_ADDRESSES,
-} from '../constants/contracts';
+import useChainId from '../hooks/useChainId';
+import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
 import { NFT_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS } from '../constants/theme';
 
@@ -27,13 +24,7 @@ const Link = styled.a`
 `;
 
 export default ({ tokenId }: Props) => {
-  const [{ data: network }] = useNetwork();
-
-  const chainId =
-    network?.chain?.id && network?.chain?.id in PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES
-      ? network?.chain?.id
-      : // TODO: use mainnet fallback
-        4;
+  const chainId = useChainId();
 
   return (
     <span>

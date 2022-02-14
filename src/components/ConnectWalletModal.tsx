@@ -13,6 +13,7 @@ import {
 } from './Modal';
 import Paragraph from './Paragraph';
 import HelperText from './HelperText';
+import useChainId from '../hooks/useChainId';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
 import { WALLETS } from '../constants/wallets';
@@ -178,6 +179,7 @@ export default ({ isOpen, close }: Props) => {
   });
   const [isAddressCopied, setIsAddressCopied] = useState(false);
   const [hasSeenConnectionError, setHasSeenConnectionError] = useState(false);
+  const chainId = useChainId();
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
@@ -237,12 +239,9 @@ export default ({ isOpen, close }: Props) => {
                     </CopyToClipboard>
                   )}
 
-                  {/* TODO: use mainnet fallback */}
                   {isSupportedNetwork && !isSmallViewport && (
                     <ModalAction
-                      href={`${BLOCK_EXPLORER_URLS[network?.chain?.id || 4]}/address/${
-                        account?.address
-                      }`}
+                      href={`${BLOCK_EXPLORER_URLS[chainId]}/address/${account?.address}`}
                       target="_blank"
                       rel="noreferrer"
                     >

@@ -1,12 +1,9 @@
-import { useNetwork } from 'wagmi';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import Credits from './Credits';
+import useChainId from '../hooks/useChainId';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
-import {
-  PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES,
-  MORPHS_NFT_CONTRACT_ADDRESSES,
-} from '../constants/contracts';
+import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
 import { NFT_EXPLORER_URLS } from '../constants/explorers';
 import { FONTS } from '../constants/theme';
 
@@ -49,13 +46,7 @@ const GalleryLink = styled.p`
 `;
 
 export default () => {
-  const [{ data: network }] = useNetwork();
-
-  const chainId =
-    network?.chain?.id && network?.chain?.id in PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES
-      ? network?.chain?.id
-      : // TODO: use mainnet fallback
-        4;
+  const chainId = useChainId();
 
   const isSmallViewport = useMediaQuery({
     query: '(max-width: 767px)',
