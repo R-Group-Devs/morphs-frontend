@@ -327,7 +327,7 @@ export default ({ isOpen, close }: Props) => {
                 <Paragraph>
                   <HelperText>
                     Make sure you have the wallet provider software downloaded. Reach out on the{' '}
-                    <a href="https://discord.gg/cXxFndSu" target="_blank" rel="noreferrer">
+                    <a href="https://discord.gg/eT5hD56Brt" target="_blank" rel="noreferrer">
                       Playgrounds Discord
                     </a>{' '}
                     for help.
