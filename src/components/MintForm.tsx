@@ -286,7 +286,7 @@ export default () => {
 
         {!isCodeValid && hasAttemptedSubmission && (
           <ValidationError>
-            This code is invalid. Please double-check the code you entered or mint without a code.
+            This code is invalid. Double-check the code you entered or mint without a code.
           </ValidationError>
         )}
 
