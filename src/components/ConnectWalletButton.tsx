@@ -45,8 +45,11 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
   }
 `;
 
-const Network = styled.div<{ $isSupported: boolean }>`
+const NetworkTooltip = styled(UnsupportedNetworkTooltip)`
   margin-right: 2em;
+`;
+
+const Network = styled.div<{ $isSupported: boolean }>`
   font-family: ${FONTS.mono};
   font-size: 14px;
   color: ${COLORS.white};
@@ -92,11 +95,11 @@ export default () => {
   return (
     <Container>
       {wallet.connected && (
-        <UnsupportedNetworkTooltip isContentVisible={!isSmallViewport}>
+        <NetworkTooltip isContentVisible={!isSmallViewport}>
           <Network $isSupported={isSupportedNetwork}>
             {network.chain?.id === 1 ? 'Ethereum' : network.chain?.name}
           </Network>
-        </UnsupportedNetworkTooltip>
+        </NetworkTooltip>
       )}
 
       <Dialog.Root open={isOpen}>

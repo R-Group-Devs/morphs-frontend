@@ -10,6 +10,7 @@ import {
   ModalTitle,
   ModalContent,
   ModalItem,
+  ModalButton,
 } from './Modal';
 import Paragraph from './Paragraph';
 import HelperText from './HelperText';
@@ -39,7 +40,7 @@ const WalletProviderDescription = styled.div`
   font-weight: 400;
 `;
 
-const WalletProviderOption = styled(ModalItem)`
+const WalletProviderOption = styled(ModalButton)`
   flex-direction: row;
   align-items: center;
   height: 64px;
@@ -236,7 +237,9 @@ export default ({ isOpen, close }: Props) => {
                         setIsAddressCopied(true);
                       }}
                     >
-                      <ModalAction>{isAddressCopied ? 'Copied' : 'Copy address'}</ModalAction>
+                      <ModalAction href="" onClick={(e) => e.preventDefault()}>
+                        {isAddressCopied ? 'Copied' : 'Copy address'}
+                      </ModalAction>
                     </CopyToClipboard>
                   )}
 
@@ -251,6 +254,7 @@ export default ({ isOpen, close }: Props) => {
                   )}
 
                   <ModalAction
+                    href=""
                     onClick={(e) => {
                       e.preventDefault();
                       disconnect();
@@ -267,6 +271,7 @@ export default ({ isOpen, close }: Props) => {
                 {wallet.connectors.map((connector) => (
                   <WalletProviderOption
                     key={connector.id}
+                    tabIndex={0}
                     onClick={async () => {
                       if (connector.id === 'walletConnect' || connector.id === 'walletLink') {
                         connect(connector);

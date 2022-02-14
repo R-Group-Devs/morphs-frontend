@@ -41,7 +41,7 @@ const TooltipArrow = styled(Tooltip.Arrow)`
   fill: #444;
 `;
 
-export default ({ isVisible = true, isContentVisible = true, children }: Props) => {
+export default ({ isVisible = true, isContentVisible = true, children, ...rest }: Props) => {
   const [{ data: network }] = useNetwork();
 
   const supportedNetworks = Object.values(NETWORKS).map(
@@ -55,6 +55,7 @@ export default ({ isVisible = true, isContentVisible = true, children }: Props) 
       <Tooltip.Root delayDuration={20}>
         {isContentVisible && (
           <TooltipTrigger
+            {...rest}
             onMouseDown={(e) => {
               if (isVisible && !isSupportedNetwork) {
                 e.preventDefault();

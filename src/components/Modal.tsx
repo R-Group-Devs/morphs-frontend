@@ -78,6 +78,24 @@ const Item = styled.div`
   transition: all 0.3s;
 `;
 
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: start;
+  margin: 1em 0;
+  padding: 1.25em 2em;
+  width: 100%;
+  font-family: ${FONTS.mono};
+  font-size: 16px;
+  font-weight: 600;
+  color: ${COLORS.white};
+  border: 1px solid ${COLORS.primary.normal};
+  background: none;
+  transition: all 0.3s;
+`;
+
 const CloseButton = styled(Dialog.Close)`
   font-size: 24px;
   font-weight: 600;
@@ -138,4 +156,5 @@ export {
   ModalTitle,
   Content as ModalContent,
   Item as ModalItem,
+  Button as ModalButton,
 };
