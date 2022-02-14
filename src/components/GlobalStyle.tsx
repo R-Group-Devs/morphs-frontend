@@ -15,6 +15,10 @@ export default createGlobalStyle`
     color: ${COLORS.white};
   }
 
+  &:focus {
+    outline-color: ${COLORS.primary.normal};
+  }
+
   a {
     color: ${COLORS.accent.normal};
     border-bottom: 1px solid ${COLORS.accent.normal};
