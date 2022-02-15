@@ -218,8 +218,12 @@ export default () => {
   }, [mint, flag, setIsMintScrollModalOpen]);
 
   useEffect(() => {
-    if (wallet.connected && signer && hasPendingMint && isCodeValid && isSupportedNetwork) {
-      mintScroll();
+    if (wallet.connected && signer && hasPendingMint && isCodeValid) {
+      if (!isSupportedNetwork) {
+        setHasPendingMint(false);
+      } else {
+        mintScroll();
+      }
     }
   }, [flag, wallet, signer, hasPendingMint, isCodeValid, isSupportedNetwork, mintScroll]);
 
