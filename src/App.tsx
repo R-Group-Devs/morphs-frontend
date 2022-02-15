@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
+import { ErrorBoundary } from 'react-error-boundary';
+import AppErrorMessage from './components/AppErrorMessage';
 import WalletProvider from './providers/WalletProvider';
 import GlobalStyle from './components/GlobalStyle';
 import ProgressBar from './components/ProgressBar';
@@ -61,30 +63,35 @@ const App = () => {
   });
 
   return (
-    <WalletProvider>
-      <animated.div style={progressBarAnimationProps}>
-        <ProgressBar />
-      </animated.div>
+    <>
+      <GlobalStyle />
 
-      <animated.div style={contentAnimationProps}>
-        <Container>
-          <GlobalStyle />
-          <Header />
+      <ErrorBoundary fallback={<AppErrorMessage />}>
+        <WalletProvider>
+          <animated.div style={progressBarAnimationProps}>
+            <ProgressBar />
+          </animated.div>
 
-          <Content>
-            <Panel>
-              <Description />
-            </Panel>
+          <animated.div style={contentAnimationProps}>
+            <Container>
+              <Header />
 
-            <Panel>
-              <MintForm />
-            </Panel>
-          </Content>
+              <Content>
+                <Panel>
+                  <Description />
+                </Panel>
 
-          <Footer />
-        </Container>
-      </animated.div>
-    </WalletProvider>
+                <Panel>
+                  <MintForm />
+                </Panel>
+              </Content>
+
+              <Footer />
+            </Container>
+          </animated.div>
+        </WalletProvider>
+      </ErrorBoundary>
+    </>
   );
 };
 
