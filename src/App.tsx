@@ -5,6 +5,7 @@ import AppErrorMessage from './components/AppErrorMessage';
 import WalletProvider from './providers/WalletProvider';
 import GlobalStyle from './components/GlobalStyle';
 import ProgressBar from './components/ProgressBar';
+import MintCountdown from './components/MintCountdown';
 import Header from './components/Header';
 import Description from './components/Description';
 import MintForm from './components/MintForm';
@@ -74,6 +75,7 @@ const App = () => {
 
           <animated.div style={contentAnimationProps}>
             <Container>
+              <MintCountdown />
               <Header />
 
               <Content>
