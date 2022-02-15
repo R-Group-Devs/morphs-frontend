@@ -67,6 +67,11 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
     outline: none;
   }
 
+  &::selection {
+    color: ${COLORS.white};
+    background: #666;
+  }
+
   ${({ $isValid }) =>
     $isValid &&
     css`
