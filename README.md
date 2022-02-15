@@ -23,9 +23,7 @@ Install dependencies:
 $ yarn
 ```
 
-You'll need RPC endpoints for all networks you plan to use during local development. You can generate private RPC endpoints with [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/), or search for public RPC endpoints to use.
-
-Add the following environment variables to a `.env.local` file:
+You'll need an [Infura](https://infura.io/) project ID for local development. Add the following environment variables to a `.env.local` file:
 
 ```
 REACT_APP_INFURA_PROJECT_ID=???
