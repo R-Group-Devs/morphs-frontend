@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const ellipsis = keyframes`
+const ellipsisAnimation = keyframes`
   to {
     width: 2.1em;
   }
@@ -15,7 +15,7 @@ export default styled.span`
     width: 0;
     display: inline-block;
     vertical-align: bottom;
-    animation: ${ellipsis} steps(4, end) 900ms infinite;
+    animation: ${ellipsisAnimation} steps(4, end) 900ms infinite;
     overflow: hidden;
   }
 `;

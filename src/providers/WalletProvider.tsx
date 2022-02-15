@@ -8,11 +8,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface ProviderProps {
+interface ProviderConfig {
   chainId?: number;
 }
 
-const provider = ({ chainId }: ProviderProps) =>
+const provider = ({ chainId }: ProviderConfig) =>
   new providers.InfuraProvider(chainId, process.env.REACT_APP_INFURA_PROJECT_ID);
 
 const connectors = [
