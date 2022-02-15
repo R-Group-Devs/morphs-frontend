@@ -1,3 +1,4 @@
+import { providers } from 'ethers';
 import { Provider, defaultChains } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
@@ -6,6 +7,13 @@ import { WalletLinkConnector } from 'wagmi/connectors/walletLink';
 interface Props {
   children: React.ReactNode;
 }
+
+interface ProviderProps {
+  chainId?: number;
+}
+
+const provider = ({ chainId }: ProviderProps) =>
+  new providers.InfuraProvider(chainId, process.env.REACT_APP_INFURA_PROJECT_ID);
 
 const connectors = [
   new InjectedConnector({
@@ -30,7 +38,7 @@ const connectors = [
 ];
 
 export default ({ children }: Props) => (
-  <Provider connectors={connectors} autoConnect>
+  <Provider provider={provider} connectors={connectors} autoConnect>
     {children}
   </Provider>
 );
