@@ -2,7 +2,7 @@ import { NETWORKS } from './networks';
 
 export const PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES = {
   // TODO: add ethereum contract
-  [NETWORKS.rinkeby]: '0x6a4ec56c34c3f8bbcc0510add4432373887ccc1a',
+  [NETWORKS.rinkeby]: '0x2fd757A0f244eFF2E6bd2A4200ACae5E1053E829',
 } as const;
 
 export const MORPHS_NFT_CONTRACT_ADDRESSES = {
