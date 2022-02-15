@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useConnect } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
+import styled from 'styled-components';
 import {
   ModalPortal,
   ModalOverlay,
@@ -22,6 +23,15 @@ interface Props {
   state: Transaction['state'];
   close: () => void;
 }
+
+const FooterText = styled.div`
+  margin-top: 1.5em;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 2em;
+  color: #999;
+`;
 
 export default ({ data, state, close }: Props) => {
   const [{ data: wallet }] = useConnect();
@@ -108,6 +118,11 @@ export default ({ data, state, close }: Props) => {
                     )}
                     .
                   </HelperText>
+
+                  <FooterText>
+                    If your scroll does not appear immediately using the link above, try waiting a
+                    minute and refreshing.
+                  </FooterText>
                 </Paragraph>
               </ModalItem>
             )}
