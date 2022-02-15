@@ -46,10 +46,11 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
 `;
 
 const NetworkTooltip = styled(UnsupportedNetworkTooltip)`
-  margin-right: 2em;
+  margin-right: 1.5em;
 `;
 
 const Network = styled.div<{ $isSupported: boolean }>`
+  padding: 0 0.5em;
   font-family: ${FONTS.mono};
   font-size: 14px;
   color: ${COLORS.white};
