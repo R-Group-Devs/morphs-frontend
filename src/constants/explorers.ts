@@ -8,12 +8,6 @@ export const BLOCK_EXPLORER_URLS = {
 
 export const NFT_EXPLORER_URLS = {
   // TODO: enable ethereum NFT explorer URL
-  // [NETWORKS.ethereum]: 'https://opensea.io',
-  [NETWORKS.rinkeby]: 'https://testnets.opensea.io',
-} as const;
-
-export const NFT_COLLECTION_NAMES = {
-  // TODO: enable ethereum NFT collection name
-  // [NETWORKS.ethereum]: 'morphswtf',
-  [NETWORKS.rinkeby]: 'morphs',
+  // [NETWORKS.ethereum]: 'https://rarible.com',
+  [NETWORKS.rinkeby]: 'https://rinkeby.rarible.com',
 } as const;

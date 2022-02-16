@@ -3,7 +3,8 @@ import { useMediaQuery } from 'react-responsive';
 import Credits from './Credits';
 import useChainId from '../hooks/useChainId';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
-import { NFT_EXPLORER_URLS, NFT_COLLECTION_NAMES } from '../constants/explorers';
+import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
+import { NFT_EXPLORER_URLS } from '../constants/explorers';
 import { FONTS } from '../constants/theme';
 
 const Container = styled.div``;
@@ -74,7 +75,7 @@ export default () => {
 
         <GalleryLink>
           <a
-            href={`${NFT_EXPLORER_URLS[chainId]}/collection/${NFT_COLLECTION_NAMES[chainId]}`}
+            href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
             target="_blank"
             rel="noreferrer"
           >

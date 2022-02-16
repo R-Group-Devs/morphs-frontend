@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import useChainId from '../hooks/useChainId';
 import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
-import { NFT_EXPLORER_URLS, NFT_COLLECTION_NAMES } from '../constants/explorers';
+import { NFT_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS } from '../constants/theme';
 
 interface Props {
@@ -32,8 +32,8 @@ export default ({ tokenId }: Props) => {
       <Link
         href={
           tokenId
-            ? `${NFT_EXPLORER_URLS[chainId]}/assets/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}/${tokenId}`
-            : `${NFT_EXPLORER_URLS[chainId]}/collection/${NFT_COLLECTION_NAMES[chainId]}`
+            ? `${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${tokenId}`
+            : `${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`
         }
         target="_blank"
         rel="noreferrer"
