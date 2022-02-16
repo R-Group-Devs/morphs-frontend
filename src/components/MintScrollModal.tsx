@@ -16,7 +16,7 @@ import LoadingText from './LoadingText';
 import useChainId from '../hooks/useChainId';
 import { transactionStates, Transaction } from '../hooks/useExecuteTransaction';
 import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
-import { NFT_EXPLORER_URLS } from '../constants/explorers';
+import { NFT_EXPLORER_URLS, NFT_COLLECTION_NAMES } from '../constants/explorers';
 
 interface Props {
   data: TransactionReceipt | null;
@@ -101,7 +101,7 @@ export default ({ data, state, close }: Props) => {
                     You feel a pulse of strange energy...{' '}
                     {nftId ? (
                       <a
-                        href={`${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${nftId}`}
+                        href={`${NFT_EXPLORER_URLS[chainId]}/assets/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}/${nftId}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -109,7 +109,7 @@ export default ({ data, state, close }: Props) => {
                       </a>
                     ) : (
                       <a
-                        href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
+                        href={`${NFT_EXPLORER_URLS[chainId]}/collection/${NFT_COLLECTION_NAMES[chainId]}`}
                         target="_blank"
                         rel="noreferrer"
                       >
