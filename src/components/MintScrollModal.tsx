@@ -133,8 +133,7 @@ export default ({ data, state, close }: Props) => {
 
                 <Paragraph>
                   <HelperText>
-                    {/* TODO: change to Ethereum */}
-                    Make sure you are on the Rinkeby network and try again. Reach out on the{' '}
+                    Make sure you are on the Ethereum network and try again. Reach out on the{' '}
                     <a href="https://discord.gg/eT5hD56Brt" target="_blank" rel="noreferrer">
                       Playgrounds Discord
                     </a>{' '}

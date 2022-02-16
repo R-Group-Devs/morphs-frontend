@@ -44,9 +44,6 @@ const TooltipArrow = styled(Tooltip.Arrow)`
 export default ({ isVisible = true, isContentVisible = true, children, ...rest }: Props) => {
   const [{ data: network }] = useNetwork();
 
-  const supportedNetworks = Object.values(NETWORKS).map(
-    (chainId) => network?.chains?.find((chain) => chain.id === chainId)?.name
-  );
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
@@ -73,8 +70,7 @@ export default ({ isVisible = true, isContentVisible = true, children, ...rest }
 
         <TooltipContent sideOffset={5} $isVisible={isVisible && !isSupportedNetwork}>
           <TooltipArrow />
-          {/* TODO: change tooltip text */}
-          <p>This app only supports the following networks: {supportedNetworks.join(', ')}</p>
+          <p>This app only supports the Ethereum network.</p>
         </TooltipContent>
       </Tooltip.Root>
     </Tooltip.Provider>
