@@ -1,5 +1,5 @@
 {
-  "name": "morphs-nft-frontend",
+  "name": "morphs-frontend",
   "description": "Minting app for the Morphs NFT drop.",
   "version": "0.1.0",
   "type": "module",

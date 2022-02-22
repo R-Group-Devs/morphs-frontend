@@ -1,4 +1,4 @@
-# morphs-nft-frontend
+# morphs-frontend
 
 Minting app for the **[Morphs](https://morphs.wtf)** NFT drop.
 
@@ -12,7 +12,7 @@ Minting app for the **[Morphs](https://morphs.wtf)** NFT drop.
 Clone the repo:
 
 ```sh
-$ git clone git@github.com:R-Group-Devs/morphs-nft-frontend.git
+$ git clone git@github.com:R-Group-Devs/morphs-frontend.git
 ```
 
 ## Development
