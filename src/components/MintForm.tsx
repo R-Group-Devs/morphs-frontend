@@ -584,7 +584,7 @@ export default () => {
 
         {!isCustomFlagValid && hasAttemptedSubmission && (
           <ValidationError>
-            This cosmic signature is invalid. Enter a number between 2 and 2^256-1.
+            This cosmic signature is invalid. Enter a number between 3 and 2^256-1.
           </ValidationError>
         )}
 
