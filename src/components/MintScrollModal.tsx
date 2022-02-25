@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useConnect } from 'wagmi';
+import { useConnect, useAccount } from 'wagmi';
 import { TransactionReceipt } from '@ethersproject/providers';
 import styled from 'styled-components';
 import {
@@ -21,6 +21,7 @@ import { NFT_EXPLORER_URLS } from '../constants/explorers';
 interface Props {
   data: TransactionReceipt | null;
   state: Transaction['state'];
+  isBatchMintEnabled: boolean;
   close: () => void;
 }
 
@@ -33,8 +34,9 @@ const FooterText = styled.div`
   color: #999;
 `;
 
-export default ({ data, state, close }: Props) => {
+export default ({ data, state, isBatchMintEnabled, close }: Props) => {
   const [{ data: wallet }] = useConnect();
+  const [{ data: account }] = useAccount();
   const chainId = useChainId();
 
   const nftId = useMemo(() => {
@@ -60,7 +62,9 @@ export default ({ data, state, close }: Props) => {
     <ModalPortal>
       <ModalOverlay>
         <ModalContainer close={close}>
-          <ModalTitle close={close}>Mint a Scroll</ModalTitle>
+          <ModalTitle close={close}>
+            {isBatchMintEnabled ? 'Mint Scrolls' : 'Mint a Scroll'}
+          </ModalTitle>
 
           <ModalContent>
             {state === transactionStates.AWAITING_SIGNATURE && (
@@ -99,17 +103,17 @@ export default ({ data, state, close }: Props) => {
                 <Paragraph>
                   <HelperText>
                     You feel a pulse of strange energy...{' '}
-                    {nftId ? (
+                    {isBatchMintEnabled ? (
                       <a
-                        href={`${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${nftId}`}
+                        href={`${NFT_EXPLORER_URLS[chainId]}/user/${account?.address}/owned?filter[collections][]=${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        See your scroll
+                        See your scrolls
                       </a>
                     ) : (
                       <a
-                        href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
+                        href={`${NFT_EXPLORER_URLS[chainId]}/token/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}:${nftId}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -120,8 +124,8 @@ export default ({ data, state, close }: Props) => {
                   </HelperText>
 
                   <FooterText>
-                    If your scroll does not appear immediately using the link above, try waiting a
-                    minute and refreshing.
+                    If your {isBatchMintEnabled ? 'scrolls do not' : 'scroll does not'} appear
+                    immediately using the link above, try waiting a minute and refreshing.
                   </FooterText>
                 </Paragraph>
               </ModalItem>

@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { BigNumber } from 'ethers';
 import useChainId from './useChainId';
 import usePlaygroundsEngineContract from './usePlaygroundsEngineContract';
 import useExecuteTransaction from './useExecuteTransaction';
@@ -11,14 +10,14 @@ export default () => {
   const chainId = useChainId();
   const { signer } = playgroundsEngineContract;
 
-  const mint = useCallback(
-    async (flag: BigNumber) => {
+  const batchMint = useCallback(
+    async (count: number) => {
       executeTransaction(() =>
-        playgroundsEngineContract.mint(MORPHS_NFT_CONTRACT_ADDRESSES[chainId], flag)
+        playgroundsEngineContract.batchMint(MORPHS_NFT_CONTRACT_ADDRESSES[chainId], count)
       );
     },
     [chainId, playgroundsEngineContract, executeTransaction]
   );
 
-  return [{ data, state, error, signer }, mint] as const;
+  return [{ data, state, error, signer }, batchMint] as const;
 };

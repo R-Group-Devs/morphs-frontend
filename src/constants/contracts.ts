@@ -1,6 +1,6 @@
 import { NETWORKS } from './networks';
 
-export const PLAYGROUNDS_GENESIS_ENGINE_CONTRACT_ADDRESSES = {
+export const PLAYGROUNDS_ENGINE_CONTRACT_ADDRESSES = {
   [NETWORKS.ethereum]: '0x4993838aE8ED82caf02Cc27D820d92333eD04d0F',
   [NETWORKS.rinkeby]: '0x3d28Aeea88f70c4dDc370acC3260ACeF040e9E38',
 } as const;
