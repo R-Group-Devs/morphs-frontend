@@ -27,13 +27,17 @@ const ascii = `
                 /                                               /
 
 
-         did
-         you
-              see
+         patience
+          and
+              the
 
-                 the words
+                 celestial signature
 
-                   ?
+                            switch
+
+                                   will reveal
+
+                                                itself
 -->
 `;
 
