@@ -535,7 +535,7 @@ export default () => {
           <InputContainer>
             {hasUnlockedCustomFlagInput ? (
               <CustomFlagInput
-                placeholder="Inscribe a cosmic signature"
+                placeholder="Inscribe a celestial signature"
                 value={customFlag}
                 ref={customFlagInputRef}
                 onChange={(e) => {
