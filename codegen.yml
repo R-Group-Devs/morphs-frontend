@@ -1,0 +1,15 @@
+overwrite: true
+schema: https://api.thegraph.com/subgraphs/name/r-group-devs/shell-mainnet
+documents:
+  - ./src/graphql/**/*.gql
+generates:
+  './src/lib/graph-generated.ts':
+    plugins:
+    - typescript
+    - typescript-operations
+    - typescript-graphql-request
+    config:
+      rawRequest: true
+      scalars:
+        BigInt: string
+        BigDecimal: string

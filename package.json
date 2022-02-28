@@ -13,12 +13,15 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.0",
+    "@types/lodash": "4.14.179",
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.21",
     "ethers": "^5.5.4",
+    "graphql": "16.3.0",
+    "lodash": "4.17.21",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
     "react-countdown": "^2.3.2",
@@ -38,6 +41,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "codegen": "graphql-codegen --config codegen.yml",
     "start": "react-scripts start",
     "build": "react-scripts build && yarn ascii",
     "ascii": "node --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/inject-ascii.ts",
