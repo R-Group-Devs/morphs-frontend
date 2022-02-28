@@ -1,0 +1,35 @@
+query collectionDetail($collectionAddress: ID!) {
+  collection(id: $collectionAddress) {
+    id
+    name
+    symbol
+    address
+    nftCount
+    createdAtTimestamp
+    lastActivityAtTimestamp
+    canonicalEngine { id address name }
+    canonicalOwner { id address }
+    creator { id address }
+    forks {
+      id
+      forkId
+      owner { id address }
+      engine { id address name }
+    }
+  }
+}
+
+query ownedNfts($collectionAddress: ID! $ownerAddress: String!) {
+  collection(id: $collectionAddress) {
+    id
+    nftOwners(
+      where: { owner: $ownerAddress }
+      first: 1000
+      orderBy: lastActivityAtTimestamp
+      orderDirection: desc)
+    {
+      nft { id tokenId }
+      lastActivityAtTimestamp
+    }
+  }
+}
