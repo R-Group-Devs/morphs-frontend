@@ -11,12 +11,15 @@ import MintScrollModal from './MintScrollModal';
 import MintScrollSuccessMessage from './MintScrollSuccessMessage';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import PrePostMintCloseRenderer from './PrePostMintCloseRenderer';
+import useChainId from '../hooks/useChainId';
 import useMint from '../hooks/useMint';
 import useBatchMint from '../hooks/useBatchMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
 import scrollExampleImage from '../assets/images/scroll-example.png';
 import unlockCustomFlagInputButton from '../assets/images/unlock-custom-flag-input-button.png';
 import { NETWORKS } from '../constants/networks';
+import { NFT_EXPLORER_URLS } from '../constants/explorers';
+import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
 import { COLORS, FONTS } from '../constants/theme';
 
 const Container = styled.div`
@@ -307,6 +310,8 @@ const ToastDismissButton = styled.button`
 `;
 
 const PostMintCloseContent = () => {
+  const chainId = useChainId();
+
   const animationProps = useSpring({
     from: {
       opacity: 0,
@@ -320,11 +325,11 @@ const PostMintCloseContent = () => {
   return (
     <animated.div style={animationProps}>
       <SeeScrollsButton
-        href="https://opensea.io/collection/morphswtf"
+        href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
         target="_blank"
         rel="noreferrer"
       >
-        Browse Scrolls on OpenSea →
+        Browse Scrolls on Rarible →
       </SeeScrollsButton>
     </animated.div>
   );
