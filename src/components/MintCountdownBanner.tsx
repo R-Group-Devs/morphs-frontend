@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
-import PrePostMintCloseRenderer from './PrePostMintCloseRenderer';
 import { COLORS, FONTS } from '../constants/theme';
 
 const SpaceContainer = styled.div`
@@ -27,54 +25,12 @@ const Label = styled.span`
   text-transform: uppercase;
 `;
 
-const Unit = styled.span`
-  margin: 0 8px 0 5px;
-  display: inline-block;
-  font-weight: 400;
-
-  &:last-child {
-    margin-right: 0;
-  }
-`;
-
-const PostMintCloseContent = () => {
-  const animationProps = useSpring({
-    from: {
-      opacity: 0,
-    },
-    to: {
-      opacity: 1,
-    },
-    config: { duration: 2000 },
-  });
-
-  return (
-    <animated.div style={animationProps}>
-      <Label>The minting portal has closed</Label>
-    </animated.div>
-  );
-};
-
 export default () => (
-  <PrePostMintCloseRenderer>
-    {({ completed, days, hours, minutes, seconds }) => (
-      <>
-        <SpaceContainer />
+  <>
+    <SpaceContainer />
 
-        <Container>
-          {completed ? (
-            <PostMintCloseContent />
-          ) : (
-            <>
-              <Label>Minting Closes:</Label>
-              {days} <Unit>d</Unit>
-              {hours} <Unit>hr</Unit>
-              {minutes} <Unit>min</Unit>
-              {seconds} <Unit>s</Unit>
-            </>
-          )}
-        </Container>
-      </>
-    )}
-  </PrePostMintCloseRenderer>
+    <Container>
+      <Label>The minting portal has closed</Label>
+    </Container>
+  </>
 );
