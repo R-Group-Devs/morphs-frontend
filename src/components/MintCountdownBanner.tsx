@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import Countdown, { CountdownRenderProps } from 'react-countdown';
+import { useSpring, animated } from 'react-spring';
+import PrePostMintCloseRenderer from './PrePostMintCloseRenderer';
 import { COLORS, FONTS } from '../constants/theme';
 
 const SpaceContainer = styled.div`
@@ -24,10 +25,6 @@ const Label = styled.span`
   margin-right: 16px;
   display: inline-block;
   text-transform: uppercase;
-
-  &:after {
-    content: ':';
-  }
 `;
 
 const Unit = styled.span`
@@ -40,28 +37,44 @@ const Unit = styled.span`
   }
 `;
 
-export default () => {
-  const endDate = new Date(Date.UTC(2022, 2, 1, 6, 0, 0));
+const PostMintCloseContent = () => {
+  const animationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    config: { duration: 2000 },
+  });
 
-  const renderer = ({ days, hours, minutes, seconds, completed }: CountdownRenderProps) => {
-    if (completed) {
-      return null;
-    }
+  return (
+    <animated.div style={animationProps}>
+      <Label>The minting portal has closed</Label>
+    </animated.div>
+  );
+};
 
-    return (
+export default () => (
+  <PrePostMintCloseRenderer>
+    {({ completed, days, hours, minutes, seconds }) => (
       <>
         <SpaceContainer />
 
         <Container>
-          <Label>Minting Closes</Label>
-          {days} <Unit>d</Unit>
-          {hours} <Unit>hr</Unit>
-          {minutes} <Unit>min</Unit>
-          {seconds} <Unit>s</Unit>
+          {completed ? (
+            <PostMintCloseContent />
+          ) : (
+            <>
+              <Label>Minting Closes:</Label>
+              {days} <Unit>d</Unit>
+              {hours} <Unit>hr</Unit>
+              {minutes} <Unit>min</Unit>
+              {seconds} <Unit>s</Unit>
+            </>
+          )}
         </Container>
       </>
-    );
-  };
-
-  return <Countdown date={endDate} renderer={renderer} />;
-};
+    )}
+  </PrePostMintCloseRenderer>
+);

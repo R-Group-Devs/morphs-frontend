@@ -27,17 +27,8 @@ const ascii = `
                 /                                               /
 
 
-         patience
-          and
-              the
 
-                 celestial signature
 
-                            switch
-
-                                   will reveal
-
-                                                itself
 -->
 `;
 

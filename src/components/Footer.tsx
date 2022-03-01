@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import PrePostMintCloseRenderer from './PrePostMintCloseRenderer';
 import Credits from './Credits';
 import shapesPanelImage from '../assets/images/shapes-panel.png';
 import shapesPanelImageMobile from '../assets/images/shapes-panel-mobile.png';
@@ -44,16 +45,24 @@ export default () => {
         poster={isSmallViewport ? shapesPanelImageMobile : shapesPanelImage}
       />
 
-      <FooterText>
-        Morphs is an NFT PFP project that evolves over time. Mint yourself a mystery scroll for free
-        (gas only) and wait to see what happens… Follow{' '}
-        <a href="https://twitter.com/playgroundswtf" target="_blank" rel="noreferrer">
-          @playgroundswtf
-        </a>{' '}
-        for updates.
-      </FooterText>
+      <PrePostMintCloseRenderer>
+        {({ completed }) =>
+          !completed ? (
+            <>
+              <FooterText>
+                Morphs is an NFT PFP project that evolves over time. Mint yourself a mystery scroll
+                for free (gas only) and wait to see what happens… Follow{' '}
+                <a href="https://twitter.com/playgroundswtf" target="_blank" rel="noreferrer">
+                  @playgroundswtf
+                </a>{' '}
+                for updates.
+              </FooterText>
 
-      {isSmallViewport && <Credits />}
+              {isSmallViewport && <Credits />}
+            </>
+          ) : null
+        }
+      </PrePostMintCloseRenderer>
     </Container>
   );
 };

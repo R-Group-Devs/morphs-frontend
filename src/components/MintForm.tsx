@@ -10,6 +10,7 @@ import ConnectWalletModal from './ConnectWalletModal';
 import MintScrollModal from './MintScrollModal';
 import MintScrollSuccessMessage from './MintScrollSuccessMessage';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
+import PrePostMintCloseRenderer from './PrePostMintCloseRenderer';
 import useMint from '../hooks/useMint';
 import useBatchMint from '../hooks/useBatchMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
@@ -123,7 +124,7 @@ const CodeInput = styled.input<{ $isValid: boolean; $hasError: boolean }>`
     `}
 `;
 
-const SubmitButtonStyles = css`
+const ButtonStyles = css`
   padding: 20px 50px;
   width: 100%;
   min-height: 72px;
@@ -151,11 +152,11 @@ const SubmitButtonStyles = css`
 `;
 
 const SubmitButton = styled.button`
-  ${SubmitButtonStyles}
+  ${ButtonStyles}
 `;
 
 const DisabledSubmitButton = styled.div`
-  ${SubmitButtonStyles}
+  ${ButtonStyles}
 
   &:hover {
     cursor: default;
@@ -165,6 +166,18 @@ const DisabledSubmitButton = styled.div`
 const SubmitButtonText = styled.span<{ $isVisible: boolean }>`
   transform: ${({ $isVisible }) => ($isVisible ? 'scaleX(1)' : 'scaleX(0)')};
   display: inline-block;
+`;
+
+const SeeScrollsButton = styled.a`
+  ${ButtonStyles}
+  display: block;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const MintFormFooter = styled.div`
@@ -292,6 +305,30 @@ const ToastDismissButton = styled.button`
     cursor: pointer;
   }
 `;
+
+const PostMintCloseContent = () => {
+  const animationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    config: { duration: 2000 },
+  });
+
+  return (
+    <animated.div style={animationProps}>
+      <SeeScrollsButton
+        href="https://opensea.io/collection/morphswtf"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Browse Scrolls on OpenSea →
+      </SeeScrollsButton>
+    </animated.div>
+  );
+};
 
 const MYTHICAL_CODE = 'MYTHICAL69';
 const COSMIC_CODE = 'COSMIC420';
@@ -491,264 +528,291 @@ export default () => {
         poster={scrollExampleImage}
       />
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          setHasAttemptedSubmission(true);
-
-          if (!isCodeValid) {
-            codeInputRef.current?.focus();
-
-            return false;
-          }
-
-          if (!isCustomFlagValid) {
-            customFlagInputRef.current?.focus();
-
-            return false;
-          }
-
-          if (!wallet.connected) {
-            setHasPendingMint(true);
-            setIsConnectWalletModalOpen(true);
-          } else {
-            mintScrolls();
-          }
-        }}
-      >
-        {isBatchMintEnabled ? (
-          <SliderRoot
-            defaultValue={[batchMintQuantity]}
-            min={2}
-            max={50}
-            step={1}
-            onValueChange={(value) => setBatchMintQuantity(value[0])}
-            aria-label="Scrolls"
-          >
-            <SliderTrack>
-              <SliderRange />
-            </SliderTrack>
-            <SliderThumb />
-          </SliderRoot>
-        ) : (
-          <InputContainer>
-            {hasUnlockedCustomFlagInput ? (
-              <CustomFlagInput
-                placeholder="Inscribe a celestial signature"
-                value={customFlag}
-                ref={customFlagInputRef}
-                onChange={(e) => {
+      <PrePostMintCloseRenderer>
+        {({ completed }) =>
+          completed ? (
+            <PostMintCloseContent />
+          ) : (
+            <>
+              <form
+                onSubmit={(e) => {
                   e.preventDefault();
-                  setCustomFlag(e.target.value);
-                }}
-                $isEmpty={customFlag === ''}
-                $hasError={!isCustomFlagValid && hasAttemptedSubmission}
-                spellCheck={false}
-                autoComplete="off"
-              />
-            ) : (
-              <CodeInput
-                placeholder="If you have a special code, input it here"
-                value={code}
-                ref={codeInputRef}
-                onChange={(e) => setCode(e.target.value)}
-                $hasError={!isCodeValid && hasAttemptedSubmission}
-                $isValid={!!code && isCodeValid}
-                spellCheck={false}
-                autoComplete="off"
-              />
-            )}
 
-            {isUnlockCustomFlagInputButtonVisible && (
-              <animated.div style={unlockCustomFlagInputButtonAnimationProps}>
-                <UnlockCustomFlagInputButton
-                  onClick={() => {
-                    setHasUnlockedCustomFlagInput((toggle) => !toggle);
-                  }}
-                  $hasError={
-                    (hasUnlockedCustomFlagInput && !isCustomFlagValid && hasAttemptedSubmission) ||
-                    (!hasUnlockedCustomFlagInput && !isCodeValid && hasAttemptedSubmission)
+                  setHasAttemptedSubmission(true);
+
+                  if (!isCodeValid) {
+                    codeInputRef.current?.focus();
+
+                    return false;
                   }
-                >
-                  <UnlockCustomFlagImage
-                    src={unlockCustomFlagInputButton}
-                    $isUnlocked={hasUnlockedCustomFlagInput}
-                    alt=""
-                  />
-                </UnlockCustomFlagInputButton>
-              </animated.div>
-            )}
-          </InputContainer>
-        )}
 
-        {!isCustomFlagValid && hasAttemptedSubmission && (
-          <ValidationError>
-            This cosmic signature is invalid. Enter a number between 3 and 2^256-1.
-          </ValidationError>
-        )}
+                  if (!isCustomFlagValid) {
+                    customFlagInputRef.current?.focus();
 
-        {!isCodeValid && hasAttemptedSubmission && (
-          <ValidationError>
-            This code is invalid. Double-check the code you entered or mint without a code.
-          </ValidationError>
-        )}
+                    return false;
+                  }
 
-        {!wallet.connected || isSupportedNetwork ? (
-          <SubmitButton>
-            <SubmitButtonText $isVisible={isBatchMintEnabled}>
-              {isBatchMintEnabled && `Batch Mint ${batchMintQuantity} Scrolls`}
-            </SubmitButtonText>
-
-            <SubmitButtonText
-              $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 0}
-            >
-              {!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 0 && 'Mint a Scroll'}
-            </SubmitButtonText>
-
-            <SubmitButtonText
-              $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 1}
-            >
-              {!isBatchMintEnabled &&
-                !hasUnlockedCustomFlagInput &&
-                flag === 1 &&
-                'Mint a Mythical Scroll'}
-            </SubmitButtonText>
-
-            <SubmitButtonText
-              $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 2}
-            >
-              {!isBatchMintEnabled &&
-                !hasUnlockedCustomFlagInput &&
-                flag === 2 &&
-                'Mint a Cosmic Scroll'}
-            </SubmitButtonText>
-
-            <SubmitButtonText $isVisible={hasUnlockedCustomFlagInput && !isBatchMintEnabled}>
-              {hasUnlockedCustomFlagInput &&
-                !isBatchMintEnabled &&
-                (customFlagNumber.gt(2) ? 'Mint a Celestial Scroll' : 'Mint a Scroll')}
-            </SubmitButtonText>
-          </SubmitButton>
-        ) : (
-          <UnsupportedNetworkTooltip isVisible={wallet.connected}>
-            <DisabledSubmitButton>
-              <SubmitButtonText $isVisible={isBatchMintEnabled}>
-                {isBatchMintEnabled &&
-                  `Batch Mint ${batchMintQuantity} ${
-                    batchMintQuantity === 1 ? 'Scroll' : 'Scrolls'
-                  }`}
-              </SubmitButtonText>
-
-              <SubmitButtonText
-                $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 0}
+                  if (!wallet.connected) {
+                    setHasPendingMint(true);
+                    setIsConnectWalletModalOpen(true);
+                  } else {
+                    mintScrolls();
+                  }
+                }}
               >
-                {!isBatchMintEnabled &&
-                  !hasUnlockedCustomFlagInput &&
-                  flag === 0 &&
-                  'Mint a Scroll'}
-              </SubmitButtonText>
+                {isBatchMintEnabled ? (
+                  <SliderRoot
+                    defaultValue={[batchMintQuantity]}
+                    min={2}
+                    max={50}
+                    step={1}
+                    onValueChange={(value) => setBatchMintQuantity(value[0])}
+                    aria-label="Scrolls"
+                  >
+                    <SliderTrack>
+                      <SliderRange />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </SliderRoot>
+                ) : (
+                  <InputContainer>
+                    {hasUnlockedCustomFlagInput ? (
+                      <CustomFlagInput
+                        placeholder="Inscribe a celestial signature"
+                        value={customFlag}
+                        ref={customFlagInputRef}
+                        onChange={(e) => {
+                          e.preventDefault();
+                          setCustomFlag(e.target.value);
+                        }}
+                        $isEmpty={customFlag === ''}
+                        $hasError={!isCustomFlagValid && hasAttemptedSubmission}
+                        spellCheck={false}
+                        autoComplete="off"
+                      />
+                    ) : (
+                      <CodeInput
+                        placeholder="If you have a special code, input it here"
+                        value={code}
+                        ref={codeInputRef}
+                        onChange={(e) => setCode(e.target.value)}
+                        $hasError={!isCodeValid && hasAttemptedSubmission}
+                        $isValid={!!code && isCodeValid}
+                        spellCheck={false}
+                        autoComplete="off"
+                      />
+                    )}
 
-              <SubmitButtonText
-                $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 1}
-              >
-                {!isBatchMintEnabled &&
-                  !hasUnlockedCustomFlagInput &&
-                  flag === 1 &&
-                  'Mint a Mythical Scroll'}
-              </SubmitButtonText>
-
-              <SubmitButtonText
-                $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 2}
-              >
-                {!isBatchMintEnabled &&
-                  !hasUnlockedCustomFlagInput &&
-                  flag === 2 &&
-                  'Mint a Cosmic Scroll'}
-              </SubmitButtonText>
-
-              <SubmitButtonText $isVisible={hasUnlockedCustomFlagInput && !isBatchMintEnabled}>
-                {hasUnlockedCustomFlagInput &&
-                  !isBatchMintEnabled &&
-                  (customFlagNumber.gt(2) ? 'Mint a Celestial Scroll' : 'Mint a Scroll')}
-              </SubmitButtonText>
-            </DisabledSubmitButton>
-          </UnsupportedNetworkTooltip>
-        )}
-      </form>
-
-      <MintFormFooter>
-        {isBatchMintEnabled ? (
-          <HelperText>Batch mint cannot be combined with special codes.</HelperText>
-        ) : (
-          <HelperText>Minting is free. You just pay gas.</HelperText>
-        )}
-
-        <BatchMintToggle
-          href=""
-          onClick={(e) => {
-            e.preventDefault();
-            setIsBatchMintEnabled((toggle) => !toggle);
-          }}
-        >
-          {isBatchMintEnabled ? 'Single Mint' : 'Batch Mint'}
-        </BatchMintToggle>
-      </MintFormFooter>
-
-      <Dialog.Root open={isConnectWalletModalOpen}>
-        <ConnectWalletModal
-          isOpen={isConnectWalletModalOpen}
-          close={() => setIsConnectWalletModalOpen(false)}
-        />
-      </Dialog.Root>
-
-      <Dialog.Root open={isMintScrollModalOpen}>
-        <MintScrollModal
-          data={data}
-          state={state}
-          isBatchMintEnabled={isBatchMintEnabled}
-          close={() => setIsMintScrollModalOpen(false)}
-        />
-      </Dialog.Root>
-
-      <Toaster
-        toastOptions={{
-          duration: 60000,
-          style: {
-            maxWidth: 550,
-            fontSize: 12,
-            color: COLORS.white,
-            background: '#444',
-          },
-          success: {
-            iconTheme: {
-              primary: COLORS.success,
-              secondary: '#fff',
-            },
-          },
-          error: {
-            duration: 8000,
-            iconTheme: {
-              primary: COLORS.accent.normal,
-              secondary: '#fff',
-            },
-          },
-        }}
-      >
-        {(t) => (
-          <ToastBar toast={t}>
-            {({ icon, message }) => (
-              <>
-                {icon}
-                {message}
-                {t.type !== 'loading' && (
-                  <ToastDismissButton onClick={() => toast.dismiss(t.id)}>X</ToastDismissButton>
+                    {isUnlockCustomFlagInputButtonVisible && (
+                      <animated.div style={unlockCustomFlagInputButtonAnimationProps}>
+                        <UnlockCustomFlagInputButton
+                          onClick={() => {
+                            setHasUnlockedCustomFlagInput((toggle) => !toggle);
+                          }}
+                          $hasError={
+                            (hasUnlockedCustomFlagInput &&
+                              !isCustomFlagValid &&
+                              hasAttemptedSubmission) ||
+                            (!hasUnlockedCustomFlagInput && !isCodeValid && hasAttemptedSubmission)
+                          }
+                        >
+                          <UnlockCustomFlagImage
+                            src={unlockCustomFlagInputButton}
+                            $isUnlocked={hasUnlockedCustomFlagInput}
+                            alt=""
+                          />
+                        </UnlockCustomFlagInputButton>
+                      </animated.div>
+                    )}
+                  </InputContainer>
                 )}
-              </>
-            )}
-          </ToastBar>
-        )}
-      </Toaster>
+
+                {!isCustomFlagValid && hasAttemptedSubmission && (
+                  <ValidationError>
+                    This cosmic signature is invalid. Enter a number between 3 and 2^256-1.
+                  </ValidationError>
+                )}
+
+                {!isCodeValid && hasAttemptedSubmission && (
+                  <ValidationError>
+                    This code is invalid. Double-check the code you entered or mint without a code.
+                  </ValidationError>
+                )}
+
+                {!wallet.connected || isSupportedNetwork ? (
+                  <SubmitButton>
+                    <SubmitButtonText $isVisible={isBatchMintEnabled}>
+                      {isBatchMintEnabled && `Batch Mint ${batchMintQuantity} Scrolls`}
+                    </SubmitButtonText>
+
+                    <SubmitButtonText
+                      $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 0}
+                    >
+                      {!isBatchMintEnabled &&
+                        !hasUnlockedCustomFlagInput &&
+                        flag === 0 &&
+                        'Mint a Scroll'}
+                    </SubmitButtonText>
+
+                    <SubmitButtonText
+                      $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 1}
+                    >
+                      {!isBatchMintEnabled &&
+                        !hasUnlockedCustomFlagInput &&
+                        flag === 1 &&
+                        'Mint a Mythical Scroll'}
+                    </SubmitButtonText>
+
+                    <SubmitButtonText
+                      $isVisible={!isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 2}
+                    >
+                      {!isBatchMintEnabled &&
+                        !hasUnlockedCustomFlagInput &&
+                        flag === 2 &&
+                        'Mint a Cosmic Scroll'}
+                    </SubmitButtonText>
+
+                    <SubmitButtonText
+                      $isVisible={hasUnlockedCustomFlagInput && !isBatchMintEnabled}
+                    >
+                      {hasUnlockedCustomFlagInput &&
+                        !isBatchMintEnabled &&
+                        (customFlagNumber.gt(2) ? 'Mint a Celestial Scroll' : 'Mint a Scroll')}
+                    </SubmitButtonText>
+                  </SubmitButton>
+                ) : (
+                  <UnsupportedNetworkTooltip isVisible={wallet.connected}>
+                    <DisabledSubmitButton>
+                      <SubmitButtonText $isVisible={isBatchMintEnabled}>
+                        {isBatchMintEnabled &&
+                          `Batch Mint ${batchMintQuantity} ${
+                            batchMintQuantity === 1 ? 'Scroll' : 'Scrolls'
+                          }`}
+                      </SubmitButtonText>
+
+                      <SubmitButtonText
+                        $isVisible={
+                          !isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 0
+                        }
+                      >
+                        {!isBatchMintEnabled &&
+                          !hasUnlockedCustomFlagInput &&
+                          flag === 0 &&
+                          'Mint a Scroll'}
+                      </SubmitButtonText>
+
+                      <SubmitButtonText
+                        $isVisible={
+                          !isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 1
+                        }
+                      >
+                        {!isBatchMintEnabled &&
+                          !hasUnlockedCustomFlagInput &&
+                          flag === 1 &&
+                          'Mint a Mythical Scroll'}
+                      </SubmitButtonText>
+
+                      <SubmitButtonText
+                        $isVisible={
+                          !isBatchMintEnabled && !hasUnlockedCustomFlagInput && flag === 2
+                        }
+                      >
+                        {!isBatchMintEnabled &&
+                          !hasUnlockedCustomFlagInput &&
+                          flag === 2 &&
+                          'Mint a Cosmic Scroll'}
+                      </SubmitButtonText>
+
+                      <SubmitButtonText
+                        $isVisible={hasUnlockedCustomFlagInput && !isBatchMintEnabled}
+                      >
+                        {hasUnlockedCustomFlagInput &&
+                          !isBatchMintEnabled &&
+                          (customFlagNumber.gt(2) ? 'Mint a Celestial Scroll' : 'Mint a Scroll')}
+                      </SubmitButtonText>
+                    </DisabledSubmitButton>
+                  </UnsupportedNetworkTooltip>
+                )}
+              </form>
+
+              <MintFormFooter>
+                {isBatchMintEnabled ? (
+                  <HelperText>Batch mint cannot be combined with special codes.</HelperText>
+                ) : (
+                  <HelperText>Minting is free. You just pay gas.</HelperText>
+                )}
+
+                <BatchMintToggle
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsBatchMintEnabled((toggle) => !toggle);
+                  }}
+                >
+                  {isBatchMintEnabled ? 'Single Mint' : 'Batch Mint'}
+                </BatchMintToggle>
+              </MintFormFooter>
+
+              <Dialog.Root open={isConnectWalletModalOpen}>
+                <ConnectWalletModal
+                  isOpen={isConnectWalletModalOpen}
+                  close={() => setIsConnectWalletModalOpen(false)}
+                />
+              </Dialog.Root>
+
+              <Dialog.Root open={isMintScrollModalOpen}>
+                <MintScrollModal
+                  data={data}
+                  state={state}
+                  isBatchMintEnabled={isBatchMintEnabled}
+                  close={() => setIsMintScrollModalOpen(false)}
+                />
+              </Dialog.Root>
+
+              <Toaster
+                toastOptions={{
+                  duration: 60000,
+                  style: {
+                    maxWidth: 550,
+                    fontSize: 12,
+                    color: COLORS.white,
+                    background: '#444',
+                  },
+                  success: {
+                    iconTheme: {
+                      primary: COLORS.success,
+                      secondary: '#fff',
+                    },
+                  },
+                  error: {
+                    duration: 8000,
+                    iconTheme: {
+                      primary: COLORS.accent.normal,
+                      secondary: '#fff',
+                    },
+                  },
+                }}
+              >
+                {(t) => (
+                  <ToastBar toast={t}>
+                    {({ icon, message }) => (
+                      <>
+                        {icon}
+                        {message}
+                        {t.type !== 'loading' && (
+                          <ToastDismissButton onClick={() => toast.dismiss(t.id)}>
+                            X
+                          </ToastDismissButton>
+                        )}
+                      </>
+                    )}
+                  </ToastBar>
+                )}
+              </Toaster>
+            </>
+          )
+        }
+      </PrePostMintCloseRenderer>
     </Container>
   );
 };
