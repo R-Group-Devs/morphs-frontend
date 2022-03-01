@@ -8,7 +8,8 @@ import ProgressBar from './components/ProgressBar';
 import MintCountdownBanner from './components/MintCountdownBanner';
 import Header from './components/Header';
 import Description from './components/Description';
-import MintForm from './components/MintForm';
+import ScrollExampleVideo from './components/ScrollExampleVideo';
+import SeeScrollsButton from './components/SeeScrollsButton';
 import Footer from './components/Footer';
 
 const Container = styled.div`
@@ -31,11 +32,14 @@ const Content = styled.div`
   }
 `;
 
-const Panel = styled.div`
+const Panel = styled.div<{ right?: boolean }>`
+  margin-left: ${({ right }) => (right ? '10%' : 0)};
   width: 45%;
 
   @media (max-width: 767px) {
     width: 100%;
+    margin-top: ${({ right }) => (right ? '3em' : 0)};
+    margin-left: 0;
   }
 `;
 
@@ -83,8 +87,9 @@ const App = () => {
                   <Description />
                 </Panel>
 
-                <Panel>
-                  <MintForm />
+                <Panel right>
+                  <ScrollExampleVideo />
+                  <SeeScrollsButton />
                 </Panel>
               </Content>
 
