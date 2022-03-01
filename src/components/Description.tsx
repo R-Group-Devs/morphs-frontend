@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import { useSpring, animated } from 'react-spring';
+import PrePostMintCloseRenderer from './PrePostMintCloseRenderer';
 import Credits from './Credits';
 import useChainId from '../hooks/useChainId';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
@@ -45,25 +47,11 @@ const GalleryLink = styled.p`
   font-size: 14px;
 `;
 
-export default () => {
+const PreMintCloseDescription = () => {
   const chainId = useChainId();
 
-  const isSmallViewport = useMediaQuery({
-    query: '(max-width: 767px)',
-  });
-
   return (
-    <Container>
-      <MorphsShapesVideo
-        src="./videos/morphs-shapes.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        controlsList="nodownload"
-        poster={morphsShapesImage}
-      />
-
+    <>
       <Heading>Mint a scroll, see what happens…</Heading>
 
       <FlavorText>
@@ -85,6 +73,69 @@ export default () => {
       </FlavorText>
 
       <Heading>Perhaps it will become something later on.</Heading>
+    </>
+  );
+};
+
+const PostMintCloseDescription = () => {
+  const animationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    config: { duration: 2000 },
+  });
+
+  return (
+    <animated.div style={animationProps}>
+      <Heading>Our scrolls have been sent.</Heading>
+
+      <FlavorText>
+        <p>Morphs is an open-ended, evolving NFT project set in a science fantasy universe.</p>
+
+        <p>
+          Minting has ended, but you can still get involved by acquiring a scroll on the secondary
+          market.
+        </p>
+
+        <p>
+          Visit{' '}
+          <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
+            codex.morphs.wtf
+          </a>{' '}
+          for more info.
+        </p>
+      </FlavorText>
+
+      <Heading>What mysteries do they hold…</Heading>
+    </animated.div>
+  );
+};
+
+export default () => {
+  const isSmallViewport = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
+  return (
+    <Container>
+      <MorphsShapesVideo
+        src="./videos/morphs-shapes.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        controlsList="nodownload"
+        poster={morphsShapesImage}
+      />
+
+      <PrePostMintCloseRenderer>
+        {({ completed }) =>
+          completed ? <PostMintCloseDescription /> : <PreMintCloseDescription />
+        }
+      </PrePostMintCloseRenderer>
 
       {!isSmallViewport && <Credits />}
     </Container>
