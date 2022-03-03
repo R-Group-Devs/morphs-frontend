@@ -44,8 +44,8 @@
   },
   "scripts": {
     "codegen": "graphql-codegen --config codegen.yml",
-    "start": "react-scripts start",
-    "build": "react-scripts build && yarn ascii",
+    "start": "yarn codegen && react-scripts start",
+    "build": "yarn codegen && react-scripts build && yarn ascii",
     "ascii": "node --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/inject-ascii.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
