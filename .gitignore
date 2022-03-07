@@ -7,6 +7,9 @@
 # production
 /build
 
+# graphql codegen output
+src/lib/graph-generated.ts
+
 # misc
 .DS_Store
 .env.local
