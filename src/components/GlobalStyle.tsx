@@ -41,10 +41,10 @@ export default createGlobalStyle`
 
   @font-face {
     font-family: 'Morphs Glyphs';
-    src: url('./fonts/Morphs-Glyphs.woff2') format('woff2'),
-      url('./fonts/Morphs-Glyphs.woff') format('woff'),
-      url('./fonts/Morphs-Glyphs.otf') format('otf'),
-      url('./fonts/Morphs-Glyphs.ttf') format('ttf');
+    src: url('/fonts/Morphs-Glyphs.woff2') format('woff2'),
+      url('/fonts/Morphs-Glyphs.woff') format('woff'),
+      url('/fonts/Morphs-Glyphs.otf') format('otf'),
+      url('/fonts/Morphs-Glyphs.ttf') format('ttf');
     font-weight: 300;
     font-style: normal;
     font-display: block;
