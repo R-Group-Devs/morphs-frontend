@@ -70,7 +70,7 @@ export default ({ state, close }: Props) => {
                 <Paragraph>Success!</Paragraph>
 
                 <Paragraph>
-                  <HelperText>The sigil has been updated.</HelperText>
+                  <HelperText>Your sigil has been aligned.</HelperText>
                 </Paragraph>
               </ModalItem>
             )}
