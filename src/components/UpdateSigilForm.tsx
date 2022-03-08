@@ -18,6 +18,10 @@ const Container = styled.div<{ $isVisible: boolean }>`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   visibility: ${({ $isVisible }) => ($isVisible ? 'visible' : 'hidden')};
   transition: all 0.3s;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const Form = styled.form`
