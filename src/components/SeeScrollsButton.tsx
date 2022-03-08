@@ -1,8 +1,16 @@
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useConnect, useAccount } from 'wagmi';
+import useGlobalState from '../hooks/useGlobalState';
 import useChainId from '../hooks/useChainId';
 import { NFT_EXPLORER_URLS } from '../constants/explorers';
 import { MORPHS_NFT_CONTRACT_ADDRESSES } from '../constants/contracts';
 import { COLORS, FONTS } from '../constants/theme';
+
+const Container = styled.div`
+  text-align: center;
+`;
 
 // TODO: extract into common file
 const ButtonStyles = css`
@@ -32,7 +40,7 @@ const ButtonStyles = css`
   }
 `;
 
-const SeeScrollsButton = styled.a`
+const SeeScrollsButton = styled.button`
   ${ButtonStyles}
   display: block;
   font-size: 20px;
@@ -44,18 +52,52 @@ const SeeScrollsButton = styled.a`
   }
 `;
 
+const BrowseScrollsLink = styled.a`
+  display: inline-block;
+  margin-top: 1em;
+  font-size: 14px;
+`;
+
 export default () => {
+  const [{ data: wallet }] = useConnect();
+  const [{ data: account }] = useAccount();
+  const [, setIsConnectWalletModalOpen] = useGlobalState('isConnectWalletModalOpen');
   const chainId = useChainId();
+  const [hasPendingMorphsPageVisit, setHasPendingMorphsPageVisit] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (hasPendingMorphsPageVisit && account) {
+      navigate(`/address/${account?.address}`);
+      setHasPendingMorphsPageVisit(false);
+    }
+  }, [hasPendingMorphsPageVisit, account, navigate]);
 
   return (
-    <>
-      <SeeScrollsButton
+    <Container>
+      {wallet.connected ? (
+        <Link to={`/address/${account?.address}`}>
+          <SeeScrollsButton>See your scrolls</SeeScrollsButton>
+        </Link>
+      ) : (
+        <SeeScrollsButton
+          onClick={(e) => {
+            e.preventDefault();
+            setHasPendingMorphsPageVisit(true);
+            setIsConnectWalletModalOpen(true);
+          }}
+        >
+          Connect to see your scrolls
+        </SeeScrollsButton>
+      )}
+
+      <BrowseScrollsLink
         href={`${NFT_EXPLORER_URLS[chainId]}/collection/${MORPHS_NFT_CONTRACT_ADDRESSES[chainId]}`}
         target="_blank"
         rel="noreferrer"
       >
         Browse Scrolls on Rarible →
-      </SeeScrollsButton>
-    </>
+      </BrowseScrollsLink>
+    </Container>
   );
 };

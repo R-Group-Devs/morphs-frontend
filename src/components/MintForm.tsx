@@ -6,10 +6,10 @@ import * as Dialog from '@radix-ui/react-dialog';
 import * as Slider from '@radix-ui/react-slider';
 import toast, { Toaster, ToastBar } from 'react-hot-toast';
 import { useSpring, animated } from 'react-spring';
-import ConnectWalletModal from './ConnectWalletModal';
 import MintScrollModal from './MintScrollModal';
 import MintScrollSuccessMessage from './MintScrollSuccessMessage';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
+import useGlobalState from '../hooks/useGlobalState';
 import useMint from '../hooks/useMint';
 import useBatchMint from '../hooks/useBatchMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
@@ -282,7 +282,7 @@ const COSMIC_CODE = 'COSMIC420';
 export default () => {
   const [{ data: network }] = useNetwork();
   const [{ data: wallet }] = useConnect();
-  const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(false);
+  const [, setIsConnectWalletModalOpen] = useGlobalState('isConnectWalletModalOpen');
   const [isMintScrollModalOpen, setIsMintScrollModalOpen] = useState(false);
   const [hasPendingMint, setHasPendingMint] = useState(false);
   const [code, setCode] = useState('');
@@ -295,7 +295,6 @@ export default () => {
   const [shouldShowTransactionToast, setShouldShowTransactionToast] = useState(false);
   const [isBatchMintEnabled, setIsBatchMintEnabled] = useState(false);
   const [batchMintQuantity, setBatchMintQuantity] = useState(2);
-  const [videoClickCount, setVideoClickCount] = useState(0);
   const codeInputRef = useRef<HTMLInputElement>(null);
   const customFlagInputRef = useRef<HTMLInputElement>(null);
   const [
@@ -658,13 +657,6 @@ export default () => {
           {isBatchMintEnabled ? 'Single Mint' : 'Batch Mint'}
         </BatchMintToggle>
       </MintFormFooter>
-
-      <Dialog.Root open={isConnectWalletModalOpen}>
-        <ConnectWalletModal
-          isOpen={isConnectWalletModalOpen}
-          close={() => setIsConnectWalletModalOpen(false)}
-        />
-      </Dialog.Root>
 
       <Dialog.Root open={isMintScrollModalOpen}>
         <MintScrollModal

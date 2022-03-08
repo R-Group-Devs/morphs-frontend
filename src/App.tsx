@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import { ErrorBoundary } from 'react-error-boundary';
+import * as Dialog from '@radix-ui/react-dialog';
 import WalletProvider from './providers/WalletProvider';
 import QueryProvider from './providers/QueryProvider';
-import AppErrorMessage from './components/AppErrorMessage';
-import Header from './components/Header';
 import GlobalStyle from './components/GlobalStyle';
+import ScrollToTop from './components/ScrollToTop';
+import Header from './components/Header';
+import ConnectWalletModal from './components/ConnectWalletModal';
 import ProgressBar from './components/ProgressBar';
+import AppErrorMessage from './components/AppErrorMessage';
+import useGlobalState from './hooks/useGlobalState';
 
 interface Props {
   children: React.ReactNode;
@@ -23,6 +27,8 @@ const Container = styled.div`
 `;
 
 const App = ({ children }: Props) => {
+  const [isConnectWalletModalOpen] = useGlobalState('isConnectWalletModalOpen');
+
   const progressBarAnimationProps = useSpring({
     from: {
       opacity: 1,
@@ -49,6 +55,7 @@ const App = ({ children }: Props) => {
   return (
     <>
       <GlobalStyle />
+      <ScrollToTop />
 
       <ErrorBoundary fallback={<AppErrorMessage />}>
         <WalletProvider>
@@ -64,6 +71,10 @@ const App = ({ children }: Props) => {
                 {children}
               </Container>
             </animated.div>
+
+            <Dialog.Root open={isConnectWalletModalOpen}>
+              <ConnectWalletModal />
+            </Dialog.Root>
           </QueryProvider>
         </WalletProvider>
       </ErrorBoundary>

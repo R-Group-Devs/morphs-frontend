@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
@@ -15,17 +15,13 @@ import {
 import Paragraph from './Paragraph';
 import HelperText from './HelperText';
 import LoadingText from './LoadingText';
+import useGlobalState from '../hooks/useGlobalState';
 import useChainId from '../hooks/useChainId';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
 import { WALLETS } from '../constants/wallets';
 import { BLOCK_EXPLORER_URLS } from '../constants/explorers';
 import { COLORS, FONTS } from '../constants/theme';
-
-interface Props {
-  isOpen: boolean;
-  close: () => void;
-}
 
 const WalletProviderDetails = styled.div`
   display: flex;
@@ -173,7 +169,8 @@ const ModalAction = styled.a`
   }
 `;
 
-export default ({ isOpen, close }: Props) => {
+export default () => {
+  const [isOpen, setIsOpen] = useGlobalState('isConnectWalletModalOpen');
   const [{ data: network }] = useNetwork();
   const [{ data: wallet, loading: isConnecting, error: connectionError }, connect] = useConnect();
   const [{ data: account }, disconnect] = useAccount({
@@ -187,6 +184,8 @@ export default ({ isOpen, close }: Props) => {
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
+
+  const close = useCallback(() => setIsOpen(false), [setIsOpen]);
 
   const isSmallViewport = useMediaQuery({
     query: '(max-width: 767px)',

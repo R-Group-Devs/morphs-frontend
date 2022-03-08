@@ -17,6 +17,14 @@ const Attribute = styled.li`
   flex: 0 1 calc(33.333333% - 1em);
   text-align: center;
   border: 1px solid ${lighten(0.1, COLORS.black)};
+
+  @media (max-width: 580px) {
+    flex: 0 1 calc(50% - 0.75em);
+  }
+
+  @media (max-width: 440px) {
+    flex: 0 1 100%;
+  }
 `;
 
 const Label = styled.span`
@@ -78,18 +86,22 @@ export default ({
 
       <Attribute>
         <Label>Signature</Label>
-        <Tooltip.Provider>
-          <Tooltip.Root delayDuration={20}>
-            <Tooltip.Trigger>
-              <Value>{truncatedSignature}</Value>
-            </Tooltip.Trigger>
+        {signature.length > 10 ? (
+          <Tooltip.Provider>
+            <Tooltip.Root delayDuration={20}>
+              <Tooltip.Trigger>
+                <Value>{truncatedSignature}</Value>
+              </Tooltip.Trigger>
 
-            <Tooltip.Content sideOffset={5}>
-              <Tooltip.Arrow />
-              <p>{signature}</p>
-            </Tooltip.Content>
-          </Tooltip.Root>
-        </Tooltip.Provider>
+              <Tooltip.Content sideOffset={5}>
+                <Tooltip.Arrow />
+                <p>{signature}</p>
+              </Tooltip.Content>
+            </Tooltip.Root>
+          </Tooltip.Provider>
+        ) : (
+          signature
+        )}
       </Attribute>
 
       <Attribute>

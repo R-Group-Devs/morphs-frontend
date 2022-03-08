@@ -14,11 +14,21 @@ interface Props {
 const Container = styled.div`
   display: flex;
   margin-top: 5em;
+
+  @media (max-width: 767px) {
+    margin-top: 3em;
+    flex-direction: column;
+  }
 `;
 
 const Panel = styled.div<{ right?: boolean }>`
   width: ${({ right }) => (right ? '58.8%' : '41.2%')};
   margin-left: ${({ right }) => (right ? '3em' : 0)};
+
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 const Img = styled.img`
@@ -29,6 +39,10 @@ const Img = styled.img`
 const Name = styled.h2`
   margin-top: 0;
   font-size: 42px;
+
+  @media (max-width: 767px) {
+    margin-top: 1em;
+  }
 `;
 
 const Description = styled(Paragraph)`
@@ -48,7 +62,7 @@ const Section = styled.div`
 
 const SectionHeading = styled.h3`
   margin: 0;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
 `;
 
 export default ({ tokenId }: Props) => {
