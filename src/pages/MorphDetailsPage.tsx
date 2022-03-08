@@ -8,9 +8,11 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useSpring, animated } from 'react-spring';
 import { Helmet } from 'react-helmet';
+import { ErrorBoundary } from 'react-error-boundary';
 import LoadingIndicator from '../components/LoadingIndicator';
 import MorphAttributes from '../components/MorphAttributes';
 import UpdateSigilForm from '../components/UpdateSigilForm';
+import InvalidTokenMessage from '../components/InvalidTokenMessage';
 import useMorphDetails from '../hooks/useMorphDetails';
 import { COLORS, FONTS } from '../constants/theme';
 
@@ -147,9 +149,11 @@ export default () => {
         <title>{tokenId}</title>
       </Helmet>
 
-      <Suspense fallback={<LoadingIndicator />}>
-        <MorphDetails tokenId={tokenId} />
-      </Suspense>
+      <ErrorBoundary fallback={<InvalidTokenMessage />}>
+        <Suspense fallback={<LoadingIndicator />}>
+          <MorphDetails tokenId={tokenId} />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 };
