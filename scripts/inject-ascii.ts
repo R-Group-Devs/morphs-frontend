@@ -31,9 +31,8 @@ const ascii = `
                 when
                           the
 
-                              secret
+                              secret is
 
-                            is
                                         revealed,
 
 
