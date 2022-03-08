@@ -28,7 +28,20 @@ const ascii = `
 
 
 
+                when
+                          the
 
+                              secret
+
+                            is
+                                        revealed,
+
+
+                                            SHIFT
+
+                                                    your
+
+                                                                    perspective
 -->
 `;
 
