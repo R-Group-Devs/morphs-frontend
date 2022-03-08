@@ -21,7 +21,7 @@ const Logo = styled(Link)`
   }
 
   @media (max-width: 580px) {
-    margin-top: 0.75em;
+    margin-top: 0.5em;
     font-size: 54px;
   }
 `;

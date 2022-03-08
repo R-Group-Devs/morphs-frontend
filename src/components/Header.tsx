@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Logo from './Logo';
+import Nav from './Nav';
 import ConnectWalletButton from './ConnectWalletButton';
 
 const Container = styled.div`
@@ -13,9 +14,23 @@ const Container = styled.div`
   }
 `;
 
+const Main = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 580px) {
+    flex-direction: column-reverse;
+  }
+`;
+
 export default () => (
   <Container>
-    <Logo />
+    <Main>
+      <Logo />
+      <Nav />
+    </Main>
+
     <ConnectWalletButton />
   </Container>
 );
