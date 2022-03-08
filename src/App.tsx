@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import { ErrorBoundary } from 'react-error-boundary';
-import AppErrorMessage from './components/AppErrorMessage';
+import * as Dialog from '@radix-ui/react-dialog';
 import WalletProvider from './providers/WalletProvider';
+import QueryProvider from './providers/QueryProvider';
 import GlobalStyle from './components/GlobalStyle';
-import ProgressBar from './components/ProgressBar';
-import MintCountdownBanner from './components/MintCountdownBanner';
+import ScrollToTop from './components/ScrollToTop';
 import Header from './components/Header';
-import Description from './components/Description';
-import ScrollExampleVideo from './components/ScrollExampleVideo';
-import SeeScrollsButton from './components/SeeScrollsButton';
-import Footer from './components/Footer';
+import ConnectWalletModal from './components/ConnectWalletModal';
+import ProgressBar from './components/ProgressBar';
+import AppErrorMessage from './components/AppErrorMessage';
+import useGlobalState from './hooks/useGlobalState';
+
+interface Props {
+  children: React.ReactNode;
+}
 
 const Container = styled.div`
   margin: 0 auto;
@@ -22,28 +26,9 @@ const Container = styled.div`
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 2.5em;
+const App = ({ children }: Props) => {
+  const [isConnectWalletModalOpen] = useGlobalState('isConnectWalletModalOpen');
 
-  @media (max-width: 767px) {
-    flex-direction: column;
-  }
-`;
-
-const Panel = styled.div<{ right?: boolean }>`
-  margin-left: ${({ right }) => (right ? '10%' : 0)};
-  width: 45%;
-
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-top: ${({ right }) => (right ? '3em' : 0)};
-    margin-left: 0;
-  }
-`;
-
-const App = () => {
   const progressBarAnimationProps = useSpring({
     from: {
       opacity: 1,
@@ -70,32 +55,27 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
+      <ScrollToTop />
 
       <ErrorBoundary fallback={<AppErrorMessage />}>
         <WalletProvider>
-          <animated.div style={progressBarAnimationProps}>
-            <ProgressBar />
-          </animated.div>
+          <QueryProvider>
+            <animated.div style={progressBarAnimationProps}>
+              <ProgressBar />
+            </animated.div>
 
-          <animated.div style={contentAnimationProps}>
-            <Container>
-              <MintCountdownBanner />
-              <Header />
+            <animated.div style={contentAnimationProps}>
+              <Container>
+                <Header />
 
-              <Content>
-                <Panel>
-                  <Description />
-                </Panel>
+                {children}
+              </Container>
+            </animated.div>
 
-                <Panel right>
-                  <ScrollExampleVideo />
-                  <SeeScrollsButton />
-                </Panel>
-              </Content>
-
-              <Footer />
-            </Container>
-          </animated.div>
+            <Dialog.Root open={isConnectWalletModalOpen}>
+              <ConnectWalletModal />
+            </Dialog.Root>
+          </QueryProvider>
         </WalletProvider>
       </ErrorBoundary>
     </>

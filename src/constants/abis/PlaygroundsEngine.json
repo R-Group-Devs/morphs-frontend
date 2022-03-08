@@ -1,12 +1,27 @@
 [
   {
     "inputs": [],
+    "name": "InvalidCollection",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidCutover",
     "type": "error"
   },
   {
     "inputs": [],
+    "name": "InvalidSigil",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "MintingPeriodHasEnded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotTokenOwner",
     "type": "error"
   },
   {
@@ -237,6 +252,30 @@
         "type": "uint256"
       }
     ],
+    "name": "getSigil",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IShellFramework",
+        "name": "collection",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
     "name": "getTokenURI",
     "outputs": [
       {
@@ -305,6 +344,30 @@
       },
       {
         "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isEntangled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IShellFramework",
+        "name": "collection",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
         "name": "flag",
         "type": "uint256"
       }
@@ -350,6 +413,29 @@
       }
     ],
     "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IShellFramework",
+        "name": "collection",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "sigil",
+        "type": "string"
+      }
+    ],
+    "name": "updateSigil",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

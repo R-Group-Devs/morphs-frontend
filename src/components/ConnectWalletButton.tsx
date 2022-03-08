@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useConnect, useNetwork, useAccount } from 'wagmi';
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useMediaQuery } from 'react-responsive';
-import ConnectWalletModal from './ConnectWalletModal';
 import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
+import useGlobalState from '../hooks/useGlobalState';
 import { shortenAddress } from '../utils/address';
 import { NETWORKS } from '../constants/networks';
 import { COLORS, FONTS } from '../constants/theme';
@@ -78,7 +77,7 @@ export default () => {
   const [{ data: account }] = useAccount({
     fetchEns: true,
   });
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useGlobalState('isConnectWalletModalOpen');
 
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
@@ -111,8 +110,6 @@ export default () => {
               : connectedWalletText
             : 'Connect Wallet'}
         </ConnectWalletButton>
-
-        <ConnectWalletModal isOpen={isOpen} close={() => setIsOpen(false)} />
       </Dialog.Root>
     </Container>
   );
