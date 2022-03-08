@@ -1,12 +1,19 @@
-import { useMemo } from 'react';
+import { useState, useMemo, MouseEventHandler } from 'react';
 import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import { Link } from 'react-router-dom';
+import useGlobalKeyDown from 'react-global-key-down-hook';
 import * as Tooltip from './Tooltip';
 import { MorphsMetadata } from '../lib/morphs';
 import { shortenAddress } from '../utils/address';
 import { COLORS, FONTS } from '../constants/theme';
+
+interface Props {
+  isSigilFormVisible: boolean;
+  onSigilMouseEnter: MouseEventHandler<HTMLElement>;
+  onSigilMouseLeave: MouseEventHandler<HTMLElement>;
+}
 
 const Container = styled.ul`
   padding: 0;
@@ -57,7 +64,11 @@ export default ({
   sigil,
   signature,
   variation,
-}: MorphsMetadata['attributes']) => {
+  isSigilFormVisible,
+  onSigilMouseEnter,
+  onSigilMouseLeave,
+}: MorphsMetadata['attributes'] & Props) => {
+  const [isSigilFormPersisted, setIsSigilFormPersisted] = useState(false);
   const isEntangled = quantumStatus === 'Entangled';
 
   const computedSignature = useMemo(() => {
@@ -67,6 +78,12 @@ export default ({
 
     return signature.length > 10 ? `${signature.slice(0, 10)}...` : signature;
   }, [signature, isEntangled]);
+
+  useGlobalKeyDown(() => {
+    if (isSigilFormVisible) {
+      setIsSigilFormPersisted(true);
+    }
+  }, 'Shift');
 
   return (
     <Container>
@@ -95,7 +112,10 @@ export default ({
         <Value>{quantumStatus}</Value>
       </Attribute>
 
-      <Attribute>
+      <Attribute
+        onMouseEnter={onSigilMouseEnter}
+        onMouseLeave={(e) => !isSigilFormPersisted && onSigilMouseLeave(e)}
+      >
         <Label>Sigil</Label>
         <Value>{sigil}</Value>
       </Attribute>

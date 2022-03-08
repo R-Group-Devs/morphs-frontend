@@ -11123,6 +11123,11 @@ react-fast-compare@^3.1.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
+react-global-key-down-hook@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-global-key-down-hook/-/react-global-key-down-hook-0.2.1.tgz#2236448d96c7cfa893718fbf2efc886b1105bd9e"
+  integrity sha512-7bi/jJlD6VlRird5VJTKow3q28pWn6H36zhOzBmKGgklAdEjqqwyjX0vxBcHlohd08VcUUBiLxRJ/7oz3IZOiQ==
+
 react-helmet@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-6.1.0.tgz#a750d5165cb13cf213e44747502652e794468726"

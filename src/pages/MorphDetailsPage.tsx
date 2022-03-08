@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { lighten } from 'polished';
@@ -82,6 +82,8 @@ const MorphDetails = ({ tokenId }: Props) => {
     address: data?.owner,
     skip: !data?.owner,
   });
+  const [isSigilFormVisible, setIsSigilFormVisible] = useState(false);
+
   const profileName = ens ?? data?.owner;
   const description =
     data?.description.replace(/0x\w*/, (address) => `[${address}](/address/${address})`) ?? '';
@@ -103,7 +105,7 @@ const MorphDetails = ({ tokenId }: Props) => {
           <Img src={data?.image} alt={data?.name} />
 
           {account?.address.toLowerCase() === data?.owner.toLowerCase() && (
-            <UpdateSigilForm onUpdate={refetch} />
+            <UpdateSigilForm isVisible={isSigilFormVisible} onUpdate={refetch} />
           )}
         </Panel>
 
@@ -114,7 +116,14 @@ const MorphDetails = ({ tokenId }: Props) => {
           </Description>
           <Section>
             <SectionHeading>Attributes</SectionHeading>
-            {data?.attributes && <MorphAttributes {...data?.attributes} />}
+            {data?.attributes && (
+              <MorphAttributes
+                {...data?.attributes}
+                isSigilFormVisible={isSigilFormVisible}
+                onSigilMouseEnter={() => setIsSigilFormVisible(true)}
+                onSigilMouseLeave={() => setIsSigilFormVisible(false)}
+              />
+            )}
           </Section>
 
           {!isEnsLoading && (

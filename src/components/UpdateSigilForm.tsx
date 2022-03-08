@@ -10,12 +10,15 @@ import { transactionStates } from '../hooks/useExecuteTransaction';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
+  isVisible: boolean;
   onUpdate: () => void;
 }
 
-const Form = styled.form`
+const Form = styled.form<{ $isVisible: boolean }>`
   display: flex;
   margin-top: 1em;
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+  transition: opacity 0.3s;
 `;
 
 const SubmitButton = styled.button`
@@ -42,7 +45,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-export default ({ onUpdate }: Props) => {
+export default ({ isVisible, onUpdate }: Props) => {
   const { tokenId } = useParams();
   const [sigil, setSigil] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,6 +64,7 @@ export default ({ onUpdate }: Props) => {
   return (
     <>
       <Form
+        $isVisible={isVisible}
         onSubmit={(e) => {
           e.preventDefault();
           setHasAttemptedSubmission(true);
