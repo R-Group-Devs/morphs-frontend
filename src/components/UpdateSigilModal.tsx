@@ -33,7 +33,7 @@ export default ({ state, close }: Props) => {
     <ModalPortal>
       <ModalOverlay>
         <ModalContainer close={close}>
-          <ModalTitle close={close}>Update Sigil</ModalTitle>
+          <ModalTitle close={close}>Align Sigil</ModalTitle>
 
           <ModalContent>
             {state === transactionStates.AWAITING_SIGNATURE && (
@@ -44,7 +44,8 @@ export default ({ state, close }: Props) => {
 
                 <Paragraph>
                   <HelperText>
-                    Sign the update sigil transaction in your {wallet.connector?.name} wallet.
+                    Sign the transaction in your {wallet.connector?.name} wallet to align your
+                    sigil.
                   </HelperText>
                 </Paragraph>
               </ModalItem>
@@ -53,7 +54,7 @@ export default ({ state, close }: Props) => {
             {state === transactionStates.AWAITING_CONFIRMATION && (
               <ModalItem>
                 <Paragraph>
-                  <LoadingText>Updating sigil</LoadingText>
+                  <LoadingText>Aligning sigil</LoadingText>
                 </Paragraph>
 
                 <Paragraph>
