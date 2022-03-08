@@ -83,6 +83,8 @@ const MorphDetails = ({ tokenId }: Props) => {
     skip: !data?.owner,
   });
   const profileName = ens ?? data?.owner;
+  const description =
+    data?.description.replace(/0x\w*/, (address) => `[${address}](/address/${address})`) ?? '';
 
   const mountAnimationProps = useSpring({
     from: {
@@ -108,9 +110,7 @@ const MorphDetails = ({ tokenId }: Props) => {
         <Panel right>
           <Name>{data?.name}</Name>
           <Description>
-            <Markdown linkTarget="_blank" remarkPlugins={[remarkGfm]}>
-              {data?.description || ''}
-            </Markdown>
+            <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
           </Description>
           <Section>
             <SectionHeading>Attributes</SectionHeading>
