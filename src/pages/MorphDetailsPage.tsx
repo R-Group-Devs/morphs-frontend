@@ -77,6 +77,14 @@ const SectionHeading = styled.h3`
   margin-bottom: 1.5em;
 `;
 
+const OwnerLink = styled.div`
+  display: block;
+  line-height: 23px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
 const MorphDetails = ({ tokenId }: Props) => {
   const [{ data: account }] = useAccount({});
   const { data, refetch } = useMorphDetails(tokenId);
@@ -131,7 +139,9 @@ const MorphDetails = ({ tokenId }: Props) => {
           {!isEnsLoading && (
             <Section>
               <SectionHeading>Owner</SectionHeading>
-              <Link to={`/address/${profileName}`}>{profileName}</Link>
+              <OwnerLink>
+                <Link to={`/address/${profileName}`}>{profileName}</Link>
+              </OwnerLink>
             </Section>
           )}
         </Panel>
