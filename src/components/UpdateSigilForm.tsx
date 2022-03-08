@@ -14,11 +14,15 @@ interface Props {
   onUpdate: () => void;
 }
 
-const Form = styled.form<{ $isVisible: boolean }>`
+const Container = styled.div<{ $isVisible: boolean }>`
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+  visibility: ${({ $isVisible }) => ($isVisible ? 'visible' : 'hidden')};
+  transition: all 0.3s;
+`;
+
+const Form = styled.form`
   display: flex;
   margin-top: 1em;
-  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
-  transition: opacity 0.3s;
 `;
 
 const SubmitButton = styled.button`
@@ -62,9 +66,8 @@ export default ({ isVisible, onUpdate }: Props) => {
   }, [state, onUpdate]);
 
   return (
-    <>
+    <Container $isVisible={isVisible}>
       <Form
-        $isVisible={isVisible}
         onSubmit={(e) => {
           e.preventDefault();
           setHasAttemptedSubmission(true);
@@ -94,6 +97,6 @@ export default ({ isVisible, onUpdate }: Props) => {
       <Dialog.Root open={isModalOpen}>
         <UpdateSigilModal data={data} state={state} close={() => setIsModalOpen(false)} />
       </Dialog.Root>
-    </>
+    </Container>
   );
 };

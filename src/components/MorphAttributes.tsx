@@ -10,9 +10,10 @@ import { shortenAddress } from '../utils/address';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
+  attributes: MorphsMetadata['attributes'];
   isSigilFormVisible: boolean;
-  onSigilMouseEnter: MouseEventHandler<HTMLElement>;
-  onSigilMouseLeave: MouseEventHandler<HTMLElement>;
+  onSigilAttributeMouseEnter: MouseEventHandler<HTMLElement>;
+  onSigilAttributeMouseLeave: MouseEventHandler<HTMLElement>;
 }
 
 const Container = styled.ul`
@@ -56,18 +57,12 @@ const Value = styled.span`
 `;
 
 export default ({
-  affinity,
-  era,
-  group,
-  palette,
-  quantumStatus,
-  sigil,
-  signature,
-  variation,
+  attributes,
   isSigilFormVisible,
-  onSigilMouseEnter,
-  onSigilMouseLeave,
-}: MorphsMetadata['attributes'] & Props) => {
+  onSigilAttributeMouseEnter,
+  onSigilAttributeMouseLeave,
+}: Props) => {
+  const { affinity, era, group, palette, quantumStatus, sigil, signature, variation } = attributes;
   const [isSigilFormPersisted, setIsSigilFormPersisted] = useState(false);
   const isEntangled = quantumStatus === 'Entangled';
 
@@ -113,8 +108,8 @@ export default ({
       </Attribute>
 
       <Attribute
-        onMouseEnter={onSigilMouseEnter}
-        onMouseLeave={(e) => !isSigilFormPersisted && onSigilMouseLeave(e)}
+        onMouseEnter={onSigilAttributeMouseEnter}
+        onMouseLeave={(e) => !isSigilFormPersisted && onSigilAttributeMouseLeave(e)}
       >
         <Label>Sigil</Label>
         <Value>{sigil}</Value>

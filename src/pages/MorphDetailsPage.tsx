@@ -118,10 +118,10 @@ const MorphDetails = ({ tokenId }: Props) => {
             <SectionHeading>Attributes</SectionHeading>
             {data?.attributes && (
               <MorphAttributes
-                {...data?.attributes}
+                attributes={data?.attributes}
                 isSigilFormVisible={isSigilFormVisible}
-                onSigilMouseEnter={() => setIsSigilFormVisible(true)}
-                onSigilMouseLeave={() => setIsSigilFormVisible(false)}
+                onSigilAttributeMouseEnter={() => setIsSigilFormVisible(true)}
+                onSigilAttributeMouseLeave={() => setIsSigilFormVisible(false)}
               />
             )}
           </Section>
