@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useSpring, animated } from 'react-spring';
 import useMorphDetails from '../hooks/useMorphDetails';
 import MorphAttributes from './MorphAttributes';
-import Paragraph from './Paragraph';
-import { shortenAddress } from '../utils/address';
 import { COLORS } from '../constants/theme';
 
 interface Props {
@@ -48,13 +48,13 @@ const Name = styled.h2`
   }
 `;
 
-const Description = styled(Paragraph)`
+const Description = styled.div`
   margin-top: 2em;
-`;
+  line-height: 1.5em;
 
-const Owner = styled(Paragraph)`
-  margin-top: 2em;
-  font-size: 14px;
+  p {
+    margin-bottom: 1.5em;
+  }
 `;
 
 const Section = styled.div`
@@ -70,7 +70,7 @@ const SectionHeading = styled.h3`
 
 export default ({ tokenId }: Props) => {
   const { data } = useMorphDetails(tokenId);
-  const profileName = shortenAddress(data?.owner ?? '');
+  const profileName = data?.owner ?? '';
 
   const mountAnimationProps = useSpring({
     from: {
@@ -91,14 +91,17 @@ export default ({ tokenId }: Props) => {
 
         <Panel right>
           <Name>{data?.name}</Name>
-          <Description>{data?.description}</Description>
-          <Owner>
-            Owned by <Link to={`/address/${data?.owner}`}>{profileName}</Link>
-          </Owner>
-
+          <Description>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{data?.description || ''}</ReactMarkdown>
+          </Description>
           <Section>
             <SectionHeading>Attributes</SectionHeading>
             {data?.attributes && <MorphAttributes {...data?.attributes} />}
+          </Section>
+
+          <Section>
+            <SectionHeading>Owner</SectionHeading>
+            <Link to={`/address/${data?.owner}`}>{profileName}</Link>
           </Section>
         </Panel>
       </Container>

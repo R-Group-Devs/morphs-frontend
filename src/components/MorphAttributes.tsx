@@ -1,7 +1,11 @@
+import { useMemo } from 'react';
+import { BigNumber } from 'ethers';
 import styled from 'styled-components';
 import { lighten } from 'polished';
+import { Link } from 'react-router-dom';
 import * as Tooltip from './Tooltip';
 import { MorphsMetadata } from '../lib/morphs';
+import { shortenAddress } from '../utils/address';
 import { COLORS, FONTS } from '../constants/theme';
 
 const Container = styled.ul`
@@ -54,7 +58,15 @@ export default ({
   signature,
   variation,
 }: MorphsMetadata['attributes']) => {
-  const truncatedSignature = signature.length > 10 ? `${signature.slice(0, 10)}...` : signature;
+  const isEntangled = quantumStatus === 'Entangled';
+
+  const computedSignature = useMemo(() => {
+    if (isEntangled) {
+      return BigNumber.from(signature).toHexString();
+    }
+
+    return signature.length > 10 ? `${signature.slice(0, 10)}...` : signature;
+  }, [signature, isEntangled]);
 
   return (
     <Container>
@@ -90,21 +102,27 @@ export default ({
 
       <Attribute>
         <Label>Signature</Label>
-        {signature.length > 10 ? (
-          <Tooltip.Provider>
-            <Tooltip.Root delayDuration={20}>
-              <Tooltip.Trigger>
-                <Value>{truncatedSignature}</Value>
-              </Tooltip.Trigger>
-
-              <Tooltip.Content sideOffset={5}>
-                <Tooltip.Arrow />
-                <p>{signature}</p>
-              </Tooltip.Content>
-            </Tooltip.Root>
-          </Tooltip.Provider>
+        {isEntangled ? (
+          <Link to={`/address/${computedSignature}`}>{shortenAddress(computedSignature)}</Link>
         ) : (
-          signature
+          <>
+            {signature.length > 10 ? (
+              <Tooltip.Provider>
+                <Tooltip.Root delayDuration={20}>
+                  <Tooltip.Trigger>
+                    <Value>{computedSignature}</Value>
+                  </Tooltip.Trigger>
+
+                  <Tooltip.Content sideOffset={5}>
+                    <Tooltip.Arrow />
+                    <p>{signature}</p>
+                  </Tooltip.Content>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            ) : (
+              computedSignature
+            )}
+          </>
         )}
       </Attribute>
 
