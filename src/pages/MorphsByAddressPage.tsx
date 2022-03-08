@@ -113,7 +113,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
     to: {
       opacity: 1,
     },
-    pause: !morphs || isLoadingEnsResolution || isLoadingReverseEnsResolution,
+    pause: isLoadingEnsResolution || isLoadingReverseEnsResolution,
   });
 
   if (isLoadingEnsResolution || isLoadingReverseEnsResolution) {
