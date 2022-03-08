@@ -8,7 +8,7 @@ import { useSpring, animated } from 'react-spring';
 import MorphAttributes from './MorphAttributes';
 import UpdateSigilForm from './UpdateSigilForm';
 import useMorphDetails from '../hooks/useMorphDetails';
-import { COLORS } from '../constants/theme';
+import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
   tokenId: string;
@@ -43,6 +43,7 @@ const Img = styled.img`
 
 const Name = styled.h2`
   margin-top: 0;
+  font-family: ${FONTS.sansSerif};
   font-size: 42px;
 
   @media (max-width: 767px) {
@@ -61,7 +62,7 @@ const Description = styled.div`
 
 const Section = styled.div`
   margin-top: 3em;
-  padding-top: 3em;
+  padding-top: 2.5em;
   border-top: 1px solid ${lighten(0.1, COLORS.black)};
 `;
 

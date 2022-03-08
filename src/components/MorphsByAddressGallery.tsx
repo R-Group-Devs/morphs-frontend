@@ -8,7 +8,7 @@ import makeBlockie from 'ethereum-blockies-base64';
 import useMorphsByAddress from '../hooks/useMorphsByAddress';
 import GalleryItem from './GalleryItem';
 import { shortenAddress } from '../utils/address';
-import { COLORS } from '../constants/theme';
+import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
   addressOrName: string;
@@ -39,7 +39,8 @@ const Avatar = styled.img`
 `;
 
 const ProfileName = styled.h2`
-  font-size: 28px;
+  font-family: ${FONTS.sansSerif};
+  font-size: 32px;
 `;
 
 const AffinityCounts = styled.h4`
