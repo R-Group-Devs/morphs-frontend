@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import { ErrorBoundary } from 'react-error-boundary';
 import * as Dialog from '@radix-ui/react-dialog';
+import { Helmet } from 'react-helmet';
 import WalletProvider from './providers/WalletProvider';
 import QueryProvider from './providers/QueryProvider';
 import GlobalStyle from './components/GlobalStyle';
@@ -56,6 +57,7 @@ const App = ({ children }: Props) => {
     <>
       <GlobalStyle />
       <ScrollToTop />
+      <Helmet titleTemplate="Morphs NFTs / %s" />
 
       <ErrorBoundary fallback={<AppErrorMessage />}>
         <WalletProvider>

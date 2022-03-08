@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
+import { Helmet } from 'react-helmet';
 import Description from '../components/Description';
 import ScrollExampleVideo from '../components/ScrollExampleVideo';
 import SeeScrollsButton from '../components/SeeScrollsButton';
@@ -36,19 +37,25 @@ export default () => {
   });
 
   return (
-    <animated.div style={mountAnimationProps}>
-      <Content>
-        <Panel>
-          <Description />
-        </Panel>
+    <>
+      <Helmet titleTemplate="">
+        <title>Morphs NFTs</title>
+      </Helmet>
 
-        <Panel right>
-          <ScrollExampleVideo />
-          <SeeScrollsButton />
-        </Panel>
-      </Content>
+      <animated.div style={mountAnimationProps}>
+        <Content>
+          <Panel>
+            <Description />
+          </Panel>
 
-      <Footer />
-    </animated.div>
+          <Panel right>
+            <ScrollExampleVideo />
+            <SeeScrollsButton />
+          </Panel>
+        </Content>
+
+        <Footer />
+      </animated.div>
+    </>
   );
 };
