@@ -29,7 +29,17 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const ImgContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+`;
+
 const Img = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
   width: 100%;
 `;
@@ -45,7 +55,9 @@ const Name = styled.h3`
 export default ({ name, image, tokenId }: MorphsMetadata) => (
   <Container>
     <StyledLink to={`/token/${tokenId}`}>
-      <Img src={image} alt={name} />
+      <ImgContainer>
+        <Img src={image} alt={name} />
+      </ImgContainer>
 
       <Content>
         <Name>{name}</Name>

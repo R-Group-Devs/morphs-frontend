@@ -13,8 +13,12 @@ const Container = styled.ul`
 `;
 
 const Attribute = styled.li`
-  padding: 1em;
+  display: flex;
+  flex-direction: column;
   flex: 0 1 calc(33.333333% - 1em);
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
   text-align: center;
   border: 1px solid ${lighten(0.1, COLORS.black)};
 

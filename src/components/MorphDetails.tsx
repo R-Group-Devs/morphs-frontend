@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import { Link } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
 import useMorphDetails from '../hooks/useMorphDetails';
 import MorphAttributes from './MorphAttributes';
 import Paragraph from './Paragraph';
@@ -14,6 +15,7 @@ interface Props {
 const Container = styled.div`
   display: flex;
   margin-top: 5em;
+  margin-bottom: 5em;
 
   @media (max-width: 767px) {
     margin-top: 3em;
@@ -34,6 +36,7 @@ const Panel = styled.div<{ right?: boolean }>`
 const Img = styled.img`
   width: 100%;
   height: auto;
+  border: 1px solid ${COLORS.white};
 `;
 
 const Name = styled.h2`
@@ -69,24 +72,36 @@ export default ({ tokenId }: Props) => {
   const { data } = useMorphDetails(tokenId);
   const profileName = shortenAddress(data?.owner ?? '');
 
+  const mountAnimationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    pause: !data,
+  });
+
   return (
-    <Container>
-      <Panel>
-        <Img src={data?.image} alt={data?.name} />
-      </Panel>
+    <animated.div style={mountAnimationProps}>
+      <Container>
+        <Panel>
+          <Img src={data?.image} alt={data?.name} />
+        </Panel>
 
-      <Panel right>
-        <Name>{data?.name}</Name>
-        <Description>{data?.description}</Description>
-        <Owner>
-          Owned by <Link to={`/address/${data?.owner}`}>{profileName}</Link>
-        </Owner>
+        <Panel right>
+          <Name>{data?.name}</Name>
+          <Description>{data?.description}</Description>
+          <Owner>
+            Owned by <Link to={`/address/${data?.owner}`}>{profileName}</Link>
+          </Owner>
 
-        <Section>
-          <SectionHeading>Attributes</SectionHeading>
-          {data?.attributes && <MorphAttributes {...data?.attributes} />}
-        </Section>
-      </Panel>
-    </Container>
+          <Section>
+            <SectionHeading>Attributes</SectionHeading>
+            {data?.attributes && <MorphAttributes {...data?.attributes} />}
+          </Section>
+        </Panel>
+      </Container>
+    </animated.div>
   );
 };

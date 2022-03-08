@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring';
 import Description from '../components/Description';
 import ScrollExampleVideo from '../components/ScrollExampleVideo';
 import SeeScrollsButton from '../components/SeeScrollsButton';
@@ -24,19 +25,30 @@ const Panel = styled.div<{ right?: boolean }>`
   }
 `;
 
-export default () => (
-  <>
-    <Content>
-      <Panel>
-        <Description />
-      </Panel>
+export default () => {
+  const mountAnimationProps = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+  });
 
-      <Panel right>
-        <ScrollExampleVideo />
-        <SeeScrollsButton />
-      </Panel>
-    </Content>
+  return (
+    <animated.div style={mountAnimationProps}>
+      <Content>
+        <Panel>
+          <Description />
+        </Panel>
 
-    <Footer />
-  </>
-);
+        <Panel right>
+          <ScrollExampleVideo />
+          <SeeScrollsButton />
+        </Panel>
+      </Content>
+
+      <Footer />
+    </animated.div>
+  );
+};
