@@ -80,7 +80,7 @@ export default ({ onUpdate }: Props) => {
           autoComplete="off"
         />
 
-        <SubmitButton>Update</SubmitButton>
+        <SubmitButton>Align</SubmitButton>
       </Form>
 
       {!isSigilValid && hasAttemptedSubmission && (
