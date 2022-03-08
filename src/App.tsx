@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 import { ErrorBoundary } from 'react-error-boundary';
-import AppErrorMessage from './components/AppErrorMessage';
 import WalletProvider from './providers/WalletProvider';
+import QueryProvider from './providers/QueryProvider';
+import AppErrorMessage from './components/AppErrorMessage';
+import Header from './components/Header';
 import GlobalStyle from './components/GlobalStyle';
 import ProgressBar from './components/ProgressBar';
-import MintCountdownBanner from './components/MintCountdownBanner';
-import Header from './components/Header';
-import Description from './components/Description';
-import ScrollExampleVideo from './components/ScrollExampleVideo';
-import SeeScrollsButton from './components/SeeScrollsButton';
-import Footer from './components/Footer';
+
+interface Props {
+  children: React.ReactNode;
+}
 
 const Container = styled.div`
   margin: 0 auto;
@@ -22,28 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 2.5em;
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-  }
-`;
-
-const Panel = styled.div<{ right?: boolean }>`
-  margin-left: ${({ right }) => (right ? '10%' : 0)};
-  width: 45%;
-
-  @media (max-width: 767px) {
-    width: 100%;
-    margin-top: ${({ right }) => (right ? '3em' : 0)};
-    margin-left: 0;
-  }
-`;
-
-const App = () => {
+const App = ({ children }: Props) => {
   const progressBarAnimationProps = useSpring({
     from: {
       opacity: 1,
@@ -73,29 +52,19 @@ const App = () => {
 
       <ErrorBoundary fallback={<AppErrorMessage />}>
         <WalletProvider>
-          <animated.div style={progressBarAnimationProps}>
-            <ProgressBar />
-          </animated.div>
+          <QueryProvider>
+            <animated.div style={progressBarAnimationProps}>
+              <ProgressBar />
+            </animated.div>
 
-          <animated.div style={contentAnimationProps}>
-            <Container>
-              <MintCountdownBanner />
-              <Header />
+            <animated.div style={contentAnimationProps}>
+              <Container>
+                <Header />
 
-              <Content>
-                <Panel>
-                  <Description />
-                </Panel>
-
-                <Panel right>
-                  <ScrollExampleVideo />
-                  <SeeScrollsButton />
-                </Panel>
-              </Content>
-
-              <Footer />
-            </Container>
-          </animated.div>
+                {children}
+              </Container>
+            </animated.div>
+          </QueryProvider>
         </WalletProvider>
       </ErrorBoundary>
     </>
