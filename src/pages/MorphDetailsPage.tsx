@@ -82,7 +82,7 @@ const MorphDetails = ({ tokenId }: Props) => {
     address: data?.owner,
     skip: !data?.owner,
   });
-  const profileName = data?.owner ?? '';
+  const profileName = ens ?? data?.owner;
 
   const mountAnimationProps = useSpring({
     from: {
@@ -120,7 +120,7 @@ const MorphDetails = ({ tokenId }: Props) => {
           {!isEnsLoading && (
             <Section>
               <SectionHeading>Owner</SectionHeading>
-              <Link to={`/address/${data?.owner}`}>{ens ?? profileName}</Link>
+              <Link to={`/address/${profileName}`}>{profileName}</Link>
             </Section>
           )}
         </Panel>

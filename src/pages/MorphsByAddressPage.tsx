@@ -64,12 +64,12 @@ const Empty = styled.div`
 const MorphsByAddress = ({ addressOrName }: Props) => {
   const isAccountPropEnsName = addressOrName.endsWith('.eth');
 
-  const [{ data: ens, loading: isEnsLoading }] = useEnsLookup({
+  const [{ data: ens, loading: isLoadingReverseEnsResolution }] = useEnsLookup({
     address: addressOrName,
     skip: isAccountPropEnsName,
   });
 
-  const [{ data: account }] = useEnsResolveName({
+  const [{ data: account, loading: isLoadingEnsResolution }] = useEnsResolveName({
     name: addressOrName,
     skip: !isAccountPropEnsName,
   });
@@ -97,12 +97,12 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
       return addressOrName;
     }
 
-    if (isEnsLoading) {
+    if (isLoadingReverseEnsResolution) {
       return '--';
     }
 
     return ens ?? shortenAddress(address);
-  }, [address, addressOrName, ens, isAccountPropEnsName, isEnsLoading]);
+  }, [address, addressOrName, ens, isAccountPropEnsName, isLoadingReverseEnsResolution]);
 
   const avatarImage = avatar ?? makeBlockie(address || addressOrName);
 
@@ -113,8 +113,12 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
     to: {
       opacity: 1,
     },
-    pause: !morphs,
+    pause: !morphs || isLoadingEnsResolution || isLoadingReverseEnsResolution,
   });
+
+  if (isLoadingEnsResolution || isLoadingReverseEnsResolution) {
+    throw new Promise(() => {});
+  }
 
   return (
     <animated.div style={mountAnimationProps}>
