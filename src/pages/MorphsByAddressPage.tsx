@@ -1,4 +1,4 @@
-import { useMemo, Suspense } from 'react';
+import { useMemo, Suspense, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { lighten } from 'polished';
@@ -127,10 +127,10 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
         <ProfileName>{profileName}</ProfileName>
         <AffinityCounts>
           {affinities.map(({ affinity, count }, index) => (
-            <>
+            <Fragment key={affinity}>
               {index !== 0 && <AffinityDivider> | </AffinityDivider>}
               <strong>{affinity}</strong>: {count}
-            </>
+            </Fragment>
           ))}
         </AffinityCounts>
       </Header>
