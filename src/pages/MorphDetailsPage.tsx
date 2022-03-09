@@ -63,6 +63,7 @@ const Description = styled.div`
 
   p {
     margin-bottom: 1.5em;
+    overflow-wrap: break-word;
   }
 `;
 
