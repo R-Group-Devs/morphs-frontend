@@ -66,6 +66,7 @@ export default ({ isVisible, onUpdate }: Props) => {
     if (state === transactionStates.CONFIRMED) {
       onUpdate();
       setHasAttemptedSubmission(false);
+      setSigil('');
     }
   }, [state, onUpdate]);
 
