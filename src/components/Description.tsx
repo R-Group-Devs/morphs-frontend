@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import Credits from './Credits';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
@@ -7,19 +8,15 @@ import { FONTS } from '../constants/theme';
 const Container = styled.div``;
 
 const Heading = styled.div`
-  margin-top: 4em;
-  font-family: ${FONTS.glyphs};
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 2em;
-
-  @media (max-width: 767px) {
-    margin-top: 3em;
-  }
+  margin-top: 32px;
+  font-family: ${FONTS.sansSerif};
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31px;
 `;
 
 const MorphsShapesVideo = styled.video`
-  width: 60%;
+  width: 70%;
   height: auto;
 
   @media (max-width: 767px) {
@@ -28,13 +25,20 @@ const MorphsShapesVideo = styled.video`
 `;
 
 const FlavorText = styled.div`
-  margin-top: 2.5em;
+  margin-top: 32px;
   font-size: 16px;
+  font-weight: 700;
   line-height: 2em;
 
   @media (max-width: 767px) {
     margin-top: 2em;
   }
+`;
+
+const BodyText = styled.div`
+  margin-top: 32px;
+  font-size: 16px;
+  line-height: 2em;
 `;
 
 export default () => {
@@ -54,28 +58,33 @@ export default () => {
         poster={morphsShapesImage}
       />
 
-      <Heading>Our scrolls have been sent.</Heading>
+      <Heading>
+        Welcome to
+        <br />
+        The Morphs Research Hub.
+      </Heading>
 
       <FlavorText>
         <p>Morphs is an open-ended, evolving NFT project set in a science fantasy universe.</p>
-
-        <p>
-          Minting has ended, but you can still get involved by acquiring a scroll on the secondary
-          market.
-        </p>
-
-        <p>
-          Visit{' '}
-          <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
-            codex.morphs.wtf
-          </a>{' '}
-          for more info.
-        </p>
       </FlavorText>
 
-      <Heading>What mysteries do they hold…</Heading>
+      <BodyText>
+        <p>
+          To learn more about Morphs, visit the{' '}
+          <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
+            Codex
+          </a>
+          .
+        </p>
 
-      {!isSmallViewport && <Credits />}
+        <p>
+          To view your own or all Morphs NFTs, visit the <Link to="">Compendium</Link>.
+        </p>
+
+        <p>
+          To view the data on Sigil Alignments, visit <Link to="/alignments">Alignments</Link>.
+        </p>
+      </BodyText>
     </Container>
   );
 };

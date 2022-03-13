@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useConnect, useAccount } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 const Nav = styled.ul`
-  display: inline-block;
+  display: flex;
   margin-left: 70px;
   padding: 0;
   list-style: none;
+  font-size: 14px;
 
   @media (max-width: 820px) {
     margin-left: 40px;
@@ -25,34 +26,42 @@ const Nav = styled.ul`
   }
 `;
 
-const NavItem = styled.li``;
-
-const NavLink = styled(Link)`
-  color: #666;
-  border-bottom-color: #666;
-
-  &:hover {
-    color: #fff;
-    border-bottom-color: #fff;
+const NavItem = styled.li`
+  &:after {
+    content: '';
+    display: inline-block;
+    margin: 0 24px;
+    width: 8px;
+    height: 8px;
+    background: #474747;
   }
 
-  &:focus {
-    outline: none;
+  &:last-child:after {
+    display: none;
   }
 `;
 
-export default () => {
-  const [{ data: wallet }] = useConnect();
-  const [{ data: account }] = useAccount();
+const NavLink = styled(Link)``;
 
-  if (!wallet.connected) {
-    return null;
-  }
+const NavLinkExternal = styled.a``;
+
+export default () => {
+  const [{ data: account }] = useAccount();
 
   return (
     <Nav>
       <NavItem>
+        <NavLinkExternal href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
+          Codex
+        </NavLinkExternal>
+      </NavItem>
+
+      <NavItem>
         <NavLink to={`/address/${account?.address}`}>My Scrolls</NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink to="/alignments">Alignments</NavLink>
       </NavItem>
     </Nav>
   );

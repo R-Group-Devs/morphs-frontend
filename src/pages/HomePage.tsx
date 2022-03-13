@@ -3,7 +3,6 @@ import { useSpring, animated } from 'react-spring';
 import { Helmet } from 'react-helmet';
 import Description from '../components/Description';
 import ScrollExampleVideo from '../components/ScrollExampleVideo';
-import SeeScrollsButton from '../components/SeeScrollsButton';
 import Footer from '../components/Footer';
 
 const Content = styled.div`
@@ -50,7 +49,6 @@ export default () => {
 
           <Panel right>
             <ScrollExampleVideo />
-            <SeeScrollsButton />
           </Panel>
         </Content>
 
