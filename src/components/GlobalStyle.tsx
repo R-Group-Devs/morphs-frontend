@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { ModalOverlayStyles } from '../components/Modal';
+import { OverlayStyles } from '../styles/Overlay';
 import { COLORS, FONTS } from '../constants/theme';
 
 export default createGlobalStyle`
@@ -73,13 +73,13 @@ export default createGlobalStyle`
   }
 
   .-walletlink-css-reset .-walletlink-extension-dialog-container .-walletlink-extension-dialog-backdrop {
-    ${ModalOverlayStyles}
+    ${OverlayStyles}
     transition: all 0.3s;
   }
 
   .walletconnect-qrcode__base {
     && {
-      ${ModalOverlayStyles}
+      ${OverlayStyles}
       transition: all 0.3s;
     }
   }

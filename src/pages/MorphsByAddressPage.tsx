@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import { useEnsLookup, useEnsAvatar, useEnsResolveName } from 'wagmi';
-import { useSpring, animated } from 'react-spring';
 import { Helmet } from 'react-helmet';
 import countBy from 'lodash/countBy';
 import makeBlockie from 'ethereum-blockies-base64';
 import LoadingIndicator from '../components/LoadingIndicator';
+import Animated from '../components/Animated';
+import HeaderAvatar from '../components/HeaderAvatar';
+import Gallery from '../components/Gallery';
 import GalleryItem from '../components/GalleryItem';
 import useMorphsByAddress from '../hooks/useMorphsByAddress';
 import { shortenAddress } from '../utils/address';
@@ -19,29 +21,12 @@ interface Props {
 
 const AFFINITIES = ['Citizen', 'Mythical', 'Cosmic', 'Celestial'];
 
-const Gallery = styled.ul`
-  margin-bottom: 5em;
-  padding: 0;
-  display: flex;
-  gap: 1.5em;
-  flex-wrap: wrap;
-  list-style: none;
-`;
-
 const Header = styled.div`
   margin-bottom: 4em;
   text-align: center;
 `;
 
-const Avatar = styled.img`
-  display: inline-block;
-  width: 120px;
-  height: 120px;
-  border: 1px solid ${COLORS.white};
-  border-radius: 50%;
-`;
-
-const ProfileName = styled.h2`
+const Name = styled.h2`
   margin-bottom: 0;
   font-family: ${FONTS.sansSerif};
   font-size: 32px;
@@ -106,25 +91,15 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
 
   const avatarImage = avatar ?? makeBlockie(address || addressOrName);
 
-  const mountAnimationProps = useSpring({
-    from: {
-      opacity: 0,
-    },
-    to: {
-      opacity: 1,
-    },
-    pause: isLoadingEnsResolution || isLoadingReverseEnsResolution,
-  });
-
   if (isLoadingEnsResolution || isLoadingReverseEnsResolution) {
     throw new Promise(() => {});
   }
 
   return (
-    <animated.div style={mountAnimationProps}>
+    <Animated pause={isLoadingEnsResolution || isLoadingReverseEnsResolution}>
       <Header>
-        <Avatar src={avatarImage} />
-        <ProfileName>{profileName}</ProfileName>
+        <HeaderAvatar src={avatarImage} />
+        <Name>{profileName}</Name>
         <AffinityCounts>
           {affinities.map(({ affinity, count }, index) => (
             <Fragment key={affinity}>
@@ -144,7 +119,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
       ) : (
         <Empty>This wallet does not hold any morphs.</Empty>
       )}
-    </animated.div>
+    </Animated>
   );
 };
 

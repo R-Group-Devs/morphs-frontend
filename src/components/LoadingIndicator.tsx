@@ -10,9 +10,9 @@ const Container = styled.div`
   pointer-events: none;
 `;
 
-export default () => {
+export default ({ ...rest }) => {
   return (
-    <Container>
+    <Container {...rest}>
       <RingLoader color={COLORS.white} />
     </Container>
   );

@@ -35,7 +35,7 @@ export default () => {
         poster={isSmallViewport ? shapesPanelImageMobile : shapesPanelImage}
       />
 
-      {isSmallViewport && <Credits />}
+      <Credits />
     </Container>
   );
 };

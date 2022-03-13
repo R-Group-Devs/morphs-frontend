@@ -5,10 +5,9 @@ import { COLORS, FONTS } from '../constants/theme';
 const Logo = styled(Link)`
   display: block;
   font-family: ${FONTS.sansSerif};
-  font-size: 64px;
+  font-size: 56px;
   font-weight: 600;
   text-transform: uppercase;
-  line-height: 1.2em;
   color: ${COLORS.white};
   border: none;
 
@@ -20,9 +19,8 @@ const Logo = styled(Link)`
     outline: none;
   }
 
-  @media (max-width: 580px) {
-    margin-top: 0.5em;
-    font-size: 54px;
+  @media (max-width: 650px) {
+    font-size: 48px;
   }
 `;
 

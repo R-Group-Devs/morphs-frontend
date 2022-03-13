@@ -115,7 +115,9 @@ export default ({
         onMouseLeave={(e) => !isSigilFormPersisted && onSigilAttributeMouseLeave(e)}
       >
         <Label>Sigil</Label>
-        <Value>{sigil}</Value>
+        <Value>
+          <Link to={`/alignment/${sigil.toUpperCase()}`}>{sigil}</Link>
+        </Value>
       </Attribute>
 
       <Attribute>

@@ -1,58 +1,64 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useConnect, useAccount } from 'wagmi';
+import { useMediaQuery } from 'react-responsive';
+import MobileNav from './MobileNav';
 
 const Nav = styled.ul`
-  display: inline-block;
-  margin-left: 70px;
+  display: flex;
+  margin-left: 64px;
   padding: 0;
   list-style: none;
+  font-size: 14px;
+`;
 
-  @media (max-width: 820px) {
-    margin-left: 40px;
-    display: block;
+const NavItem = styled.li`
+  &:after {
+    content: '';
+    display: inline-block;
+    margin: 0 24px;
+    width: 8px;
+    height: 8px;
+    background: #474747;
   }
 
-  @media (max-width: 790px) {
-    margin-left: 40px;
+  &:last-child:after {
     display: none;
   }
-
-  @media (max-width: 580px) {
-    margin-top: 2em;
-    margin-left: 0;
-    display: block;
-  }
 `;
 
-const NavItem = styled.li``;
+const NavLink = styled(Link)``;
 
-const NavLink = styled(Link)`
-  color: #666;
-  border-bottom-color: #666;
-
-  &:hover {
-    color: #fff;
-    border-bottom-color: #fff;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
+const NavLinkExternal = styled.a``;
 
 export default () => {
   const [{ data: wallet }] = useConnect();
   const [{ data: account }] = useAccount();
 
-  if (!wallet.connected) {
-    return null;
+  const isMediumViewport = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
+
+  if (isMediumViewport) {
+    return <MobileNav />;
   }
 
   return (
     <Nav>
       <NavItem>
-        <NavLink to={`/address/${account?.address}`}>My Scrolls</NavLink>
+        <NavLinkExternal href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
+          Codex
+        </NavLinkExternal>
+      </NavItem>
+
+      <NavItem>
+        <NavLink to={wallet?.connected ? `/address/${account?.address}` : '/connect'}>
+          My Morphs
+        </NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink to="/alignments">Alignments</NavLink>
       </NavItem>
     </Nav>
   );
