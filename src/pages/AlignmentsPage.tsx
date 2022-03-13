@@ -70,6 +70,8 @@ const CountLabel = styled.span`
 
 const Alignments = () => {
   const { data } = useAlignments();
+  const alignedCount = data?.reduce((total, { count }) => total + count, 0) || 0;
+  const unalignedCount = 26814 - alignedCount;
 
   const mountAnimationProps = useSpring({
     from: {
@@ -95,12 +97,12 @@ const Alignments = () => {
         <Counts>
           <Count>
             <CountLabel>Aligned</CountLabel>
-            ---
+            {alignedCount.toLocaleString()}
           </Count>
 
           <Count>
             <CountLabel>Unaligned</CountLabel>
-            ---
+            {unalignedCount.toLocaleString()}
           </Count>
         </Counts>
       </Header>
