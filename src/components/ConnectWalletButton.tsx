@@ -11,6 +11,11 @@ import { COLORS, FONTS } from '../constants/theme';
 const Container = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 650px) {
+    margin: 0 3em;
+    width: 100%;
+  }
 `;
 
 const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
@@ -37,9 +42,10 @@ const ConnectWalletButton = styled(Dialog.Trigger)<{ $isConnected: boolean }>`
     top: 1px;
   }
 
-  @media (max-width: 580px) {
+  @media (max-width: 650px) {
     padding: 20px;
-    width: 80vw;
+    width: 100%;
+    display: block;
     font-size: 16px;
   }
 `;
@@ -85,7 +91,7 @@ export default () => {
   const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
 
   const isXSmallViewport = useMediaQuery({
-    query: '(max-width: 580px)',
+    query: '(max-width: 650px)',
   });
 
   const isSmallViewport = useMediaQuery({

@@ -19,9 +19,8 @@ const Logo = styled(Link)`
     outline: none;
   }
 
-  @media (max-width: 580px) {
-    margin-top: 0.5em;
-    font-size: 54px;
+  @media (max-width: 650px) {
+    font-size: 48px;
   }
 `;
 

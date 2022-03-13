@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useAccount } from 'wagmi';
+import { useMediaQuery } from 'react-responsive';
+import MobileNav from './MobileNav';
 
 const Nav = styled.ul`
   display: flex;
@@ -8,22 +10,6 @@ const Nav = styled.ul`
   padding: 0;
   list-style: none;
   font-size: 14px;
-
-  @media (max-width: 820px) {
-    margin-left: 40px;
-    display: block;
-  }
-
-  @media (max-width: 790px) {
-    margin-left: 40px;
-    display: none;
-  }
-
-  @media (max-width: 580px) {
-    margin-top: 2em;
-    margin-left: 0;
-    display: block;
-  }
 `;
 
 const NavItem = styled.li`
@@ -47,6 +33,14 @@ const NavLinkExternal = styled.a``;
 
 export default () => {
   const [{ data: account }] = useAccount();
+
+  const isMediumViewport = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
+
+  if (isMediumViewport) {
+    return <MobileNav />;
+  }
 
   return (
     <Nav>

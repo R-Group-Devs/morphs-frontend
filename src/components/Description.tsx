@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import Credits from './Credits';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
 import { FONTS } from '../constants/theme';
 
@@ -41,50 +40,44 @@ const BodyText = styled.div`
   line-height: 2em;
 `;
 
-export default () => {
-  const isSmallViewport = useMediaQuery({
-    query: '(max-width: 767px)',
-  });
+export default () => (
+  <Container>
+    <MorphsShapesVideo
+      src="./videos/morphs-shapes.mp4"
+      autoPlay
+      loop
+      muted
+      playsInline
+      controlsList="nodownload"
+      poster={morphsShapesImage}
+    />
 
-  return (
-    <Container>
-      <MorphsShapesVideo
-        src="./videos/morphs-shapes.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        controlsList="nodownload"
-        poster={morphsShapesImage}
-      />
+    <Heading>
+      Welcome to
+      <br />
+      The Morphs Research Hub.
+    </Heading>
 
-      <Heading>
-        Welcome to
-        <br />
-        The Morphs Research Hub.
-      </Heading>
+    <FlavorText>
+      <p>Morphs is an open-ended, evolving NFT project set in a science fantasy universe.</p>
+    </FlavorText>
 
-      <FlavorText>
-        <p>Morphs is an open-ended, evolving NFT project set in a science fantasy universe.</p>
-      </FlavorText>
+    <BodyText>
+      <p>
+        To learn more about Morphs, visit the{' '}
+        <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
+          Codex
+        </a>
+        .
+      </p>
 
-      <BodyText>
-        <p>
-          To learn more about Morphs, visit the{' '}
-          <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
-            Codex
-          </a>
-          .
-        </p>
+      <p>
+        To view your own or all Morphs NFTs, visit the <Link to="">Compendium</Link>.
+      </p>
 
-        <p>
-          To view your own or all Morphs NFTs, visit the <Link to="">Compendium</Link>.
-        </p>
-
-        <p>
-          To view the data on Sigil Alignments, visit <Link to="/alignments">Alignments</Link>.
-        </p>
-      </BodyText>
-    </Container>
-  );
-};
+      <p>
+        To view the data on Sigil Alignments, visit <Link to="/alignments">Alignments</Link>.
+      </p>
+    </BodyText>
+  </Container>
+);
