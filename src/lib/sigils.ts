@@ -30,7 +30,8 @@ export const getSigilLeaderboard = async (chainId = 1) => {
       collection: collectionAddress.toLowerCase(),
     },
     orderBy: TokenStorageValue_OrderBy.UpdatedAtTimestamp,
-    orderDirection: OrderDirection.Desc
+    orderDirection: OrderDirection.Desc,
+    limit: 1000
   });
 
   if (resp.errors?.length || !resp.data) {

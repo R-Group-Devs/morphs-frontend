@@ -34,12 +34,13 @@ query getTokenStorage(
   $orderBy: TokenStorageValue_orderBy
   $orderDirection: OrderDirection = asc
   $filter: TokenStorageValue_filter
+  $limit: Int! = 100
 ) {
   tokenStorageValues(
     orderBy: $orderBy
     orderDirection: $orderDirection
     where: $filter
-    first: 100
+    first: $limit
   ) {
     id
     nft { id tokenId }
