@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useAccount } from 'wagmi';
+import { useConnect, useAccount } from 'wagmi';
 import { useMediaQuery } from 'react-responsive';
 import MobileNav from './MobileNav';
 
@@ -32,6 +32,7 @@ const NavLink = styled(Link)``;
 const NavLinkExternal = styled.a``;
 
 export default () => {
+  const [{ data: wallet }] = useConnect();
   const [{ data: account }] = useAccount();
 
   const isMediumViewport = useMediaQuery({
@@ -51,7 +52,9 @@ export default () => {
       </NavItem>
 
       <NavItem>
-        <NavLink to={`/address/${account?.address}`}>My Scrolls</NavLink>
+        <NavLink to={wallet?.connected ? `/address/${account?.address}` : '/connect'}>
+          My Scrolls
+        </NavLink>
       </NavItem>
 
       <NavItem>
