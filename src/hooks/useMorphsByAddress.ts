@@ -7,7 +7,7 @@ export default (address: string) => {
   const chainId = useChainId();
 
   const { data: tokenIds } = useQuery(
-    `${chainId}:${address}:tokenIdsByAddress`,
+    ['tokenIdsByAddress', chainId, address],
     async () => getOwnedMorphs(chainId, address),
     { enabled: !!address }
   );

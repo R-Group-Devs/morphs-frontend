@@ -5,5 +5,5 @@ import { getSigilLeaderboard } from '../lib/sigils';
 export default () => {
   const chainId = useChainId();
 
-  return useQuery(`${chainId}:alignments`, async () => getSigilLeaderboard(chainId));
+  return useQuery(['alignments', chainId], async () => getSigilLeaderboard(chainId));
 };

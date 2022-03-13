@@ -78,9 +78,7 @@ export default ({ alignments }: Props) => {
         {alignments.map(({ normalizedSigil, count }) => (
           <tr key={normalizedSigil}>
             <Cell>
-              <AlignmentLink to={`/compendium?sigil=${normalizedSigil}`}>
-                {normalizedSigil}
-              </AlignmentLink>
+              <AlignmentLink to={`/alignment/${normalizedSigil}`}>{normalizedSigil}</AlignmentLink>
             </Cell>
             <CountCell>{count}</CountCell>
             <PercentageCell>{`${getPercentage(count)}%`}</PercentageCell>

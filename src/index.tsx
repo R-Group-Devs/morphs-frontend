@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
 import HomePage from './pages/HomePage';
-import CompendiumPage from './pages/CompendiumPage';
 import MorphsByAddressPage from './pages/MorphsByAddressPage';
 import MorphDetailsPage from './pages/MorphDetailsPage';
 import AlignmentsPage from './pages/AlignmentsPage';
+import AlignmentDetailsPage from './pages/AlignmentDetailsPage';
 import ConnectWalletPage from './pages/ConnectWalletPage';
 import SearchTestPage from './pages/SearchTestPage';
 import './polyfills';
@@ -17,7 +17,6 @@ ReactDOM.render(
       <App>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/compendium" element={<CompendiumPage />} />
           <Route path="/address/:addressOrName" element={<MorphsByAddressPage />} />
           <Route path="/token/:tokenId" element={<MorphDetailsPage />} />
           <Route
@@ -29,6 +28,7 @@ ReactDOM.render(
             }
           />
           <Route path="/alignments" element={<AlignmentsPage />} />
+          <Route path="/alignment/:sigil" element={<AlignmentDetailsPage />} />
           <Route path="/connect" element={<ConnectWalletPage />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

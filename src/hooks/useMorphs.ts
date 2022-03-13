@@ -5,5 +5,5 @@ import { searchMorphs, MorphsQuery } from '../lib/search';
 export default (query: MorphsQuery) => {
   const chainId = useChainId();
 
-  return useQuery(`${chainId}:${query}:morphs`, async () => searchMorphs(query, chainId));
+  return useQuery(['morphs', chainId, query], async () => searchMorphs(query, chainId));
 };
