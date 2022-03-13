@@ -21,7 +21,6 @@ const Container = styled.div<{ $isOpen: boolean }>`
   height: 100vh;
   background: ${COLORS.black};
   transition: left 0.3s;
-  z-index: 1;
 `;
 
 const Overlay = styled.div<{ $isVisible: boolean }>`
@@ -33,6 +32,7 @@ const Overlay = styled.div<{ $isVisible: boolean }>`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   visibility: ${({ $isVisible }) => ($isVisible ? 'visible' : 'hidden')};
   transition: all 0.3s;
+  z-index: 1;
   ${OverlayStyles}
 `;
 

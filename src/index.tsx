@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
 import HomePage from './pages/HomePage';
+import CompendiumPage from './pages/CompendiumPage';
 import MorphsByAddressPage from './pages/MorphsByAddressPage';
 import MorphDetailsPage from './pages/MorphDetailsPage';
 import AlignmentsPage from './pages/AlignmentsPage';
 import ConnectWalletPage from './pages/ConnectWalletPage';
-import './polyfills';
 import SearchTestPage from './pages/SearchTestPage';
+import './polyfills';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
       <App>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/compendium" element={<CompendiumPage />} />
           <Route path="/address/:addressOrName" element={<MorphsByAddressPage />} />
           <Route path="/token/:tokenId" element={<MorphDetailsPage />} />
           <Route

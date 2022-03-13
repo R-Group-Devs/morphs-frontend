@@ -27,6 +27,7 @@ const Header = styled.div`
 
 const Heading = styled.h2`
   font-family: ${FONTS.sansSerif};
+  font-size: 28px;
 
   @media (max-width: 580px) {
     margin-bottom: 2em;

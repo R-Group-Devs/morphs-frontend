@@ -1,13 +1,15 @@
 import { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SigilStanding } from '../lib/sigils';
-import { FONTS } from '../constants/theme';
+import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
   alignments: SigilStanding[];
 }
 
 const Table = styled.table`
+  margin-bottom: 4em;
   width: 100%;
   border-collapse: collapse;
 `;
@@ -41,6 +43,15 @@ const PercentageCell = styled(Cell)`
   text-align: right;
 `;
 
+const AlignmentLink = styled(Link)`
+  font-weight: 700;
+  border-bottom: none;
+
+  &:hover {
+    border-bottom: 1px solid ${COLORS.accent.light};
+  }
+`;
+
 export default ({ alignments }: Props) => {
   const totalSigils = alignments.reduce((total, { count }) => total + count, 0);
 
@@ -66,7 +77,11 @@ export default ({ alignments }: Props) => {
       <tbody>
         {alignments.map(({ normalizedSigil, count }) => (
           <tr key={normalizedSigil}>
-            <Cell>{normalizedSigil}</Cell>
+            <Cell>
+              <AlignmentLink to={`/compendium?sigil=${normalizedSigil}`}>
+                {normalizedSigil}
+              </AlignmentLink>
+            </Cell>
             <CountCell>{count}</CountCell>
             <PercentageCell>{`${getPercentage(count)}%`}</PercentageCell>
           </tr>
