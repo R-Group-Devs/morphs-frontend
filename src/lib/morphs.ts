@@ -40,7 +40,8 @@ export interface MorphsMetadata {
   description: string
   /** will be rewritten as an HTTP uri */
   image: string
-  attributes: {
+  /** will be undefined if token is running a non-standard engine */
+  attributes?: {
     affinity: string
     era: string
     group: string
@@ -82,13 +83,11 @@ export const batchGetMorphDetails = async (
     const owner = data[idx * 2 + 0];
     const uri = data[idx * 2 + 1];
     const metadata = metadataFromTokenURI(uri);
-    return {
-      tokenId,
-      name: metadata.name,
-      description: metadata.description,
-      image: rewriteIpfsUri(metadata.image),
-      owner,
-      attributes: {
+
+    let attributes: MorphsMetadata['attributes'];
+
+    try {
+      attributes = {
         affinity: getAttribute(metadata, 'Affinity'),
         era: getAttribute(metadata, 'Era'),
         group: getAttribute(metadata, 'Group'),
@@ -97,7 +96,18 @@ export const batchGetMorphDetails = async (
         sigil: getAttribute(metadata, 'Sigil'),
         signature: getAttribute(metadata, 'Signature'),
         variation: getAttribute(metadata, 'Variation')
-      }
+      };
+    } catch (err) {
+      console.warn('unable to parse attributes -- token may be running a custom engine');
+    }
+
+    return {
+      tokenId,
+      name: metadata.name,
+      description: metadata.description,
+      image: rewriteIpfsUri(metadata.image),
+      owner,
+      attributes,
     }
   });
 
