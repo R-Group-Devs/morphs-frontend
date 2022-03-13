@@ -125,17 +125,17 @@ const MorphDetails = ({ tokenId }: Props) => {
           <Description>
             <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
           </Description>
-          <Section>
-            <SectionHeading>Attributes</SectionHeading>
-            {data?.attributes && (
-              <MorphAttributes
-                attributes={data?.attributes}
-                isSigilFormVisible={isSigilFormVisible}
-                onSigilAttributeMouseEnter={() => setIsSigilFormVisible(true)}
-                onSigilAttributeMouseLeave={() => setIsSigilFormVisible(false)}
-              />
-            )}
-          </Section>
+          {data?.attributes && (
+            <Section>
+              <SectionHeading>Attributes</SectionHeading>
+                <MorphAttributes
+                  attributes={data?.attributes}
+                  isSigilFormVisible={isSigilFormVisible}
+                  onSigilAttributeMouseEnter={() => setIsSigilFormVisible(true)}
+                  onSigilAttributeMouseLeave={() => setIsSigilFormVisible(false)}
+                />
+            </Section>
+          )}
 
           {!isEnsLoading && (
             <Section>
