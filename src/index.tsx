@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage';
 import MorphsByAddressPage from './pages/MorphsByAddressPage';
 import MorphDetailsPage from './pages/MorphDetailsPage';
 import AlignmentsPage from './pages/AlignmentsPage';
-import AlignmentDetailsPage from './pages/AlignmentDetailsPage';
+import MorphsByAlignmentPage from './pages/MorphsByAlignmentPage';
 import ConnectWalletPage from './pages/ConnectWalletPage';
 import SearchTestPage from './pages/SearchTestPage';
 import './polyfills';
@@ -28,7 +28,7 @@ ReactDOM.render(
             }
           />
           <Route path="/alignments" element={<AlignmentsPage />} />
-          <Route path="/alignment/:sigil" element={<AlignmentDetailsPage />} />
+          <Route path="/alignment/:sigil" element={<MorphsByAlignmentPage />} />
           <Route path="/connect" element={<ConnectWalletPage />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

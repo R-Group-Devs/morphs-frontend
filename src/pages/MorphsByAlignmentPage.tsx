@@ -1,12 +1,14 @@
-import { Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 import { Helmet } from 'react-helmet';
+import InfiniteScroll from 'react-infinite-scroller';
 import LoadingIndicator from '../components/LoadingIndicator';
 import GalleryItem from '../components/GalleryItem';
 import useAlignments from '../hooks/useAlignments';
 import useMorphs from '../hooks/useMorphs';
+import { MorphsMetadata } from '../lib/morphs';
 import { COLORS, FONTS } from '../constants/theme';
 
 const Gallery = styled.ul`
@@ -42,13 +44,22 @@ const Empty = styled.div`
   text-align: center;
 `;
 
-const Compendium = () => {
+const LoadMoreIndicator = styled(LoadingIndicator)`
+  margin: 2em 0 3em;
+`;
+
+const MorphsByAlignment = () => {
   const { sigil } = useParams();
   const { data: alignments } = useAlignments();
+  const [morphs, setMorphs] = useState<any[]>([]);
+
   const alignment = alignments?.find(
     ({ normalizedSigil }) => sigil?.toUpperCase() === normalizedSigil
   );
-  const { data } = useMorphs({ sigils: alignment?.sigils });
+
+  const [cursor, setCursor] = useState('0');
+  //const { data } = useMorphs({ sigils: alignment?.sigils, cursor });
+  const { data, isLoading } = useMorphs({ cursor });
 
   const mountAnimationProps = useSpring({
     from: {
@@ -59,6 +70,16 @@ const Compendium = () => {
     },
   });
 
+  useEffect(() => {
+    setMorphs((morphs) => [...morphs, ...(data?.morphs || [])]);
+  }, [data?.morphs]);
+
+  console.log(morphs);
+
+  if (isLoading && morphs.length === 0) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <animated.div style={mountAnimationProps}>
       <Header>
@@ -66,12 +87,24 @@ const Compendium = () => {
         <Name>{alignment?.normalizedSigil}</Name>
       </Header>
 
-      {data?.morphs.length ? (
-        <Gallery>
-          {data?.morphs.map((morph) => (
-            <GalleryItem key={morph.tokenId} {...morph} />
-          ))}
-        </Gallery>
+      {morphs.length ? (
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={() => {
+            if (data?.nextCursor && !isLoading) {
+              setCursor(data.nextCursor);
+            }
+          }}
+          hasMore
+          loader={<LoadMoreIndicator />}
+          threshold={2000}
+        >
+          <Gallery>
+            {morphs.map((morph) => (
+              <GalleryItem key={morph.tokenId} {...morph} />
+            ))}
+          </Gallery>
+        </InfiniteScroll>
       ) : (
         <Empty>This wallet does not hold any morphs.</Empty>
       )}
@@ -79,14 +112,18 @@ const Compendium = () => {
   );
 };
 
-export default () => (
-  <>
-    <Helmet>
-      <title>Compendium</title>
-    </Helmet>
+export default () => {
+  const { sigil } = useParams();
 
-    <Suspense fallback={<LoadingIndicator />}>
-      <Compendium />
-    </Suspense>
-  </>
-);
+  return (
+    <>
+      <Helmet>
+        <title>{sigil}</title>
+      </Helmet>
+
+      <Suspense fallback={<LoadingIndicator />}>
+        <MorphsByAlignment />
+      </Suspense>
+    </>
+  );
+};
