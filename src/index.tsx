@@ -5,6 +5,7 @@ import App from './App';
 import HomePage from './pages/HomePage';
 import MorphsByAddressPage from './pages/MorphsByAddressPage';
 import MorphDetailsPage from './pages/MorphDetailsPage';
+import AlignmentsPage from './pages/AlignmentsPage';
 import ConnectWalletPage from './pages/ConnectWalletPage';
 import './polyfills';
 import SearchTestPage from './pages/SearchTestPage';
@@ -25,6 +26,7 @@ ReactDOM.render(
               </Suspense>
             }
           />
+          <Route path="/alignments" element={<AlignmentsPage />} />
           <Route path="/connect" element={<ConnectWalletPage />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

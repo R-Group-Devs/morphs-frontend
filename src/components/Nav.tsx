@@ -6,7 +6,7 @@ import MobileNav from './MobileNav';
 
 const Nav = styled.ul`
   display: flex;
-  margin-left: 70px;
+  margin-left: 64px;
   padding: 0;
   list-style: none;
   font-size: 14px;
