@@ -62,6 +62,9 @@ export default ({
   onSigilAttributeMouseEnter,
   onSigilAttributeMouseLeave,
 }: Props) => {
+  if (!attributes) {
+    return null;
+  }
   const { affinity, era, group, palette, quantumStatus, sigil, signature, variation } = attributes;
   const [isSigilFormPersisted, setIsSigilFormPersisted] = useState(false);
   const isEntangled = quantumStatus === 'Entangled';

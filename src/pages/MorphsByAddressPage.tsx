@@ -82,7 +82,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
   const { data: morphs } = useMorphsByAddress(address);
 
   const affinities = useMemo(() => {
-    const counts = countBy(morphs, (x) => x.attributes.affinity);
+    const counts = countBy(morphs, (x) => x.attributes?.affinity);
 
     return Object.entries(counts)
       .map(([affinity, count]) => ({
