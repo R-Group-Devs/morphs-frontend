@@ -58,8 +58,7 @@ const MorphsByAlignment = () => {
   );
 
   const [cursor, setCursor] = useState('0');
-  //const { data } = useMorphs({ sigils: alignment?.sigils, cursor });
-  const { data, isLoading } = useMorphs({ cursor });
+  const { data, isLoading } = useMorphs({ sigils: alignment?.sigils, cursor });
 
   const mountAnimationProps = useSpring({
     from: {
@@ -93,8 +92,8 @@ const MorphsByAlignment = () => {
               setCursor(data.nextCursor);
             }
           }}
-          hasMore
-          loader={<LoadMoreIndicator />}
+          hasMore={!data || !!data?.nextCursor}
+          loader={<LoadMoreIndicator key={0} />}
           threshold={2000}
         >
           <Gallery>
