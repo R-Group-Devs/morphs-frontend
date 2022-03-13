@@ -74,8 +74,6 @@ const MorphsByAlignment = () => {
     setMorphs((morphs) => [...morphs, ...(data?.morphs || [])]);
   }, [data?.morphs]);
 
-  console.log(morphs);
-
   if (isLoading && morphs.length === 0) {
     return <LoadingIndicator />;
   }
