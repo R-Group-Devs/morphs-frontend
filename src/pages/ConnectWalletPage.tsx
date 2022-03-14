@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import Animated from '../components/Animated';
-import SeeScrollsButton from '../components/SeeScrollsButton';
+import SeeMorphsButton from '../components/SeeMorphsButton';
 
 const Container = styled.div`
   position: fixed;
@@ -32,7 +32,7 @@ export default () => {
       <Animated>
         <Message>You don't have a wallet connected.</Message>
 
-        <SeeScrollsButton />
+        <SeeMorphsButton />
       </Animated>
     </Container>
   );

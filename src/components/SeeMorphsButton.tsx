@@ -11,8 +11,8 @@ const Container = styled.div`
 
 // TODO: extract into common file
 const ButtonStyles = css`
+  margin: 0 2em;
   padding: 20px 50px;
-  width: 100%;
   min-height: 72px;
   background: ${COLORS.primary.normal};
   font-family: ${FONTS.sansSerif};
@@ -37,7 +37,7 @@ const ButtonStyles = css`
   }
 `;
 
-const SeeScrollsButton = styled.button<{ $isConnected: boolean }>`
+const SeeMorphsButton = styled.button<{ $isConnected: boolean }>`
   ${ButtonStyles}
   display: block;
   font-size: 20px;
@@ -67,7 +67,7 @@ export default () => {
 
   return (
     <Container>
-      <SeeScrollsButton
+      <SeeMorphsButton
         $isConnected={false}
         onClick={(e) => {
           e.preventDefault();
@@ -76,7 +76,7 @@ export default () => {
         }}
       >
         Connect to see your morphs
-      </SeeScrollsButton>
+      </SeeMorphsButton>
     </Container>
   );
 };
