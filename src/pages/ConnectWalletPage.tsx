@@ -4,7 +4,16 @@ import Animated from '../components/Animated';
 import SeeScrollsButton from '../components/SeeScrollsButton';
 
 const Container = styled.div`
-  margin: 5em auto 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3em auto 0;
+  padding-bottom: 5em;
   max-width: 500px;
 `;
 
