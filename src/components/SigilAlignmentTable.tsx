@@ -80,7 +80,7 @@ export default ({ alignments }: Props) => {
             <Cell>
               <AlignmentLink to={`/alignment/${normalizedSigil}`}>{normalizedSigil}</AlignmentLink>
             </Cell>
-            <CountCell>{count}</CountCell>
+            <CountCell>{count.toLocaleString()}</CountCell>
             <PercentageCell>{`${getPercentage(count)}%`}</PercentageCell>
           </tr>
         ))}

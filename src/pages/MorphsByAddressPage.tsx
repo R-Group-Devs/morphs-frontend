@@ -104,7 +104,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
           {affinities.map(({ affinity, count }, index) => (
             <Fragment key={affinity}>
               {index !== 0 && <AffinityDivider> | </AffinityDivider>}
-              <strong>{affinity}</strong>: {count}
+              <strong>{affinity.toLocaleString()}</strong>: {count}
             </Fragment>
           ))}
         </AffinityCounts>
