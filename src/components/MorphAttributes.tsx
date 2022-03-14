@@ -116,7 +116,11 @@ export default ({
       >
         <Label>Sigil</Label>
         <Value>
-          <Link to={`/alignment/${sigil.toUpperCase()}`}>{sigil}</Link>
+          {sigil !== 'Unaligned' ? (
+            <Link to={`/alignment/${sigil.toUpperCase()}`}>{sigil}</Link>
+          ) : (
+            sigil
+          )}
         </Value>
       </Attribute>
 
