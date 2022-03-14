@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -37,6 +37,7 @@ const Empty = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   margin-top: 12em;
   padding-left: 2em;
   padding-right: 2em;
@@ -69,7 +70,12 @@ const MorphsByAlignment = () => {
   }
 
   if (!alignment || morphs.length === 0) {
-    return <Empty>No morphs are aligned with this sigil.</Empty>;
+    return (
+      <Empty>
+        <p>No morphs are aligned with this sigil.</p>
+        <Link to="/alignments">See all alignments</Link>
+      </Empty>
+    );
   }
 
   return (
