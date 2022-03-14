@@ -1,4 +1,4 @@
-import { useState, useRef, forwardRef, ForwardedRef, MouseEventHandler } from 'react';
+import { useState, useEffect, useRef, forwardRef, ForwardedRef, MouseEventHandler } from 'react';
 import styled, { css } from 'styled-components';
 import { lighten } from 'polished';
 import { Link } from 'react-router-dom';
@@ -97,6 +97,10 @@ export default () => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const [{ data: wallet }] = useConnect();
   const [{ data: account }] = useAccount();
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+  }, [isOpen]);
 
   return (
     <>
