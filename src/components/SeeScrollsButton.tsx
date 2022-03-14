@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { useConnect, useAccount } from 'wagmi';
+import { useNavigate } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 import useGlobalState from '../hooks/useGlobalState';
 import { COLORS, FONTS } from '../constants/theme';
 
@@ -51,13 +51,11 @@ const SeeScrollsButton = styled.button<{ $isConnected: boolean }>`
 `;
 
 export default () => {
-  const [{ data: wallet }] = useConnect();
   const [{ data: account }] = useAccount({
     fetchEns: true,
   });
   const [, setIsConnectWalletModalOpen] = useGlobalState('isConnectWalletModalOpen');
   const [hasPendingMorphsPageVisit, setHasPendingMorphsPageVisit] = useState(false);
-  const profilePath = account?.ens?.name ?? account?.address;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,22 +67,16 @@ export default () => {
 
   return (
     <Container>
-      {wallet.connected ? (
-        <Link to={`/address/${profilePath}`}>
-          <SeeScrollsButton $isConnected>See your scrolls</SeeScrollsButton>
-        </Link>
-      ) : (
-        <SeeScrollsButton
-          $isConnected={false}
-          onClick={(e) => {
-            e.preventDefault();
-            setHasPendingMorphsPageVisit(true);
-            setIsConnectWalletModalOpen(true);
-          }}
-        >
-          Connect to see your scrolls
-        </SeeScrollsButton>
-      )}
+      <SeeScrollsButton
+        $isConnected={false}
+        onClick={(e) => {
+          e.preventDefault();
+          setHasPendingMorphsPageVisit(true);
+          setIsConnectWalletModalOpen(true);
+        }}
+      >
+        Connect to see your morphs
+      </SeeScrollsButton>
     </Container>
   );
 };
