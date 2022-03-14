@@ -23,7 +23,7 @@ const Container = styled.div`
   max-width: 1080px;
 
   @media (max-width: 767px) {
-    padding: 3em;
+    padding: 2em;
     max-width: 100%;
   }
 `;
