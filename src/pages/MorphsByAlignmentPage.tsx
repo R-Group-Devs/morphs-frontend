@@ -29,7 +29,18 @@ const Name = styled.h2`
 `;
 
 const Empty = styled.div`
-  margin-top: 6em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12em;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 14em;
   text-align: center;
 `;
 
@@ -57,6 +68,10 @@ const MorphsByAlignment = () => {
     return <LoadingIndicator />;
   }
 
+  if (!alignment || morphs.length === 0) {
+    return <Empty>No morphs are aligned with this sigil.</Empty>;
+  }
+
   return (
     <Animated>
       <Header>
@@ -64,27 +79,23 @@ const MorphsByAlignment = () => {
         <Name>{alignment?.normalizedSigil}</Name>
       </Header>
 
-      {morphs.length ? (
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => {
-            if (data?.nextCursor && !isLoading) {
-              setCursor(data.nextCursor);
-            }
-          }}
-          hasMore={!data || !!data?.nextCursor}
-          loader={<LoadMoreIndicator key={0} />}
-          threshold={2000}
-        >
-          <Gallery>
-            {morphs.map((morph) => (
-              <GalleryItem key={morph.tokenId} {...morph} />
-            ))}
-          </Gallery>
-        </InfiniteScroll>
-      ) : (
-        <Empty>This wallet does not hold any morphs.</Empty>
-      )}
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={() => {
+          if (data?.nextCursor && !isLoading) {
+            setCursor(data.nextCursor);
+          }
+        }}
+        hasMore={!data || !!data?.nextCursor}
+        loader={<LoadMoreIndicator key={0} />}
+        threshold={2000}
+      >
+        <Gallery>
+          {morphs.map((morph) => (
+            <GalleryItem key={morph.tokenId} {...morph} />
+          ))}
+        </Gallery>
+      </InfiniteScroll>
     </Animated>
   );
 };
