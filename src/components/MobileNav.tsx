@@ -16,8 +16,8 @@ interface OverlayProps {
 const Container = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
-  left: ${({ $isOpen }) => ($isOpen ? 0 : '-300px')};
-  width: 300px;
+  left: ${({ $isOpen }) => ($isOpen ? 0 : '-260px')};
+  width: 260px;
   height: 100vh;
   background: ${COLORS.black};
   transition: left 0.3s;

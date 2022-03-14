@@ -12,8 +12,9 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 3em auto 0;
-  padding-bottom: 5em;
+  margin: 0 auto;
+  margin-top: 12em;
+  padding-bottom: 14em;
   max-width: 500px;
 `;
 
