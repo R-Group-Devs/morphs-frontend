@@ -24,6 +24,10 @@ const AFFINITIES = ['Citizen', 'Mythical', 'Cosmic', 'Celestial'];
 const Header = styled.div`
   margin-bottom: 4em;
   text-align: center;
+
+  @media (max-width: 650px) {
+    margin-bottom: 3em;
+  }
 `;
 
 const Name = styled.h2`
@@ -34,6 +38,7 @@ const Name = styled.h2`
 
 const AffinityCounts = styled.h4`
   font-size: 14px;
+  line-height: 22px;
   font-weight: 400;
 `;
 

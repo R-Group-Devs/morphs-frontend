@@ -16,6 +16,10 @@ import { FONTS } from '../constants/theme';
 const Header = styled.div`
   margin-bottom: 4em;
   text-align: center;
+
+  @media (max-width: 650px) {
+    margin-bottom: 3em;
+  }
 `;
 
 const Name = styled.h2`

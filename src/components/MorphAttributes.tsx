@@ -34,6 +34,14 @@ const Attribute = styled.li`
   text-align: center;
   border: 1px solid ${lighten(0.1, COLORS.black)};
 
+  @media (max-width: 1024px) {
+    flex: 0 1 calc(50% - 0.75em);
+  }
+
+  @media (max-width: 767px) {
+    flex: 0 1 calc(33.333333% - 1em);
+  }
+
   @media (max-width: 580px) {
     flex: 0 1 calc(50% - 0.75em);
   }
