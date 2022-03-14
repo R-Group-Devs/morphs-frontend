@@ -28,6 +28,12 @@ const Name = styled.h2`
   font-size: 32px;
 `;
 
+const AlignmentRank = styled.h4`
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+`;
+
 const Empty = styled.div`
   position: fixed;
   top: 0;
@@ -58,6 +64,12 @@ const MorphsByAlignment = () => {
     ({ normalizedSigil }) => sigil?.toUpperCase() === normalizedSigil
   );
 
+  const alignmentIndex = alignments?.findIndex(
+    ({ normalizedSigil }) => sigil?.toUpperCase() === normalizedSigil
+  );
+
+  const rank = alignmentIndex !== undefined ? alignmentIndex + 1 : null;
+
   const [cursor, setCursor] = useState('0');
   const { data, isLoading } = useMorphs({ sigils: alignment?.sigils, cursor });
 
@@ -83,6 +95,12 @@ const MorphsByAlignment = () => {
       <Header>
         <HeaderAvatar src={data?.morphs?.[0].image} />
         <Name>{alignment?.normalizedSigil}</Name>
+
+        {rank && (
+          <AlignmentRank>
+            <strong>#{rank}</strong> in <Link to="/alignments">Alignments</Link>
+          </AlignmentRank>
+        )}
       </Header>
 
       <InfiniteScroll
