@@ -81,7 +81,7 @@ const MorphsByAlignment = () => {
     return <LoadingIndicator />;
   }
 
-  if (!alignment || morphs.length === 0) {
+  if (!alignment || morphs.length === 0 || data?.morphs.length === 0) {
     return (
       <Empty>
         <p>No morphs are aligned with this sigil.</p>
