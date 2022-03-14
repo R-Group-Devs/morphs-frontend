@@ -1,40 +1,12 @@
 import { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import useGlobalState from '../hooks/useGlobalState';
-import { COLORS, FONTS } from '../constants/theme';
+import ButtonStyles from '../styles/Button';
 
 const Container = styled.div`
   text-align: center;
-`;
-
-// TODO: extract into common file
-const ButtonStyles = css`
-  margin: 0 2em;
-  padding: 20px 50px;
-  min-height: 72px;
-  background: ${COLORS.primary.normal};
-  font-family: ${FONTS.sansSerif};
-  font-size: 24px;
-  font-weight: bold;
-  line-height: normal;
-  text-transform: uppercase;
-  color: ${COLORS.white};
-  border: none;
-  transition: all 0.3s;
-
-  &:hover {
-    background: ${COLORS.primary.light};
-    color: #fff;
-    outline: none;
-    cursor: pointer;
-  }
-
-  &:active {
-    position: relative;
-    top: 1px;
-  }
 `;
 
 const SeeMorphsButton = styled.button<{ $isConnected: boolean }>`

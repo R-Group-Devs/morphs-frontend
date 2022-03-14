@@ -3,15 +3,15 @@ import { useSpring, animated } from 'react-spring';
 import { ErrorBoundary } from 'react-error-boundary';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Helmet } from 'react-helmet';
-import WalletProvider from './providers/WalletProvider';
-import QueryProvider from './providers/QueryProvider';
-import GlobalStyle from './components/GlobalStyle';
-import ScrollToTop from './components/ScrollToTop';
-import Header from './components/Header';
-import ConnectWalletModal from './components/ConnectWalletModal';
-import ProgressBar from './components/ProgressBar';
-import AppErrorMessage from './components/AppErrorMessage';
-import useGlobalState from './hooks/useGlobalState';
+import WalletProvider from '../providers/WalletProvider';
+import QueryProvider from '../providers/QueryProvider';
+import GlobalStyle from './GlobalStyle';
+import ScrollToTop from './ScrollToTop';
+import Header from './Header';
+import ConnectWalletModal from './ConnectWalletModal';
+import ProgressBar from './ProgressBar';
+import AppErrorMessage from './AppErrorMessage';
+import useGlobalState from '../hooks/useGlobalState';
 
 interface Props {
   children: React.ReactNode;

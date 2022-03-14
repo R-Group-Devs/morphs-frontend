@@ -1,6 +1,6 @@
 # morphs-frontend
 
-Minting app for the **[Morphs](https://morphs.wtf)** NFT drop.
+Research hub for the **[Morphs](https://morphs.wtf)** NFT project.
 
 ## Requirements
 
