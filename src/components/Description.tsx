@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useConnect, useAccount } from 'wagmi';
-import morphsShapesImage from '../assets/images/morphs-shapes.png';
 import morphsShapesGif from '../assets/images/morphs-shapes.gif';
 import { FONTS } from '../constants/theme';
 
