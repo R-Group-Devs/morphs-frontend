@@ -83,16 +83,16 @@ const Alignments = () => {
       </Description>
 
       <Header>
-        <Heading>Alignments</Heading>
+        <Heading>Alignments </Heading>
 
         <Counts>
           <Count>
-            <CountLabel>Aligned</CountLabel>
+            <CountLabel>🔰 Aligned</CountLabel>
             {alignedCount.toLocaleString()}
           </Count>
 
           <Count>
-            <CountLabel>Unaligned</CountLabel>
+            <CountLabel>⭕️ Unaligned</CountLabel>
             {unalignedCount.toLocaleString()}
           </Count>
         </Counts>
