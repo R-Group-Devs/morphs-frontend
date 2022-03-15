@@ -106,7 +106,7 @@ const MorphDetails = ({ tokenId }: Props) => {
           <Img src={data?.image} alt={data?.name} />
 
           {account?.address.toLowerCase() === data?.owner.toLowerCase() && (
-            <UpdateSigilForm isVisible={isSigilFormVisible} onUpdate={refetch} />
+            <UpdateSigilForm isVisible onUpdate={refetch} />
           )}
         </Panel>
 
