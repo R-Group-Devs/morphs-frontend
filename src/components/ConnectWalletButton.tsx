@@ -55,9 +55,13 @@ const NetworkTooltip = styled(UnsupportedNetworkTooltip)`
 
 const Network = styled.div<{ $isSupported: boolean }>`
   padding: 0 0.5em;
+  max-width: 120px;
   font-family: ${FONTS.mono};
   font-size: 14px;
   color: ${COLORS.white};
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:hover {
     cursor: default;
@@ -106,7 +110,11 @@ export default () => {
       {wallet.connected && (
         <NetworkTooltip isContentVisible={!isSmallViewport}>
           <Network $isSupported={isSupportedNetwork}>
-            {network.chain?.id === 1 ? 'Ethereum' : network.chain?.name}
+            {network.chain?.id === 1
+              ? 'Ethereum'
+              : network.chain?.id === 137
+              ? 'Polygon'
+              : network.chain?.name}
           </Network>
         </NetworkTooltip>
       )}
