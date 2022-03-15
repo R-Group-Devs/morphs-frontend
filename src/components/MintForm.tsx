@@ -15,6 +15,7 @@ import useGlobalState from '../hooks/useGlobalState';
 import useMint from '../hooks/useMint';
 import useBatchMint from '../hooks/useBatchMint';
 import { transactionStates } from '../hooks/useExecuteTransaction';
+import ButtonStyles from '../styles/Button';
 import unlockCustomFlagInputButton from '../assets/images/unlock-custom-flag-input-button.png';
 import { NETWORKS } from '../constants/networks';
 import { COLORS, FONTS } from '../constants/theme';
@@ -60,33 +61,6 @@ const CodeInput = styled(Input)<{ $isValid: boolean; $hasError: boolean }>`
       animation-duration: 2s;
       animation-iteration-count: 1;
     `}
-`;
-
-const ButtonStyles = css`
-  padding: 20px 50px;
-  width: 100%;
-  min-height: 72px;
-  background: ${COLORS.primary.normal};
-  font-family: ${FONTS.sansSerif};
-  font-size: 24px;
-  font-weight: bold;
-  line-height: normal;
-  text-transform: uppercase;
-  color: ${COLORS.white};
-  border: none;
-  transition: all 0.3s;
-
-  &:hover {
-    background: ${COLORS.primary.light};
-    color: #fff;
-    outline: none;
-    cursor: pointer;
-  }
-
-  &:active {
-    position: relative;
-    top: 1px;
-  }
 `;
 
 const SubmitButton = styled.button`

@@ -1,7 +1,8 @@
 import { forwardRef, ForwardedRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useSpring, animated } from 'react-spring';
+import { OverlayStyles } from '../styles/Overlay';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface OverlayProps {
@@ -18,11 +19,6 @@ interface TitleProps {
   close: () => void;
 }
 
-export const ModalOverlayStyles = css`
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(3px);
-`;
-
 const Overlay = styled(Dialog.Overlay)`
   position: fixed;
   top: 0;
@@ -33,7 +29,7 @@ const Overlay = styled(Dialog.Overlay)`
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  ${ModalOverlayStyles}
+  ${OverlayStyles}
 
   @media (max-width: 767px) {
     align-items: start;

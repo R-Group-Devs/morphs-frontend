@@ -8,7 +8,7 @@ export default (tokenIds?: string[]) => {
   const rpcUrl = RPC_URLS[chainId];
 
   return useQuery(
-    `${chainId}:${tokenIds}:morphs`,
+    ['morphs', chainId, tokenIds],
     async () => batchGetMorphDetails(chainId, rpcUrl, tokenIds || []),
     { enabled: tokenIds && tokenIds?.length > 0 }
   );

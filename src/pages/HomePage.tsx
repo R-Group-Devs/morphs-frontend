@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
 import { Helmet } from 'react-helmet';
+import Animated from '../components/Animated';
 import Description from '../components/Description';
 import ScrollExampleVideo from '../components/ScrollExampleVideo';
-import SeeScrollsButton from '../components/SeeScrollsButton';
 import Footer from '../components/Footer';
 
 const Content = styled.div`
@@ -26,36 +25,24 @@ const Panel = styled.div<{ right?: boolean }>`
   }
 `;
 
-export default () => {
-  const mountAnimationProps = useSpring({
-    from: {
-      opacity: 0,
-    },
-    to: {
-      opacity: 1,
-    },
-  });
+export default () => (
+  <>
+    <Helmet titleTemplate="">
+      <title>Morphs NFTs</title>
+    </Helmet>
 
-  return (
-    <>
-      <Helmet titleTemplate="">
-        <title>Morphs NFTs</title>
-      </Helmet>
+    <Animated>
+      <Content>
+        <Panel>
+          <Description />
+        </Panel>
 
-      <animated.div style={mountAnimationProps}>
-        <Content>
-          <Panel>
-            <Description />
-          </Panel>
+        <Panel right>
+          <ScrollExampleVideo />
+        </Panel>
+      </Content>
 
-          <Panel right>
-            <ScrollExampleVideo />
-            <SeeScrollsButton />
-          </Panel>
-        </Content>
-
-        <Footer />
-      </animated.div>
-    </>
-  );
-};
+      <Footer />
+    </Animated>
+  </>
+);

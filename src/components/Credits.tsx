@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
 const Credits = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 4em;
   padding: 0;
   list-style: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: normal;
   line-height: 1em;
-  text-transform: lowercase;
 
   @media (max-width: 767px) {
+    flex-direction: column;
     margin-top: 3em;
     font-size: 12px;
     text-align: center;
@@ -23,21 +26,31 @@ const Credit = styled.li`
 export default () => (
   <Credits>
     <Credit>
-      Built by{' '}
+      built by{' '}
       <a href="https://playgrounds.wtf" target="_blank" rel="noreferrer">
         playgrounds.wtf
       </a>
     </Credit>
     <Credit>
-      Designed by{' '}
+      designed by{' '}
       <a href="https://twitter.com/polyforms_" target="_blank" rel="noreferrer">
         @polyforms_
       </a>
     </Credit>
     <Credit>
-      Made with{' '}
+      made with{' '}
       <a href="https://heyshell.xyz" target="_blank" rel="noreferrer">
         heyshell.xyz
+      </a>
+    </Credit>
+    <Credit>
+      Morphs uses a{' '}
+      <a
+        href="https://creativecommons.org/share-your-work/public-domain/cc0/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        CC0 license
       </a>
     </Credit>
   </Credits>

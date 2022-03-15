@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { useAccount, useEnsLookup } from 'wagmi';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useSpring, animated } from 'react-spring';
 import { Helmet } from 'react-helmet';
 import { ErrorBoundary } from 'react-error-boundary';
 import LoadingIndicator from '../components/LoadingIndicator';
+import Animated from '../components/Animated';
 import MorphAttributes from '../components/MorphAttributes';
 import UpdateSigilForm from '../components/UpdateSigilForm';
 import InvalidTokenMessage from '../components/InvalidTokenMessage';
@@ -99,18 +99,8 @@ const MorphDetails = ({ tokenId }: Props) => {
   const description =
     data?.description.replace(/0x\w*/, (address) => `[${address}](/address/${address})`) ?? '';
 
-  const mountAnimationProps = useSpring({
-    from: {
-      opacity: 0,
-    },
-    to: {
-      opacity: 1,
-    },
-    pause: !data,
-  });
-
   return (
-    <animated.div style={mountAnimationProps}>
+    <Animated pause={!data}>
       <Container>
         <Panel>
           <Img src={data?.image} alt={data?.name} />
@@ -128,12 +118,12 @@ const MorphDetails = ({ tokenId }: Props) => {
           {data?.attributes && (
             <Section>
               <SectionHeading>Attributes</SectionHeading>
-                <MorphAttributes
-                  attributes={data?.attributes}
-                  isSigilFormVisible={isSigilFormVisible}
-                  onSigilAttributeMouseEnter={() => setIsSigilFormVisible(true)}
-                  onSigilAttributeMouseLeave={() => setIsSigilFormVisible(false)}
-                />
+              <MorphAttributes
+                attributes={data?.attributes}
+                isSigilFormVisible={isSigilFormVisible}
+                onSigilAttributeMouseEnter={() => setIsSigilFormVisible(true)}
+                onSigilAttributeMouseLeave={() => setIsSigilFormVisible(false)}
+              />
             </Section>
           )}
 
@@ -147,7 +137,7 @@ const MorphDetails = ({ tokenId }: Props) => {
           )}
         </Panel>
       </Container>
-    </animated.div>
+    </Animated>
   );
 };
 

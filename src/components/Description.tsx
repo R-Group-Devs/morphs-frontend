@@ -1,25 +1,21 @@
 import styled from 'styled-components';
-import { useMediaQuery } from 'react-responsive';
-import Credits from './Credits';
-import morphsShapesImage from '../assets/images/morphs-shapes.png';
+import { Link } from 'react-router-dom';
+import { useConnect, useAccount } from 'wagmi';
+import morphsShapesGif from '../assets/images/morphs-shapes.gif';
 import { FONTS } from '../constants/theme';
 
 const Container = styled.div``;
 
 const Heading = styled.div`
-  margin-top: 4em;
-  font-family: ${FONTS.glyphs};
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 2em;
-
-  @media (max-width: 767px) {
-    margin-top: 3em;
-  }
+  margin-top: 32px;
+  font-family: ${FONTS.sansSerif};
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31px;
 `;
 
-const MorphsShapesVideo = styled.video`
-  width: 60%;
+const MorphsShapesGif = styled.img`
+  width: 70%;
   height: auto;
 
   @media (max-width: 767px) {
@@ -28,8 +24,9 @@ const MorphsShapesVideo = styled.video`
 `;
 
 const FlavorText = styled.div`
-  margin-top: 2.5em;
+  margin-top: 32px;
   font-size: 16px;
+  font-weight: 700;
   line-height: 2em;
 
   @media (max-width: 767px) {
@@ -37,45 +34,51 @@ const FlavorText = styled.div`
   }
 `;
 
+const BodyText = styled.div`
+  margin-top: 32px;
+  font-size: 16px;
+  line-height: 2em;
+`;
+
 export default () => {
-  const isSmallViewport = useMediaQuery({
-    query: '(max-width: 767px)',
-  });
+  const [{ data: wallet }] = useConnect();
+  const [{ data: account }] = useAccount();
 
   return (
     <Container>
-      <MorphsShapesVideo
-        src="./videos/morphs-shapes.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        controlsList="nodownload"
-        poster={morphsShapesImage}
-      />
+      <MorphsShapesGif src={morphsShapesGif} />
 
-      <Heading>Our scrolls have been sent.</Heading>
+      <Heading>
+        Welcome to
+        <br />
+        The Morphs Research Hub.
+      </Heading>
 
       <FlavorText>
         <p>Morphs is an open-ended, evolving NFT project set in a science fantasy universe.</p>
-
-        <p>
-          Minting has ended, but you can still get involved by acquiring a scroll on the secondary
-          market.
-        </p>
-
-        <p>
-          Visit{' '}
-          <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
-            codex.morphs.wtf
-          </a>{' '}
-          for more info.
-        </p>
       </FlavorText>
 
-      <Heading>What mysteries do they hold…</Heading>
+      <BodyText>
+        <p>
+          To learn more about Morphs, visit the{' '}
+          <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
+            Codex
+          </a>{' '}
+          📖
+        </p>
 
-      {!isSmallViewport && <Credits />}
+        <p>
+          To view your Morphs, visit{' '}
+          <Link to={wallet?.connected ? `/address/${account?.address}` : '/connect'}>
+            My Morphs
+          </Link>{' '}
+          👤
+        </p>
+
+        <p>
+          To view the data on Sigil Alignments, visit <Link to="/alignments">Alignments</Link> 🛡
+        </p>
+      </BodyText>
     </Container>
   );
 };
