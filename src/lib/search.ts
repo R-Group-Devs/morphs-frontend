@@ -1,5 +1,4 @@
 import { MORPHS_NFT_CONTRACT_ADDRESSES } from "../constants/contracts";
-import { RPC_URLS } from "../constants/rpc";
 import { getGraphClient } from "./graph";
 import { Nft_OrderBy, OrderDirection, TokenStorageValue_Filter, TokenStorageValue_OrderBy } from "./graph-generated";
 import { batchGetMorphDetails, MorphsMetadata } from "./morphs";
@@ -17,7 +16,6 @@ export interface MorphsQueryResponse {
 export const searchMorphs = async (query: MorphsQuery = {}, chainId = 1): Promise<MorphsQueryResponse> => {
   const client = getGraphClient(chainId);
   const collection = MORPHS_NFT_CONTRACT_ADDRESSES[chainId];
-  const rpcUrl = RPC_URLS[chainId];
 
   let tokenStorageValueFilter: TokenStorageValue_Filter | undefined;
 
@@ -59,7 +57,7 @@ export const searchMorphs = async (query: MorphsQuery = {}, chainId = 1): Promis
     }
   }
 
-  const morphs = await batchGetMorphDetails(chainId, rpcUrl, tokenIds);
+  const morphs = await batchGetMorphDetails(chainId, tokenIds);
 
   return { morphs, nextCursor };
 }
