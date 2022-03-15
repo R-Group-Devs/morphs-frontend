@@ -15,7 +15,7 @@ const NavItem = styled.li`
   &:after {
     content: '';
     display: inline-block;
-    margin: 0 24px;
+    margin: 0 22px;
     width: 8px;
     height: 8px;
     background: #474747;
