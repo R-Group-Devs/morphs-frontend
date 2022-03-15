@@ -82,6 +82,18 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
       .sort((a, b) => AFFINITIES.indexOf(a.affinity) - AFFINITIES.indexOf(b.affinity));
   }, [morphs]);
 
+  const isLoading = useMemo(() => {
+    if (isAccountPropEnsName && (isLoadingEnsResolution || !account)) {
+      return true;
+    }
+
+    if (!isAccountPropEnsName && (isLoadingReverseEnsResolution || ens === undefined)) {
+      return true;
+    }
+
+    return false;
+  }, [isAccountPropEnsName, isLoadingEnsResolution, isLoadingReverseEnsResolution, account, ens]);
+
   const profileName = useMemo(() => {
     if (isAccountPropEnsName) {
       return addressOrName;
@@ -96,7 +108,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
 
   const avatarImage = avatar ?? makeBlockie(address || addressOrName);
 
-  if (isLoadingEnsResolution || isLoadingReverseEnsResolution) {
+  if (isLoading) {
     return <LoadingIndicator />;
   }
 
