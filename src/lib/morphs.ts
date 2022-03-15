@@ -7,6 +7,7 @@ import { getGraphClient } from "./graph"
 import MORPHS from '../constants/abis/Morphs.json';
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { getAttribute, metadataFromTokenURI, rewriteIpfsUri } from "./nfts";
+import { RPC_URLS } from '../constants/rpc';
 
 /** get indexed information about the Morphs collection */
 export const getMorphsCollectionDetails = async (chainId: number) => {
@@ -61,11 +62,11 @@ export interface MorphsMetadata {
 /** get metadata info about an array of Morphs tokens directly from the chain */
 export const batchGetMorphDetails = async (
   chainId: number,
-  rpcUrl: string,
   tokenIds: string[]) =>
 {
   const address = MORPHS_NFT_CONTRACT_ADDRESSES[chainId];
   const morphs = new MulticallContract(address, MORPHS);
+  const rpcUrl = RPC_URLS[chainId];
   const provider = new MulticallProvider(
     new StaticJsonRpcProvider(rpcUrl),
     chainId
