@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useConnect, useAccount } from 'wagmi';
 import morphsShapesImage from '../assets/images/morphs-shapes.png';
+import morphsShapesGif from '../assets/images/morphs-shapes.gif';
 import { FONTS } from '../constants/theme';
 
 const Container = styled.div``;
@@ -14,7 +15,7 @@ const Heading = styled.div`
   line-height: 31px;
 `;
 
-const MorphsShapesVideo = styled.video`
+const MorphsShapesGif = styled.img`
   width: 70%;
   height: auto;
 
@@ -46,15 +47,7 @@ export default () => {
 
   return (
     <Container>
-      <MorphsShapesVideo
-        src="./videos/morphs-shapes.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        controlsList="nodownload"
-        poster={morphsShapesImage}
-      />
+      <MorphsShapesGif src={morphsShapesGif} />
 
       <Heading>
         Welcome to
@@ -71,20 +64,20 @@ export default () => {
           To learn more about Morphs, visit the{' '}
           <a href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
             Codex
-          </a>
-          .
+          </a>{' '}
+          📖
         </p>
 
         <p>
           To view your Morphs, visit{' '}
           <Link to={wallet?.connected ? `/address/${account?.address}` : '/connect'}>
             My Morphs
-          </Link>
-          .
+          </Link>{' '}
+          👤
         </p>
 
         <p>
-          To view the data on Sigil Alignments, visit <Link to="/alignments">Alignments</Link>.
+          To view the data on Sigil Alignments, visit <Link to="/alignments">Alignments</Link> 🛡
         </p>
       </BodyText>
     </Container>

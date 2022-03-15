@@ -1,8 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useConnect, useAccount } from 'wagmi';
-import { useMediaQuery } from 'react-responsive';
-import MobileNav from './MobileNav';
+import { COLORS } from '../constants/theme';
 
 const Nav = styled.ul`
   display: flex;
@@ -27,38 +26,57 @@ const NavItem = styled.li`
   }
 `;
 
-const NavLink = styled(Link)``;
+const NavLinkStyles = css`
+  border-bottom: none;
 
-const NavLinkExternal = styled.a``;
+  &:focus {
+    outline: none;
+  }
+
+  & span {
+    border-bottom: 1px solid ${COLORS.accent.normal};
+    transition: all 0.2s linear;
+  }
+
+  &:hover span {
+    border-bottom-color: ${COLORS.accent.light};
+  }
+
+  &:focus span {
+    outline: 1px dotted ${COLORS.accent.normal};
+  }
+`;
+
+const NavLink = styled(Link)`
+  ${NavLinkStyles}
+`;
+
+const NavLinkExternal = styled.a`
+  ${NavLinkStyles}
+`;
 
 export default () => {
   const [{ data: wallet }] = useConnect();
   const [{ data: account }] = useAccount();
 
-  const isMediumViewport = useMediaQuery({
-    query: '(max-width: 1024px)',
-  });
-
-  if (isMediumViewport) {
-    return <MobileNav />;
-  }
-
   return (
     <Nav>
       <NavItem>
         <NavLinkExternal href="https://codex.morphs.wtf" target="_blank" rel="noreferrer">
-          Codex
+          <span>Codex</span> 📖
         </NavLinkExternal>
       </NavItem>
 
       <NavItem>
         <NavLink to={wallet?.connected ? `/address/${account?.address}` : '/connect'}>
-          My Morphs
+          <span>My Morphs</span> 👤
         </NavLink>
       </NavItem>
 
       <NavItem>
-        <NavLink to="/alignments">Alignments</NavLink>
+        <NavLink to="/alignments">
+          <span>Alignments</span> 🛡
+        </NavLink>
       </NavItem>
     </Nav>
   );

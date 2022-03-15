@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, forwardRef, ForwardedRef, MouseEventHandler } from 'react';
 import styled, { css } from 'styled-components';
-import { lighten } from 'polished';
 import { Link } from 'react-router-dom';
 import { useConnect, useAccount } from 'wagmi';
 import { OverlayStyles } from '../styles/Overlay';
 import MenuIcon from '../assets/images/icons/menu.svg';
+import CloseIcon from '../assets/images/icons/close.svg';
 import { COLORS } from '../constants/theme';
 
 interface OverlayProps {
@@ -16,11 +16,18 @@ interface OverlayProps {
 const Container = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
-  left: ${({ $isOpen }) => ($isOpen ? 0 : '-260px')};
-  width: 260px;
+  right: ${({ $isOpen }) => ($isOpen ? 0 : '-320px')};
+  padding-top: 64px;
+  width: 320px;
   height: 100vh;
   background: ${COLORS.black};
-  transition: left 0.3s;
+  transition: right 0.3s;
+
+  @media (max-width: 650px) {
+    right: ${({ $isOpen }) => ($isOpen ? 0 : '-100vw')};
+    width: 100vw;
+    text-align: center;
+  }
 `;
 
 const Overlay = styled.div<{ $isVisible: boolean }>`
@@ -55,19 +62,29 @@ const Nav = styled.ul`
 const NavItem = styled.li``;
 
 const NavLinkStyles = css`
-  display: block;
+  display: inline-block;
   padding: 1em 1.5em;
-  width: 100%;
-  color: #fff;
-  border-bottom: 1px solid ${lighten(0.1, COLORS.black)};
+  border-bottom: none;
+
+  @media (max-width: 650px) {
+    padding: 1.25em 1.5em;
+  }
 
   &:hover {
-    color: ${COLORS.primary.normal};
-    border-bottom-color: ${lighten(0.1, COLORS.black)};
+    border-bottom-color: none;
   }
 
   &:focus {
     outline: none;
+  }
+
+  & span {
+    border-bottom: 1px solid ${COLORS.accent.normal};
+    transition: all 0.2s linear;
+  }
+
+  &:hover span {
+    border-bottom-color: ${COLORS.accent.light};
   }
 `;
 
@@ -80,7 +97,7 @@ const NavLinkExternal = styled.a`
 `;
 
 const MobileNavExpandIcon = styled.img`
-  margin-right: 32px;
+  margin-left: 32px;
   width: 25px;
 
   &:hover {
@@ -89,6 +106,24 @@ const MobileNavExpandIcon = styled.img`
 
   @media (max-width: 650px) {
     margin-right: 0;
+  }
+`;
+
+const CloseButton = styled.img`
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  background: none;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 650px) {
+    position: static;
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -116,6 +151,8 @@ export default () => {
         }}
       >
         <Container $isOpen={isOpen}>
+          <CloseButton src={CloseIcon} role="button" onClick={() => setIsOpen(false)} />
+
           <Nav>
             <NavItem>
               <NavLinkExternal
@@ -124,7 +161,7 @@ export default () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                Codex
+                <span>Codex</span> 📖
               </NavLinkExternal>
             </NavItem>
 
@@ -133,13 +170,13 @@ export default () => {
                 to={wallet.connected ? `/address/${account?.address}` : '/connect'}
                 onClick={() => setIsOpen(false)}
               >
-                My Morphs
+                <span>My Morphs</span> 👤
               </NavLink>
             </NavItem>
 
             <NavItem>
               <NavLink to="/alignments" onClick={() => setIsOpen(false)}>
-                Alignments
+                <span>Alignments</span> 🛡
               </NavLink>
             </NavItem>
           </Nav>

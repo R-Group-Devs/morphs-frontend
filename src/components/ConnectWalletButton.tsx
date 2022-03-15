@@ -13,7 +13,6 @@ const Container = styled.div`
   align-items: center;
 
   @media (max-width: 650px) {
-    margin: 0 3em;
     width: 100%;
   }
 `;
@@ -88,7 +87,9 @@ export default () => {
   const isSupportedNetwork =
     !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
-  const connectedWalletText = account?.ens?.name ?? shortenAddress(account?.address ?? '');
+  const connectedWalletText =
+    (account?.ens?.name && account?.ens?.name.length <= 12) ??
+    shortenAddress(account?.address ?? '');
 
   const isXSmallViewport = useMediaQuery({
     query: '(max-width: 650px)',

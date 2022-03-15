@@ -9,8 +9,7 @@ const Container = styled.footer`
 `;
 
 const MorphsShapesBannerVideo = styled.video`
-  margin: 0 -32px;
-  width: calc(100% + 64px);
+  width: 100%;
   transition-duration: 0.7s;
 `;
 
