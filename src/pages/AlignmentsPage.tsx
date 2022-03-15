@@ -19,7 +19,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  @media (max-width: 580px) {
+  @media (max-width: 650px) {
     flex-direction: column;
     align-items: start;
   }
@@ -29,7 +29,7 @@ const Heading = styled.h2`
   font-family: ${FONTS.sansSerif};
   font-size: 28px;
 
-  @media (max-width: 580px) {
+  @media (max-width: 650px) {
     margin-bottom: 1em;
   }
 `;
@@ -37,13 +37,13 @@ const Heading = styled.h2`
 const Counts = styled.div`
   display: flex;
 
-  @media (max-width: 400px) {
+  @media (max-width: 450px) {
     flex-direction: column;
   }
 `;
 
 const Count = styled.div`
-  @media (max-width: 400px) {
+  @media (max-width: 450px) {
     margin-bottom: 0.5em;
   }
 
@@ -51,7 +51,7 @@ const Count = styled.div`
     margin-left: 2em;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 450px) {
     &:last-child {
       margin-left: 0;
     }
