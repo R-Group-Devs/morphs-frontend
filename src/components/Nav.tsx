@@ -9,6 +9,7 @@ const Nav = styled.ul`
   padding: 0;
   list-style: none;
   font-size: 14px;
+  white-space: nowrap;
 `;
 
 const NavItem = styled.li`
