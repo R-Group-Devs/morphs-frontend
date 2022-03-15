@@ -19,6 +19,10 @@ export default createGlobalStyle`
     outline-color: ${COLORS.primary.normal};
   }
 
+  p {
+    margin-bottom: 1.5em;
+  }
+
   a {
     color: ${COLORS.accent.normal};
     border-bottom: 1px solid ${COLORS.accent.normal};

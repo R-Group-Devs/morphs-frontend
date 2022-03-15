@@ -42,7 +42,7 @@ export default ({ isVisible = true, isContentVisible = true, children, ...rest }
 
         <Content sideOffset={5} $isVisible={isVisible && !isSupportedNetwork}>
           <Tooltip.Arrow />
-          <p>This app only supports the Ethereum network.</p>
+          This app only supports the Ethereum network.
         </Content>
       </Tooltip.Root>
     </Tooltip.Provider>

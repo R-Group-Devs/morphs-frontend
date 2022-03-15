@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useConnect, useAccount } from 'wagmi';
 import { Helmet } from 'react-helmet';
 import SigilAlignmentTable from '../components/SigilAlignmentTable';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -69,7 +71,10 @@ const CountLabel = styled.span`
 `;
 
 const Alignments = () => {
+  const [{ data: wallet }] = useConnect();
+  const [{ data: account }] = useAccount();
   const { data } = useAlignments();
+
   const alignedCount = data?.reduce((total, { count }) => total + count, 0) || 0;
   const unalignedCount = 26814 - alignedCount;
 
@@ -79,6 +84,15 @@ const Alignments = () => {
         <p>
           The Alignments database tracks info about the Sigil Alignments of certain Morphs. The
           Playgrounds Research team is still determining the purpose of these Sigils...
+        </p>
+
+        <p>
+          You can set a Sigil for a Morph you own on the token details page via{' '}
+          <Link to={wallet?.connected ? `/address/${account?.address}` : '/connect'}>
+            {' '}
+            My Morphs
+          </Link>
+          .
         </p>
       </Description>
 

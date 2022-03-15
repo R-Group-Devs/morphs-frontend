@@ -147,7 +147,7 @@ export default ({
 
                   <Tooltip.Content sideOffset={5}>
                     <Tooltip.Arrow />
-                    <p>{signature}</p>
+                    {signature}
                   </Tooltip.Content>
                 </Tooltip.Root>
               </Tooltip.Provider>

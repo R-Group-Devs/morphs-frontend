@@ -25,7 +25,7 @@ const TooltipTrigger = styled(Trigger)`
 `;
 
 const TooltipContent = styled(Content)`
-  padding: 0.25em 1.5em;
+  padding: 1.25em 1.5em;
   font-size: 12px;
   background: #444;
   border-radius: 2px;
