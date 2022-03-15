@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
 import Input from './Input';
 import UpdateSigilModal from './UpdateSigilModal';
+import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import ValidationError from './ValidationError';
 import useUpdateSigil from '../hooks/useUpdateSigil';
 import { transactionStates } from '../hooks/useExecuteTransaction';
@@ -53,6 +54,10 @@ const SubmitButton = styled.button`
   }
 `;
 
+const NetworkTooltip = styled(UnsupportedNetworkTooltip)`
+  width: auto;
+`;
+
 export default ({ isVisible, onUpdate }: Props) => {
   const { tokenId } = useParams();
   const [sigil, setSigil] = useState('');
@@ -92,7 +97,9 @@ export default ({ isVisible, onUpdate }: Props) => {
           autoComplete="off"
         />
 
-        <SubmitButton>Align</SubmitButton>
+        <NetworkTooltip>
+          <SubmitButton>Align</SubmitButton>
+        </NetworkTooltip>
       </Form>
 
       {!isSigilValid && hasAttemptedSubmission && (
