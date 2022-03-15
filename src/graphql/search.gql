@@ -2,12 +2,13 @@ query getNfts(
   $orderBy: NFT_orderBy = tokenId
   $orderDirection: OrderDirection = asc
   $filter: NFT_filter
+  $limit: Int! = 20
 ) {
   nfts(
     orderBy: $orderBy
     orderDirection: $orderDirection
     where: $filter
-    first: 100
+    first: $limit
   ) {
     id
     tokenId
@@ -18,12 +19,13 @@ query getNftOwners(
   $orderBy: NFTOwner_orderBy = lastActivityAtTimestamp
   $orderDirection: OrderDirection = desc
   $filter: NFTOwner_filter
+  $limit: Int! = 20
 ) {
   nftowners(
     orderBy: $orderBy
     orderDirection: $orderDirection
     where: $filter
-    first: 100
+    first: $limit
   ) {
     id
     nft { id tokenId }
@@ -34,7 +36,7 @@ query getTokenStorage(
   $orderBy: TokenStorageValue_orderBy
   $orderDirection: OrderDirection = asc
   $filter: TokenStorageValue_filter
-  $limit: Int! = 100
+  $limit: Int! = 20
 ) {
   tokenStorageValues(
     orderBy: $orderBy
