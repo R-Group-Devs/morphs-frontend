@@ -97,7 +97,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
   const avatarImage = avatar ?? makeBlockie(address || addressOrName);
 
   if (isLoadingEnsResolution || isLoadingReverseEnsResolution) {
-    throw new Promise(() => {});
+    return <LoadingIndicator />;
   }
 
   return (
