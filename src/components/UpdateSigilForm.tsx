@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { useNetwork } from 'wagmi';
 import * as Dialog from '@radix-ui/react-dialog';
 import Input from './Input';
 import UpdateSigilModal from './UpdateSigilModal';
@@ -8,6 +9,7 @@ import UnsupportedNetworkTooltip from './UnsupportedNetworkTooltip';
 import ValidationError from './ValidationError';
 import useUpdateSigil from '../hooks/useUpdateSigil';
 import { transactionStates } from '../hooks/useExecuteTransaction';
+import { NETWORKS } from '../constants/networks';
 import { COLORS, FONTS } from '../constants/theme';
 
 interface Props {
@@ -26,9 +28,10 @@ const Form = styled.form`
   margin-top: 1em;
 `;
 
-const SubmitButton = styled.button`
+const SubmitButtonStyles = css`
   padding: 10px 20px;
   font-family: ${FONTS.sansSerif};
+  font-size: 14px;
   font-weight: bold;
   line-height: normal;
   text-transform: uppercase;
@@ -50,17 +53,29 @@ const SubmitButton = styled.button`
   }
 `;
 
+const SubmitButton = styled.button`
+  ${SubmitButtonStyles}
+`;
+
+const DisabledSubmitButton = styled.div`
+  ${SubmitButtonStyles}
+`;
+
 const NetworkTooltip = styled(UnsupportedNetworkTooltip)`
   width: auto;
 `;
 
 export default ({ isVisible, onUpdate }: Props) => {
+  const [{ data: network }] = useNetwork();
   const { tokenId } = useParams();
   const [sigil, setSigil] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
   const [{ data, state }, updateSigil] = useUpdateSigil();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const isSupportedNetwork =
+    !!network.chain?.id && Object.values(NETWORKS).includes(network.chain?.id);
 
   const isSigilValid = sigil && sigil.length <= 8;
 
@@ -101,9 +116,13 @@ export default ({ isVisible, onUpdate }: Props) => {
           autoComplete="off"
         />
 
-        <NetworkTooltip>
+        {isSupportedNetwork ? (
           <SubmitButton>Align</SubmitButton>
-        </NetworkTooltip>
+        ) : (
+          <NetworkTooltip>
+            <DisabledSubmitButton>Align</DisabledSubmitButton>
+          </NetworkTooltip>
+        )}
       </Form>
 
       {!isSigilValid && hasAttemptedSubmission && (
