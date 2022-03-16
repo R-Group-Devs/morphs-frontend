@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -60,6 +60,7 @@ export default ({ isVisible, onUpdate }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
   const [{ data, state }, updateSigil] = useUpdateSigil();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const isSigilValid = sigil && sigil.length <= 8;
 
@@ -78,7 +79,13 @@ export default ({ isVisible, onUpdate }: Props) => {
           e.preventDefault();
           setHasAttemptedSubmission(true);
 
-          if (tokenId && sigil && isSigilValid) {
+          if (!isSigilValid) {
+            inputRef.current?.focus();
+
+            return false;
+          }
+
+          if (tokenId && sigil) {
             updateSigil(tokenId, sigil);
             setIsModalOpen(true);
           }
@@ -86,6 +93,7 @@ export default ({ isVisible, onUpdate }: Props) => {
       >
         <Input
           placeholder="Enter a sigil"
+          ref={inputRef}
           value={sigil}
           onChange={(e) => setSigil(e.target.value)}
           $hasError={!isSigilValid && hasAttemptedSubmission}
