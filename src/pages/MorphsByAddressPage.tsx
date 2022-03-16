@@ -8,7 +8,7 @@ import countBy from 'lodash/countBy';
 import makeBlockie from 'ethereum-blockies-base64';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Animated from '../components/Animated';
-import HeaderAvatar from '../components/HeaderAvatar';
+import HeaderAvatar, { HeaderAvatarPlaceholder } from '../components/HeaderAvatar';
 import Gallery from '../components/Gallery';
 import GalleryItem from '../components/GalleryItem';
 import useMorphsByAddress from '../hooks/useMorphsByAddress';
@@ -106,7 +106,17 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
     return ens ?? shortenAddress(address);
   }, [address, addressOrName, ens, isAccountPropEnsName, isLoadingReverseEnsResolution]);
 
-  const avatarImage = avatar ?? makeBlockie(address || addressOrName);
+  const avatarImage = useMemo(() => {
+    if (avatar) {
+      return avatar;
+    }
+
+    if (avatar === null || (!isAccountPropEnsName && !ens)) {
+      return makeBlockie(address || addressOrName);
+    }
+
+    return undefined;
+  }, [avatar, address, addressOrName, isAccountPropEnsName, ens]);
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -115,7 +125,7 @@ const MorphsByAddress = ({ addressOrName }: Props) => {
   return (
     <Animated pause={isLoadingEnsResolution || isLoadingReverseEnsResolution}>
       <Header>
-        <HeaderAvatar src={avatarImage} />
+        {avatarImage ? <HeaderAvatar src={avatarImage} /> : <HeaderAvatarPlaceholder />}
         <Name>{profileName}</Name>
         <AffinityCounts>
           {affinities.map(({ affinity, count }, index) => (
