@@ -10,7 +10,7 @@ const Video = styled.video`
   margin-top: -0.5em;
   margin-bottom: 1.75em;
   width: 100%;
-  height: auto;
+  aspect-ratio: 1;
   border: 1px solid ${COLORS.white};
 `;
 
